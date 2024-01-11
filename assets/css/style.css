@@ -1,0 +1,54 @@
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1024px;
+  margin: auto;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.header {
+  position: relative;
+  height: 100vh;
+  margin: 0;
+}
+.header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.header__logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 207px;
+  height: 25px;
+}
+.header__text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffd15b;
+  text-align: center;
+}
+.header__text h2 {
+  margin: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

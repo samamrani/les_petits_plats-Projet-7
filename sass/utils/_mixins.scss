@@ -1,0 +1,7 @@
+// Mixin pour la position absolue
+@mixin absolute-position($top, $left) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  transform: translate(-50%, -50%);
+}

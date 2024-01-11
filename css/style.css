@@ -1,0 +1,30 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  color: aquamarine;
+  font-size: 50;
+}
+
+.header {
+  position: relative;
+  height: 100vh;
+  margin: 0;
+}
+.header__logo {
+  top: 15%;
+  width: 207px;
+  height: 25px;
+}
+.header__text {
+  color: #ffd15b;
+  text-align: center;
+}
+.header__text h2 {
+  margin: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

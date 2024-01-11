@@ -1,0 +1,21 @@
+.header {
+  position: relative;
+  height: 100vh;
+  margin: 0;
+
+  &__logo {
+    top: 15%;
+    width: 207px;
+    height: 25px;
+  }
+
+  &__text {
+    // @include absolute-position(50%, 50%);
+    color: $primary-color;
+    text-align: center;
+
+    h2 {
+      margin: 0;
+    }
+  }
+}
