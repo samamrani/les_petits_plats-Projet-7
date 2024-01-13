@@ -1,9 +1,9 @@
 /* Error: Undefined mixin.
  *    ,
- * 12 |     @include absolute-position(50%, 50%);
+ * 15 |     @include absolute-position(50%, 50%);
  *    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  *    '
- *   sass\page\_header.scss 12:5  @import
+ *   sass\page\_header.scss 15:5  @import
  *   sass\main.scss 3:9           root stylesheet */
 
 body::before {
@@ -14,5 +14,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Undefined mixin.\a    \2577 \a 12 \2502      @include absolute-position(50%, 50%);\d\a    \2502      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   sass\\page\\_header.scss 12:5  @import\a   sass\\main.scss 3:9           root stylesheet";
+  content: "Error: Undefined mixin.\a    \2577 \a 15 \2502      @include absolute-position(50%, 50%);\d\a    \2502      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   sass\\page\\_header.scss 15:5  @import\a   sass\\main.scss 3:9           root stylesheet";
 }

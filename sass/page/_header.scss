@@ -4,16 +4,26 @@
   margin: 0;
 
   &__logo {
+    position: absolute;
     width: 207px;
     height: 25px;
+    top: 51px;
+    left: 69px;
   }
 
-  &__text {
+  &__content {
     @include absolute-position(50%, 50%);
-    text-align: center;
+
     h2 {
       color: $primary-color;
       font-size: 44px;
+      text-align: center;
+    }
+    &__input {
+      width: 100%;
+      max-width: 954px;
+      height: 72px;
+      box-sizing: border-box;
     }
   }
 }
