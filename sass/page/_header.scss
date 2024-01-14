@@ -1,27 +1,12 @@
 .header {
   position: relative;
-  height: 100vh;
-  margin: 0;
-  &__logo {
-    width: 207px;
-    height: 25px;
-  }
 
-  &__text {
+  &__logo,
+  &__titre {
     @include absolute-position(50%, 50%);
-
-    h2 {
-      color: $primary-color;
-      font-size: 44px;
-      text-align: center;
-    }
-
-    &__input {
-      top: 407px;
-      left: 243px;
-      width: 954px;
-      height: 72px;
-      border-radius: 11px;
-    }
+    top: 20px;
+    left: 20px;
+    color: $primary-color;
+    font-size: 44px;
   }
 }
