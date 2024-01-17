@@ -1,4 +1,4 @@
-export class RecipeModel {
+export class RecetteModel {
   constructor(data) {
     const { id, image, name, servings, ingredients } = data;
 

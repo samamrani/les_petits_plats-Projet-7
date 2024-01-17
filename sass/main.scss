@@ -1,8 +1,9 @@
-@import "./general/global";
-
-@import "./layout/rechecheRecette";
-
-@import "./page/header";
-
 @import "./utils/mixins";
 @import "./utils/variable";
+
+@import "./general/global";
+
+@import "./layout/dropdown";
+@import "./layout/card";
+
+@import "./page/header";

@@ -1,11 +1,11 @@
-export class Api {
+export class ControleurApi {
   constructor(url) {
     this._url = url;
   }
 
-  async fetch() {
+  async fetchData() {
     try {
-      const response = await this.fetch(this._url);
+      const response = await fetch(this._url);
       return await response.json();
     } catch (error) {
       throw new Error(error);
