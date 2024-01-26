@@ -1,5 +1,12 @@
 export class HeaderTemplate {
-  constructor() {}
+  constructor(recipes, displayCallback) {
+    this.inputElement = null;
+    this.recipes = recipes || [];
+    this.displayCallback = displayCallback;
+
+    // this.getDOM();
+  }
+  // async init() {}
 
   getDOM() {
     const header = document.createElement("header");
@@ -55,6 +62,47 @@ export class HeaderTemplate {
     header.appendChild(headerLogo);
     header.appendChild(headerContent);
 
+    //afficher les recettes filtrées
+    const recipesFilterSection = document.createElement("div");
+    recipesFilterSection.id = "filterRecipesSection";
+
+    document.body.appendChild(recipesFilterSection);
+
+    // this.inputElement = document.querySelector(".header__input");
+    this.inputElement = inputElement;
+
+    //gestionnaire d'événements(lorsque l'utilisateur saisie)
+    this.inputElement.addEventListener("input", () => {
+      const input = event.target.value;
+      this.recipesFilter(input);
+    });
+
+    //gestionnaire d'événements au formulaire
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+    });
+
+    // gestionnaire d'événements pour la touche "Enter"
+    this.inputElement.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+      }
+    });
+
     return header;
+  }
+
+  recipesFilter(input) {
+    console.log("Recipes:", this.recipes);
+    console.log("Input Value:", input);
+
+    // Filtre les recettes
+    const recipesFilter = this.recipes.filter((item) =>
+      item.name.toLowerCase().includes(input.toLowerCase())
+    );
+
+    console.log("Filter Recipes:", recipesFilter);
+
+    this.displayCallback(recipesFilter);
   }
 }

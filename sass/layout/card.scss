@@ -1,22 +1,51 @@
-.recette {
+.recipe {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 30px 100px;
+  display: inline-flex;
+  margin: 30px;
+  transform: translate(-50%, -50%);
+  top: 350px;
+  left: 20%;
 
   img {
-    width: 100%;
+    width: 380px;
     height: 253px;
     object-fit: cover;
     border-top-right-radius: 21px;
     border-top-left-radius: 21px;
   }
-  &__section {
-    position: relative;
-    display: flex;
-    margin-bottom: 60px;
+
+  &__title,
+  &__ingredient,
+  &__recipeTitle {
+    margin-left: 20px;
   }
+  &__span {
+    font-size: 14px;
+    color: grey;
+  }
+  &__description {
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 14px;
+  }
+  &__recipeTitle {
+    font-size: 12px;
+    color: grey;
+  }
+  &__description {
+    font-size: 14px;
+  }
+
+  &__ingredients {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__container {
+    margin-left: 20px;
+    margin-right: 60px;
+    line-height: 2px;
+  }
+
   &__temps {
     border: 2px solid $primary-color;
     background: $primary-color;
@@ -25,8 +54,8 @@
     height: 26px;
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 7%;
-    left: 350px;
+    top: 4%;
+    left: 330px;
     text-align: center;
   }
   &__card {
@@ -34,18 +63,8 @@
     height: 731px;
     border-radius: 21px;
     background: #fff;
-    margin: 20px;
   }
-  &__ingredient {
-    display: flex;
-  }
-  h1,
-  h3,
-  h4,
-  p,
-  span {
-    margin: 20px;
-  }
+
   h3 {
     font-size: 18px;
     font-weight: 400px;

@@ -1,18 +1,21 @@
 import { HeaderTemplate } from "../templates/Header.js";
 import { DropdownTemplate } from "../templates/Dropdown.js";
-import { RecetteTemplate } from "../templates/RecetteTemplate.js";
-import { RecipeApi } from "../api/RecipeApi.js";
+import { RecipeTemplate } from "../templates/RecipeTemplate.js";
+
 class App {
   constructor() {
-    this.recipeApi = new RecipeApi();
+    this.recipes = [];
   }
 
   async init() {
+    this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
     this.displayData();
   }
 
-  async displayData() {
-    const headerTemplate = new HeaderTemplate();
+  displayData() {
+    const headerTemplate = new HeaderTemplate(this.recipes, (filterRecipes) => {
+      this.displayRecipesFilter(filterRecipes);
+    });
     const headerElement = headerTemplate.getDOM();
 
     document.body.appendChild(headerElement);
@@ -22,13 +25,28 @@ class App {
 
     document.body.appendChild(dropdownElement);
 
-    const recipesData = await this.recipeApi.getRecipes();
+    this.recipes.forEach((recipeElements) => {
+      const recipeTemplate = new RecipeTemplate(recipeElements);
+      const recipeElement = recipeTemplate.getDOM();
 
-    recipesData.forEach((recipeData) => {
-      const recetteTemplate = new RecetteTemplate(recipeData);
-      const recetteElement = recetteTemplate.getDOM();
+      document.body.appendChild(recipeElement);
+    });
+  }
 
-      document.body.appendChild(recetteElement);
+  displayRecipesFilter(recipesFilter) {
+    const recipesFilterSection = document.getElementById(
+      "filterRecipesSection"
+    );
+
+    // Efface le contenu
+    recipesFilterSection.innerHTML = "";
+
+    // recette filtrés et ajout à la section
+    recipesFilter.forEach((recipeData) => {
+      const recipeTemplate = new RecipeTemplate(recipeData);
+      const recipeElements = recipeTemplate.getDOM();
+
+      recipesFilterSection.appendChild(recipeElements);
     });
   }
 }

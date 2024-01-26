@@ -44,4 +44,10 @@
     padding: 12px;
     border-radius: 11px;
   }
+  &__filter__section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
 }

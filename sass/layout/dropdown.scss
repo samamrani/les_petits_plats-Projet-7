@@ -1,18 +1,44 @@
 .dropdown {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 10px 100px;
-  &__container {
-    margin: 10px;
+  display: inline-flex;
+  gap: 20px;
+  border-radius: 11px;
+  border: 1px solid #f2f2f2;
+  padding: 17px;
+  margin: 20px 80px;
+  width: 120px;
+  background: #f2f2f2;
+
+  &__div {
+    background: none;
+    border: none;
+    margin-left: 250px;
+  }
+  &__menu.show {
+    display: block;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  /* le survol */
+  &__ingredients:hover,
+  &__ustensiles:hover,
+  &__appareils:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
   }
 
-  select {
-    width: 150px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background: #fff;
+  &__input {
+    position: absolute;
+    text-overflow: ellipsis;
+    margin-top: 20px;
+    padding: 3px;
+    width: 120px;
+    display: none;
+  }
+  .fa-search {
+    position: absolute;
+    margin-top: 24px;
+    margin-left: 100px;
+    display: none;
   }
 }
