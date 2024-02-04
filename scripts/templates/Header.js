@@ -1,12 +1,7 @@
 export class HeaderTemplate {
-  constructor(recipes, displayCallback) {
+  constructor() {
     this.inputElement = null;
-    this.recipes = recipes || [];
-    this.displayCallback = displayCallback;
-
-    // this.getDOM();
   }
-  // async init() {}
 
   getDOM() {
     const header = document.createElement("header");
@@ -31,12 +26,14 @@ export class HeaderTemplate {
     const headerTitle = document.createElement("h1");
     headerTitle.className = "header__title";
     headerTitle.textContent =
-      "Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses";
+      "CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES";
 
     headerContent.appendChild(headerTitle);
 
     const form = document.createElement("form");
-    form.action = "";
+    form.name = "search";
+    form.className = "header__search";
+    // form.action = "";
 
     headerContent.appendChild(form);
 
@@ -47,11 +44,29 @@ export class HeaderTemplate {
 
     const inputElement = document.createElement("input");
     inputElement.className = "header__input";
-    inputElement.type = "search";
-    inputElement.placeholder =
-      "Rechercher un ingrédient, appareil, ustensile ou une recette";
+    inputElement.type = "text";
+    inputElement.name = "search";
+    inputElement.minLength = 2;
+    inputElement.placeholder = "Rechercher un ingrédient,...";
 
     formDiv.appendChild(inputElement);
+
+    const closeButton = document.createElement("i");
+    closeButton.className = "fa-solid fa-xmark";
+
+    formDiv.appendChild(closeButton);
+
+    // la visibilité du bouton de fermeture lors de la saisie
+    inputElement.addEventListener("input", () => {
+      const inputValue = inputElement.value.trim();
+      closeButton.style.display = inputValue ? "block" : "none";
+    });
+
+    // la fermeture de la barre de recherche lors du clic sur le bouton de fermeture
+    closeButton.addEventListener("click", () => {
+      inputElement.value = "";
+      closeButton.style.display = "none";
+    });
 
     const searchIcon = document.createElement("i");
     searchIcon.className = "fas fa-search";
@@ -62,47 +77,6 @@ export class HeaderTemplate {
     header.appendChild(headerLogo);
     header.appendChild(headerContent);
 
-    //afficher les recettes filtrées
-    const recipesFilterSection = document.createElement("div");
-    recipesFilterSection.id = "filterRecipesSection";
-
-    document.body.appendChild(recipesFilterSection);
-
-    // this.inputElement = document.querySelector(".header__input");
-    this.inputElement = inputElement;
-
-    //gestionnaire d'événements(lorsque l'utilisateur saisie)
-    this.inputElement.addEventListener("input", () => {
-      const input = event.target.value;
-      this.recipesFilter(input);
-    });
-
-    //gestionnaire d'événements au formulaire
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-    });
-
-    // gestionnaire d'événements pour la touche "Enter"
-    this.inputElement.addEventListener("keypress", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-      }
-    });
-
     return header;
-  }
-
-  recipesFilter(input) {
-    console.log("Recipes:", this.recipes);
-    console.log("Input Value:", input);
-
-    // Filtre les recettes
-    const recipesFilter = this.recipes.filter((item) =>
-      item.name.toLowerCase().includes(input.toLowerCase())
-    );
-
-    console.log("Filter Recipes:", recipesFilter);
-
-    this.displayCallback(recipesFilter);
   }
 }

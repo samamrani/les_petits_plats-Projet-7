@@ -1,9 +1,11 @@
 export class DropdownTemplate {
-  constructor() {
-    this.recipes = [];
+  constructor(ingredient, appliance, ustensiles) {
+    this.ingredient = ingredient;
+    this.appliance = appliance;
+    this.ustensiles = ustensiles;
   }
 
-  createElement(category) {
+  createElement(category, liste) {
     const container = document.createElement("div");
     container.className = "dropdown";
 
@@ -15,42 +17,78 @@ export class DropdownTemplate {
     dropdownDiv.className = "dropdown__Div";
     dropdownDiv.textContent = `${category}`;
 
-    const dropdownMenu = document.createElement("div");
-    dropdownMenu.className = "dropdown__menu";
-    dropdownMenu.innerHTML = "";
+    const dropdownMenu = document.createElement("ul");
+    dropdownMenu.className = "dropdown__ul";
+
+    // l'icône de recherche
+    const searchIcon = document.createElement("i");
+    searchIcon.className = "fas fa-search";
+
+    const searchIconListItem = document.createElement("li");
+    searchIconListItem.appendChild(searchIcon);
+    dropdownMenu.appendChild(searchIconListItem);
 
     const inputElement = document.createElement("input");
     inputElement.className = "dropdown__input";
     inputElement.type = "search";
-
     inputElement.placeholder = `Rechercher une recette, un ingrédient,  ${category}`;
+    searchIconListItem.appendChild(inputElement);
 
-    const searchIcon = document.createElement("i");
-    searchIcon.className = "fas fa-search";
+    // la liste déroulante
+    liste.forEach((item) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = item;
+      dropdownMenu.appendChild(listItem);
+    });
 
     container.appendChild(dropdownDiv);
     container.appendChild(dropdownMenu);
     container.appendChild(icone);
-    container.appendChild(inputElement);
-    container.appendChild(searchIcon);
 
-    //l'événement de clic "l'affichage ou masquage du menu déroulant"
+    // dropdownMenu.classList.add("hidden");
+    // L'événement de clic "l'affichage ou masquage du menu déroulant"
     icone.addEventListener("click", () => {
       dropdownMenu.classList.toggle("show");
+      inputElement.classList.toggle("show");
     });
+
+    searchIconListItem.addEventListener("click", () => {
+      dropdownMenu.classList.toggle("show");
+    });
+
+    // Ajoutez cet événement d'entrée pour réagir aux modifications dans la barre de recherche
+    inputElement.addEventListener("input", () => {
+      const searchTerm = inputElement.value.toLowerCase();
+      const listItems = dropdownMenu.getElementsByTagName("li");
+
+      for (let i = 0; i < listItems.length; i++) {
+        const listItem = listItems[i];
+        const text = listItem.textContent.toLowerCase();
+
+        if (text.includes(searchTerm)) {
+          listItem.style.display = "block";
+        } else {
+          listItem.style.display = "none";
+        }
+      }
+    });
+
     return container;
   }
 
   getDOM() {
+    console.log("Appareils:", this.appliance);
+    console.log("Ustensiles:", this.ustensiles);
+
     const mainElement = document.createElement("main");
 
-    const div1 = this.createElement("ingredients");
+    const div1 = this.createElement("ingredients", this.ingredient);
     div1.className = "dropdown";
 
-    const div2 = this.createElement("appareils");
+    const div2 = this.createElement("appareils", this.appliance);
     div2.className = "dropdown";
 
-    const div3 = this.createElement("ustensiles");
+    const div3 = this.createElement("ustensiles", this.ustensiles);
     div3.className = "dropdown";
 
     mainElement.appendChild(div1);
@@ -63,27 +101,6 @@ export class DropdownTemplate {
 
     mainElement.appendChild(div4);
 
-    // filtrer les recettes en fonction de la catégorie sélectionnée
-    const dropdownRecipe = mainElement.querySelectorAll(".dropdown__Div");
-    dropdownRecipe.forEach((dropdownRecipe) => {
-      dropdownRecipe.addEventListener("click", () => {
-        const category = dropdownRecipe.textContent.toLowerCase();
-        this.filterRecipes(category);
-      });
-    });
     return mainElement;
-  }
-
-  filterRecipes(category) {
-    this.recipes.forEach((recipeData) => {
-      const recipeElement = document.getElementById(`recipe-${recipeData.id}`);
-      const recipeCategories = ["ingredients", "appareils", "ustensiles"];
-
-      if (recipeCategories.includes(category) && recipeElement) {
-        recipeElement.style.display = "block";
-      } else {
-        recipeElement.style.display = "none";
-      }
-    });
   }
 }
