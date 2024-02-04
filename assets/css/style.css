@@ -3,6 +3,7 @@ html {
   margin: 0;
   padding: 0;
   background: #e5e5e5;
+  font-family: "Manrope", sans-serif;
 }
 
 .container {
@@ -15,20 +16,23 @@ a {
 }
 
 .dropdown {
+  position: relative;
   display: inline-flex;
-  gap: 20px;
+  gap: 15px;
   border-radius: 11px;
-  border: 1px solid #f2f2f2;
-  padding: 17px;
+  padding: 20px;
   margin: 20px 80px;
   width: 120px;
-  background: #f2f2f2;
+  background: #ffffff;
   /* le survol */
 }
 .dropdown__div {
   background: none;
   border: none;
-  margin-left: 250px;
+  margin-left: 220px;
+}
+.dropdown__menu {
+  z-index: 1;
 }
 .dropdown__menu.show {
   display: block;
@@ -37,22 +41,45 @@ a {
   cursor: pointer;
 }
 .dropdown__ingredients:hover, .dropdown__ustensiles:hover, .dropdown__appareils:hover {
-  background-color: #e0e0e0;
   cursor: pointer;
 }
 .dropdown__input {
-  position: absolute;
   text-overflow: ellipsis;
-  margin-top: 20px;
-  padding: 3px;
-  width: 120px;
-  display: none;
+  padding: 10px;
+  width: 140px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+.dropdown__input.show {
+  display: block;
 }
 .dropdown .fa-search {
   position: absolute;
-  margin-top: 24px;
-  margin-left: 100px;
+  transform: translate(-50%, 50%);
+  top: 2%;
+  left: 80%;
+}
+.dropdown__ul {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background-color: #fff;
+}
+.dropdown__ul li {
+  padding: 8px;
+  cursor: pointer;
+}
+.dropdown__ul li:hover {
+  background-color: #ffd15b;
+}
+.dropdown__ul.show {
+  display: block;
 }
 
 .recipe {
@@ -62,6 +89,9 @@ a {
   transform: translate(-50%, -50%);
   top: 350px;
   left: 20%;
+}
+.recipe.hidden {
+  display: none;
 }
 .recipe img {
   width: 380px;
@@ -129,10 +159,13 @@ a {
   width: 100%;
   height: 667px;
 }
+.header__background.hidden {
+  display: none;
+}
 .header__logo {
   position: absolute;
-  top: 50px;
-  left: 5%;
+  top: 51px;
+  left: 69px;
   width: 207px;
   height: 25px;
 }
@@ -143,34 +176,50 @@ a {
   left: 50%;
 }
 .header__title {
+  font-family: "Anton", sans-serif;
   color: #ffd15b;
-  font-size: 44px;
+  font-size: 1.8rem;
   text-align: center;
+  text-transform: uppercase;
 }
 .header__input {
-  padding: 18px 395px;
+  position: relative;
+  padding: 1.5em 8em 1.5em 2.1875em;
   border-radius: 11px;
   color: light grey;
-  text-overflow: ellipsis;
+  width: 100%;
+  max-width: 954px;
+  margin: 0 auto;
 }
 .header__form {
   position: relative;
+  width: 100%;
+  border-radius: 0.6875em;
+  display: flex;
 }
-.header .fa-search {
+.header__form i.fas.fa-search {
   position: absolute;
-  right: 10px;
   top: 50%;
-  transform: translateY(-50%);
+  right: 1%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
   color: white;
   background: black;
   padding: 12px;
   border-radius: 11px;
 }
-.header__filter__section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+.header__form i.fas.fa-search:hover {
+  background-color: #ffd15b;
+  color: black;
+}
+.header__form i.fa-xmark {
+  position: absolute;
+  top: 50%;
+  right: 8%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  padding: 12px;
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
