@@ -1,6 +1,6 @@
 import { HeaderTemplate } from "../templates/Header.js";
-import { DropdownTemplate } from "../templates/Dropdown.js";
-import { RecipeTemplate } from "../templates/RecipeTemplate.js";
+import { FiltersTemplate } from "../templates/FiltersTemplate.js";
+import { RecipesTemplate } from "../templates/RecipesTemplate.js";
 
 class App {
   constructor() {
@@ -25,25 +25,26 @@ class App {
   }
 
   displayData() {
+    const body = document.querySelector("body");
+
     const headerTemplate = new HeaderTemplate();
     const headerElement = headerTemplate.getDOM();
 
-    document.body.appendChild(headerElement);
+    body.appendChild(headerElement);
 
-    const dropdownTemplate = new DropdownTemplate(
+    const main = document.createElement("main");
+
+    const filters = new FiltersTemplate(
       this.ingredients,
       this.appliances,
       this.ustensiles
     );
-    const dropdownElement = dropdownTemplate.getDOM();
-    document.body.appendChild(dropdownElement);
+    main.appendChild(filters.getDOM());
 
-    this.recipes.forEach((recipeElements) => {
-      const recipeTemplate = new RecipeTemplate(recipeElements);
-      const recipeElement = recipeTemplate.getDOM();
+    const recipes = new RecipesTemplate(this.recipes);
+    main.appendChild(recipes.getDOM());
 
-      document.body.appendChild(recipeElement);
-    });
+    body.appendChild(main);
   }
 
   getItems(key) {

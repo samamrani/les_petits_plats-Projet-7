@@ -1,4 +1,4 @@
-export class RecipeTemplate {
+export class RecipeCard {
   constructor(recipe) {
     this.recipe = recipe;
   }
@@ -6,22 +6,18 @@ export class RecipeTemplate {
   getDOM() {
     const recipe = document.createElement("div");
     recipe.classList = "recipe";
-
-    const section = document.createElement("div");
-    section.classList = "recipe__div";
-
-    const temps = document.createElement("div");
-    temps.classList = "recipe__temps";
-    temps.textContent = this.recipe.time;
-
-    const card = document.createElement("div");
-    card.classList = "recipe__card";
-
     const img = document.createElement("img");
 
     img.src = `assets/recettes/${this.recipe.image}`;
     img.alt = this.recipe.name;
     img.ariaLabel = this.recipe.name;
+
+    const temps = document.createElement("div");
+    temps.classList = "recipe__temps";
+    temps.textContent = this.recipe.time + " mn";
+
+    const card = document.createElement("div");
+    card.classList = "recipe__card";
 
     const titleH3 = document.createElement("h3");
     titleH3.className = "recipe__title";
@@ -73,10 +69,8 @@ export class RecipeTemplate {
     card.appendChild(ingredientsH4);
     card.appendChild(ingredients);
 
-    section.appendChild(temps);
-    section.appendChild(card);
-
-    recipe.appendChild(section);
+    recipe.appendChild(temps);
+    recipe.appendChild(card);
 
     return recipe;
   }

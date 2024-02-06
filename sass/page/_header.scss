@@ -50,7 +50,8 @@
   &__form i.fas.fa-search {
     position: absolute;
     top: 50%;
-    right: 1%;
+    right: 0px;
+
     transform: translate(-50%, -50%);
     cursor: pointer;
     color: white;
@@ -66,7 +67,7 @@
   &__form i.fa-xmark {
     position: absolute;
     top: 50%;
-    right: 8%;
+    right: 45px;
     transform: translate(-50%, -50%);
     cursor: pointer;
     padding: 12px;
