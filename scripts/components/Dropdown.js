@@ -8,25 +8,39 @@ export class Dropdown {
     const container = document.createElement("div");
     container.className = "dropdown";
 
-    const icon = document.createElement("div");
-    icon.className = "dropdown__icone";
-    icon.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
+    const innerContainer = document.createElement("div");
+
+    const headerDiv = document.createElement("div");
+    headerDiv.className = "dropdown__header";
 
     const dropdownDiv = document.createElement("div");
     dropdownDiv.className = "dropdown__Div";
     dropdownDiv.textContent = `${this.name}`;
 
+    const icon = document.createElement("div");
+    icon.className = "dropdown__icone";
+    icon.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
+
+    headerDiv.appendChild(dropdownDiv);
+    headerDiv.appendChild(icon);
+
     const dropdownMenu = document.createElement("ul");
     dropdownMenu.className = "dropdown__ul";
 
-    // l'icône de recherche
-    const searchIcon = document.createElement("i");
-    searchIcon.className = "fas fa-search hidden";
+    const dropdownIconInput = document.createElement("div");
+    dropdownIconInput.className = "dropdown__iconeInput";
 
     const inputElement = document.createElement("input");
     inputElement.className = "dropdown__input";
     inputElement.type = "search";
     inputElement.placeholder = "Rechercher...";
+
+    // l'icône de recherche
+    const searchIcon = document.createElement("i");
+    searchIcon.className = "fas fa-search";
+
+    dropdownIconInput.appendChild(inputElement);
+    dropdownIconInput.appendChild(searchIcon);
 
     // la liste déroulante
     this.list.forEach((item) => {
@@ -35,48 +49,38 @@ export class Dropdown {
       dropdownMenu.appendChild(listItem);
     });
 
-    container.appendChild(dropdownDiv);
-    container.appendChild(searchIcon);
-    container.appendChild(inputElement);
-    container.appendChild(dropdownMenu);
-    container.appendChild(icon);
+    innerContainer.appendChild(headerDiv);
 
-    // Initialiser la liste comme cachée
-    dropdownMenu.classList.add("hidden");
+    innerContainer.appendChild(dropdownIconInput);
+    innerContainer.appendChild(dropdownMenu);
+
+    container.appendChild(innerContainer);
 
     // L'événement de clic "l'affichage ou masquage du menu déroulant"
     icon.addEventListener("click", (event) => {
       event.stopPropagation();
-      dropdownMenu.classList.toggle("show");
+      //toggle=basculer---ajouter ou supprimer une classe CSS à un élément HTML
+      dropdownMenu.classList.toggle("show"); // show=montrer
       inputElement.classList.toggle("show");
-      searchIcon.classList.toggle(
-        "hidden",
-        inputElement.classList.contains("hidden")
-      );
+      searchIcon.classList.toggle("show");
     });
 
-    // Ajout événement d'entrée pour réagir modifications dans barre de recherche
+    // Ajout événement d'entrée pour barre de recherche
     inputElement.addEventListener("input", (event) => {
       event.stopPropagation();
-      const searchTerm = inputElement.value.toLowerCase();
+      const searchTerm = inputElement.value;
       const listItems = dropdownMenu.getElementsByTagName("li");
 
       for (let i = 0; i < listItems.length; i++) {
         const listItem = listItems[i];
-        const text = listItem.textContent.toLowerCase();
+        const text = listItem.textContent;
         listItem.style.display = text.includes(searchTerm) ? "block" : "none";
       }
 
       // Afficher la liste uniquement si la barre de recherche n'est pas vide
-      dropdownMenu.classList.toggle(
-        "show",
-        searchTerm !== "" && !inputElement.classList.contains("hidden")
-      );
-      // Cacher l'icône lorsque l'input est caché
-      searchIcon.classList.toggle(
-        "hidden",
-        inputElement.classList.contains("hidden")
-      );
+      dropdownMenu.classList.toggle("show", searchTerm !== "");
+      // Afficher l'icône de recherche même si la barre de recherche est vide
+      searchIcon.classList.add("show");
     });
 
     return container;

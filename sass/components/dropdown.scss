@@ -1,16 +1,25 @@
 .dropdown {
-  position: relative;
+  // position: relative;
 
   display: inline-flex;
   border-radius: 11px;
-  padding: 20px;
+  padding: 17px 16px;
   background: #ffffff;
-  gap: 20px;
-  margin: 100px;
 
+  margin: 20px 100px;
+
+  &__header {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+  }
   &__div {
     background: none;
     border: none;
+    font-size: 21px;
+    font-weight: 400;
+    font-family: $font-family-title;
+    // margin-left: 380px;
   }
   &__menu {
     z-index: 1;
@@ -31,45 +40,38 @@
   &__input {
     position: relative;
     text-overflow: ellipsis;
-    padding: 10px;
-    width: 110px;
     border-radius: 5px;
-    border: none;
-    outline: none;
+    padding: 12px;
     display: none;
-    top: 30px;
-    right: 110px;
+    top: 15px;
+
+    cursor: pointer;
   }
   &__input.show {
     display: block;
   }
 
   .fa-search {
-    position: absolute;
-    transform: translate(-50%, 50%);
-    top: 75px;
-    right: 150px;
-  }
-  .hidden {
+    position: relative;
+    bottom: 13px;
+    left: 165px;
     display: none;
+  }
+  .fa-search.show {
+    display: block;
   }
 
   &__ul {
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
     list-style-type: none;
-
     background-color: #fff;
+    width: 100%;
+    padding: 8px 0;
   }
 
   &__ul li {
-    padding: 8px;
     cursor: pointer;
+    line-height: 2;
   }
   &__ul li:hover {
     background-color: $primary-color;

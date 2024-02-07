@@ -8,7 +8,6 @@ class App {
     this.ingredient = [];
     this.appliance = [];
     this.ustensiles = [];
-    this.dropdownTemplate = null;
   }
 
   async init() {
@@ -31,6 +30,13 @@ class App {
     const headerElement = headerTemplate.getDOM();
 
     body.appendChild(headerElement);
+
+    // gestionnaire d'événements pour la saisie dans la barre de recherche
+    const inputElement = document.querySelector(".header__input");
+    inputElement.addEventListener("input", (event) => {
+      const inputValue = event.target.value;
+      this.searchRecipes(inputValue);
+    });
 
     const main = document.createElement("main");
 
@@ -69,6 +75,18 @@ class App {
     });
 
     return Array.from(uniqueItems);
+  }
+
+  searchRecipes(query) {
+    const regex = new RegExp(query, "i"); // 'i' indique une recherche insensible à la casse
+    const filteredRecipes = this.recipes.filter((recipe) =>
+      regex.test(recipe.name)
+    );
+    // Mettre à jour l'interface utilisateur avec les résultats de la recherche
+    const recipesTemplate = new RecipesTemplate(filteredRecipes);
+    const recipesSection = document.querySelector(".recipes");
+    recipesSection.innerHTML = ""; // Effacer le contenu précédent
+    recipesSection.appendChild(recipesTemplate.getDOM());
   }
 }
 

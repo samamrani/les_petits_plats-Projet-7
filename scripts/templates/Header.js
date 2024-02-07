@@ -58,11 +58,11 @@ export class HeaderTemplate {
 
     // la visibilité du bouton de fermeture lors de la saisie
     inputElement.addEventListener("input", () => {
-      const inputValue = inputElement.value.trim();
+      const inputValue = inputElement.value;
       closeButton.style.display = inputValue ? "block" : "none";
     });
 
-    // la fermeture de la barre de recherche lors du clic sur le bouton de fermeture
+    // la fermeture de bouton de fermeture
     closeButton.addEventListener("click", () => {
       inputElement.value = "";
       closeButton.style.display = "none";

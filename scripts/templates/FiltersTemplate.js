@@ -5,7 +5,6 @@ export class FiltersTemplate {
     this.ingredients = ingredients;
     this.appliances = appliances;
     this.ustensils = ustensils;
-    this.recetteClickCount = 0;
   }
 
   getDOM() {
@@ -13,37 +12,44 @@ export class FiltersTemplate {
     wrapper.className = "filters";
 
     const div1 = new Dropdown("Ingrédients", this.ingredients);
-    wrapper.appendChild(div1.getDOM());
+    const div1Element = div1.getDOM();
+    wrapper.appendChild(div1Element);
 
     const div2 = new Dropdown("Appareils", this.appliances);
-    wrapper.appendChild(div2.getDOM());
+    const div2Element = div2.getDOM();
+    wrapper.appendChild(div2Element);
 
     const div3 = new Dropdown("Ustensiles", this.ustensils);
-    wrapper.appendChild(div3.getDOM());
+    const div3Element = div3.getDOM();
+    wrapper.appendChild(div3Element);
 
     const div4 = document.createElement("div");
     div4.className = "dropdown dropdown__div";
-    div4.textContent = "recette";
+    div4.textContent = "0 Recette(s) ";
+    wrapper.appendChild(div4);
 
-    // Événement de clic pour incrémenter le compteur
-    const incrementCount = () => {
-      this.recetteClickCount++;
-      // Mettre à jour le texte de la balise span pour afficher le compteur
-      countElement.textContent = this.recetteClickCount.toString();
+    // Compteur de clics
+    let clickCount = 0;
+
+    // Événement de clic pour mettre à jour div4 avec le nombre de clics
+    const updateDiv4 = () => {
+      clickCount++;
+      div4.textContent = `${clickCount} recette(s)`;
     };
 
-    // Ajouter l'événement de clic à tous les dropdowns
-    wrapper.querySelectorAll(".dropdown").forEach((dropdown) => {
-      dropdown.addEventListener("click", incrementCount);
-    });
+    //écouteurs d'événements de clic à chaque élément de liste des dropdowns
+    const addClickListeners = (dropdownElement) => {
+      dropdownElement.querySelectorAll(".dropdown__ul li").forEach((item) => {
+        item.addEventListener("click", (event) => {
+          event.stopPropagation(); // Empêche la propagation du clic
+          updateDiv4();
+        });
+      });
+    };
 
-    // Span pour afficher le compteur
-    const countElement = document.createElement("span");
-    countElement.className = "click-count";
-    countElement.textContent = "0";
-    div4.appendChild(countElement);
-
-    wrapper.appendChild(div4);
+    addClickListeners(div1Element);
+    addClickListeners(div2Element);
+    addClickListeners(div3Element);
 
     return wrapper;
   }
