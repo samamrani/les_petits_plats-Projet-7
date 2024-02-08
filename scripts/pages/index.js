@@ -18,8 +18,6 @@ class App {
     this.appliances = this.getItems("appareils");
     this.ustensiles = this.getItems("ustensils");
 
-    console.log("Ustensiles:", this.ustensiles);
-
     this.displayData();
   }
 
@@ -53,32 +51,36 @@ class App {
     body.appendChild(main);
   }
 
+  // extraire les ingrédients,appareils,ustensiles à partir
+  //des recettes afin de les afficher comme options de filtrag
   getItems(key) {
-    const uniqueItems = new Set();
+    // Set--permet de stocker des valeurs uniques de tout type
+    const uniqueObject = new Set();
 
     this.recipes.forEach((recipe) => {
       recipe.ingredients.forEach((item) => {
         if (item[key]) {
-          uniqueItems.add(item[key]);
+          uniqueObject.add(item[key]);
         }
       });
 
       if (key === "appareils" && recipe.appliance) {
-        uniqueItems.add(recipe.appliance);
+        uniqueObject.add(recipe.appliance);
       }
 
       if (key === "ustensils" && recipe.ustensils) {
         recipe.ustensils.forEach((ustensil) => {
-          uniqueItems.add(ustensil);
+          uniqueObject.add(ustensil);
         });
       }
     });
-
-    return Array.from(uniqueItems);
+    // console.log(Array.from());
+    return Array.from(uniqueObject);
   }
 
-  searchRecipes(query) {
-    const regex = new RegExp(query, "i"); // 'i' indique une recherche insensible à la casse
+  //
+  searchRecipes(searchInput) {
+    const regex = new RegExp(searchInput, "i"); // 'i' indique une recherche insensible à la casse
     const filteredRecipes = this.recipes.filter((recipe) =>
       regex.test(recipe.name)
     );

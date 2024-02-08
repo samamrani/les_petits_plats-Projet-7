@@ -1,6 +1,6 @@
 export class Dropdown {
-  constructor(name, list) {
-    this.name = name;
+  constructor(category, list) {
+    this.category = category;
     this.list = list;
   }
 
@@ -15,7 +15,7 @@ export class Dropdown {
 
     const dropdownDiv = document.createElement("div");
     dropdownDiv.className = "dropdown__Div";
-    dropdownDiv.textContent = `${this.name}`;
+    dropdownDiv.textContent = `${this.category}`;
 
     const icon = document.createElement("div");
     icon.className = "dropdown__icone";
