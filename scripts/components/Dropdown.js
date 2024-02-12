@@ -5,71 +5,98 @@ export class Dropdown {
   }
 
   getDOM() {
-    const container = document.createElement("div");
-    container.className = "dropdown";
+    const dropdown = document.createElement("div");
+    dropdown.className = "dropdown";
 
-    const innerContainer = document.createElement("div");
+    const dropdownButton = document.createElement("button");
+    dropdownButton.className = "dropdown__button";
 
-    const headerDiv = document.createElement("div");
-    headerDiv.className = "dropdown__header";
+    const dropdownCategory = document.createElement("div");
+    dropdownCategory.className = "dropdown__category";
+    dropdownCategory.textContent = `${this.category}`;
 
-    const dropdownDiv = document.createElement("div");
-    dropdownDiv.className = "dropdown__Div";
-    dropdownDiv.textContent = `${this.category}`;
+    const iconElement = document.createElement("div");
+    iconElement.className = "dropdown__icone";
+    iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
+    iconElement.setAttribute("aria-hidden", "true");
 
-    const icon = document.createElement("div");
-    icon.className = "dropdown__icone";
-    icon.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
+    // dropdownIconDiv.appendChild(iconElement);
 
-    headerDiv.appendChild(dropdownDiv);
-    headerDiv.appendChild(icon);
+    dropdownButton.appendChild(dropdownCategory);
+    dropdownButton.appendChild(iconElement);
 
-    const dropdownMenu = document.createElement("ul");
-    dropdownMenu.className = "dropdown__ul";
+    // *****
+    const dropdownContent = document.createElement("div");
+    dropdownContent.className = "dropdown__content hidden";
 
-    const dropdownIconInput = document.createElement("div");
-    dropdownIconInput.className = "dropdown__iconeInput";
+    const dropdownIconInputDiv = document.createElement("div");
+    dropdownIconInputDiv.className = "dropdown__search";
 
-    const inputElement = document.createElement("input");
-    inputElement.className = "dropdown__input";
-    inputElement.type = "search";
-    inputElement.placeholder = "Rechercher...";
+    // Création de l'élément input.dropdown__input
+    const dropdownInput = document.createElement("input");
+    dropdownInput.className = "dropdown__input";
+    dropdownInput.type = "text";
+    dropdownInput.name = "search";
 
-    // l'icône de recherche
+    dropdownInput.minLength = 3;
+    dropdownInput.placeholder = "Rechercher...";
+
+    const closeButton = document.createElement("i");
+    closeButton.className = "fa-solid fa-xmark";
+
+    dropdownIconInputDiv.appendChild(closeButton);
+
+    // la visibilité du bouton de fermeture lors de la saisie
+    dropdownInput.addEventListener("input", () => {
+      const inputValue = dropdownInput.value;
+      closeButton.style.display = inputValue ? "block" : "none";
+    });
+
+    // la fermeture de bouton de fermeture
+    closeButton.addEventListener("click", () => {
+      dropdownInput.value = "";
+      closeButton.style.display = "none";
+    });
+
+    // Création de l'élément i pour l'icône de recherche
     const searchIcon = document.createElement("i");
     searchIcon.className = "fas fa-search";
 
-    dropdownIconInput.appendChild(inputElement);
-    dropdownIconInput.appendChild(searchIcon);
+    dropdownIconInputDiv.appendChild(dropdownInput);
+    dropdownIconInputDiv.appendChild(searchIcon);
+
+    const dropdownList = document.createElement("ul");
+    dropdownList.className = "dropdown__list";
+    dropdownList.id = "dropdownId";
 
     // la liste déroulante
     this.list.forEach((item) => {
       const listItem = document.createElement("li");
       listItem.textContent = item;
-      dropdownMenu.appendChild(listItem);
+
+      dropdownList.appendChild(listItem);
     });
 
-    innerContainer.appendChild(headerDiv);
+    dropdownContent.appendChild(dropdownIconInputDiv);
+    dropdownContent.appendChild(dropdownList);
 
-    innerContainer.appendChild(dropdownIconInput);
-    innerContainer.appendChild(dropdownMenu);
+    dropdown.appendChild(dropdownButton);
 
-    container.appendChild(innerContainer);
+    dropdown.appendChild(dropdownContent);
+
+    document.body.appendChild(dropdown);
 
     // L'événement de clic "l'affichage ou masquage du menu déroulant"
-    icon.addEventListener("click", (event) => {
+    dropdownButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      //toggle=basculer---ajouter ou supprimer une classe CSS à un élément HTML
-      dropdownMenu.classList.toggle("show"); // show=montrer
-      inputElement.classList.toggle("show");
-      searchIcon.classList.toggle("show");
-    });
 
+      dropdownContent.classList.toggle("hidden");
+    });
     // Ajout événement d'entrée pour barre de recherche
-    inputElement.addEventListener("input", (event) => {
+    dropdownInput.addEventListener("input", (event) => {
       event.stopPropagation();
-      const searchTerm = inputElement.value;
-      const listItems = dropdownMenu.getElementsByTagName("li");
+      const searchTerm = dropdownInput.value;
+      const listItems = dropdownList.getElementsByTagName("li");
 
       for (let i = 0; i < listItems.length; i++) {
         const listItem = listItems[i];
@@ -78,11 +105,20 @@ export class Dropdown {
       }
 
       // Afficher la liste uniquement si la barre de recherche n'est pas vide
-      dropdownMenu.classList.toggle("show", searchTerm !== "");
+      dropdownList.classList.toggle("show", searchTerm !== "");
       // Afficher l'icône de recherche même si la barre de recherche est vide
-      searchIcon.classList.add("show");
+      // dropdownIconInputDiv.classList.toggle("hidden");
+      dropdownIconInputDiv.style.display = "block";
     });
 
-    return container;
+    return dropdown;
   }
 }
+
+// UR THeligh yenou ma3na ougadargh a kressragh,
+//  ur theligh yedi ugadagh a tsba3dadh feli,
+// ur nehader elwahid ma3na tharouchteik dima dakheliw,
+// ur raqegh felak ma3na therouss elhaja degui,
+//  ur kezarara atass dachou amaken snak a-halaya,
+// ur senwigh aka , theligh gouliw,
+// ur thefigadh del moukhiw, ahalet ekhmalerarr, ma3na achourarr ougadarh akroucharg

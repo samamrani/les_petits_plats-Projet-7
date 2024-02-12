@@ -9,7 +9,7 @@ export class FiltersTemplate {
 
   getDOM() {
     const wrapper = document.createElement("section");
-    wrapper.className = "filters";
+    wrapper.className = "dropdown__filters";
 
     const div1 = new Dropdown("Ingrédients", this.ingredients);
     const div1Element = div1.getDOM();
@@ -24,8 +24,8 @@ export class FiltersTemplate {
     wrapper.appendChild(div3Element);
 
     const div4 = document.createElement("div");
-    div4.className = "dropdown dropdown__div";
-    div4.textContent = "0 Recette(s) ";
+    div4.className = "dropdown__recette";
+    div4.textContent = "50 Recette(s) ";
     wrapper.appendChild(div4);
 
     // Compteur de clics
@@ -34,12 +34,12 @@ export class FiltersTemplate {
     // Événement de clic pour mettre à jour div4 avec le nombre de clics
     const updateDiv4 = () => {
       clickCount++;
-      div4.textContent = `${clickCount} recette(s)`;
+      div4.textContent = `${clickCount} Recette(s)`;
     };
 
     //écouteurs d'événements de clic à chaque élément de liste des dropdowns
     const addClickListeners = (dropdownElement) => {
-      dropdownElement.querySelectorAll(".dropdown__ul li").forEach((item) => {
+      dropdownElement.querySelectorAll(".dropdown__list li").forEach((item) => {
         item.addEventListener("click", (event) => {
           event.stopPropagation(); // Empêche la propagation du clic
           updateDiv4();

@@ -1,83 +1,104 @@
 .dropdown {
-  // position: relative;
+  position: relative;
+  color: grey;
+  z-index: 99;
+  width: 220px;
 
-  display: inline-flex;
-  border-radius: 11px;
-  padding: 17px 16px;
-  background: #ffffff;
+  &__filters {
+    display: inline-flex;
 
-  margin: 20px 100px;
-
-  &__header {
-    display: flex;
-    gap: 15px;
-    justify-content: space-between;
+    align-items: center;
+    gap: 63px;
+    justify-content: space-evenly;
+    margin: 20px;
   }
-  &__div {
-    background: none;
-    border: none;
+  &__category {
+    color: grey;
+  }
+  &__recette {
+    align-items: center;
+    font-family: $font-family-title;
     font-size: 21px;
     font-weight: 400;
-    font-family: $font-family-title;
-    // margin-left: 380px;
+    color: #1b1b1b;
+    background: none;
   }
-  &__menu {
-    z-index: 1;
-  }
-  &__menu.show {
-    display: block;
-  }
-  &:hover {
+  &__button {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 17px 16px;
+    border-radius: 11px;
+    font-size: 1.6rem;
+    border: 1px solid #c6c6c6;
+    background-color: #fff;
+    color: grey;
+
     cursor: pointer;
   }
-  /* le survol */
-  &__ingredients:hover,
-  &__ustensiles:hover,
-  &__appareils:hover {
-    cursor: pointer;
+  &__content {
+    background-color: #fff;
+    border-radius: 0 0 0.8em 0.8em;
+    position: absolute;
+    border-left: 1px solid #c6c6c6;
+    border-right: 1px solid #c6c6c6;
+    border-bottom: 1px solid #c6c6c6;
+    width: 100%;
+    top: 90%;
   }
 
   &__input {
-    position: relative;
-    text-overflow: ellipsis;
-    border-radius: 5px;
-    padding: 12px;
-    display: none;
-    top: 15px;
-
     cursor: pointer;
+
+    padding: 10px;
+    border: 1px solid grey;
+    border-radius: 4px;
+    outline-color: grey;
+    margin: 15px;
   }
-  &__input.show {
-    display: block;
+
+  &__search {
+    position: relative;
+    display: flex;
+    width: 100%;
   }
 
   .fa-search {
-    position: relative;
-    bottom: 13px;
-    left: 165px;
-    display: none;
-  }
-  .fa-search.show {
-    display: block;
+    position: absolute;
+    top: 48%;
+    left: 180px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
   }
 
-  &__ul {
+  &__search i.fa-xmark {
+    position: absolute;
+    cursor: pointer;
     display: none;
+    transform: translate(-50%, -50%);
+    top: 48%;
+    left: 160px;
+  }
+
+  &__list {
     list-style-type: none;
-    background-color: #fff;
-    width: 100%;
-    padding: 8px 0;
+    padding: 0;
+    width: 215px;
+    max-height: 330px;
+    overflow-y: auto;
+    // text-transform: uppercase;
+    padding-top: 20px;
   }
 
-  &__ul li {
+  &__list li {
     cursor: pointer;
     line-height: 2;
+    padding: 0 1em;
   }
-  &__ul li:hover {
+  &__list li:hover {
     background-color: $primary-color;
   }
-
-  &__ul.show {
-    display: block;
+  li::first-letter {
+    text-transform: capitalize;
   }
 }

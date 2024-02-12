@@ -46,7 +46,7 @@ export class HeaderTemplate {
     inputElement.className = "header__input";
     inputElement.type = "text";
     inputElement.name = "search";
-    inputElement.minLength = 2;
+    inputElement.minLength = 3;
     inputElement.placeholder = "Rechercher un ingrédient,...";
 
     formDiv.appendChild(inputElement);

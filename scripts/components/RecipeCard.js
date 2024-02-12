@@ -18,6 +18,8 @@ export class RecipeCard {
 
     const card = document.createElement("div");
     card.classList = "recipe__card";
+    // **************************
+    const divRecette = document.createElement("div");
 
     const titleH3 = document.createElement("h3");
     titleH3.className = "recipe__title";
@@ -30,6 +32,10 @@ export class RecipeCard {
     const descriptionP = document.createElement("p");
     descriptionP.className = "recipe__description";
     descriptionP.textContent = this.recipe.description;
+
+    divRecette.appendChild(titleH3);
+    divRecette.appendChild(recipeTitleH4);
+    divRecette.appendChild(descriptionP);
 
     const ingredientsH4 = document.createElement("h4");
     ingredientsH4.className = "recipe__recipeTitle";
@@ -63,9 +69,7 @@ export class RecipeCard {
     });
 
     card.appendChild(img);
-    card.appendChild(titleH3);
-    card.appendChild(recipeTitleH4);
-    card.appendChild(descriptionP);
+    card.appendChild(divRecette);
     card.appendChild(ingredientsH4);
     card.appendChild(ingredients);
 
