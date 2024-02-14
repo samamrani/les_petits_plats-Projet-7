@@ -115,10 +115,3 @@ export class Dropdown {
   }
 }
 
-// UR THeligh yenou ma3na ougadargh a kressragh,
-//  ur theligh yedi ugadagh a tsba3dadh feli,
-// ur nehader elwahid ma3na tharouchteik dima dakheliw,
-// ur raqegh felak ma3na therouss elhaja degui,
-//  ur kezarara atass dachou amaken snak a-halaya,
-// ur senwigh aka , theligh gouliw,
-// ur thefigadh del moukhiw, ahalet ekhmalerarr, ma3na achourarr ougadarh akroucharg
