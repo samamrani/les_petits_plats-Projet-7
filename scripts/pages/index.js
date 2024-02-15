@@ -12,13 +12,21 @@ class App {
 
   async init() {
     this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
-
-    // Récupérer les ingrédients, appareils et ustensiles
-    this.ingredients = this.getItems("ingredient");
-    this.appliances = this.getItems("appareils");
-    this.ustensiles = this.getItems("ustensils");
-
     this.displayData();
+
+    document.addEventListener("click", (event) => {
+      const dropdowns = document.querySelectorAll(".dropdown");
+      dropdowns.forEach((dropdown) => {
+        const dropdownContent = dropdown.querySelector(".dropdown__content");
+        if (
+          !dropdownContent.classList.contains("hidden") &&
+          !dropdown.contains(event.target)
+        ) {
+          dropdownContent.classList.add("hidden");
+          // Autres actions à effectuer lorsque la liste déroulante est fermée
+        }
+      });
+    });
   }
 
   displayData() {
@@ -38,10 +46,13 @@ class App {
 
     const main = document.createElement("main");
 
+    // les données pour les filtres
+    const filtersData = this.getItems();
+
     const filters = new FiltersTemplate(
-      this.ingredients,
-      this.appliances,
-      this.ustensiles
+      filtersData.ingredients,
+      filtersData.appliances,
+      filtersData.ustensils
     );
     main.appendChild(filters.getDOM());
 
@@ -51,34 +62,42 @@ class App {
     body.appendChild(main);
   }
 
-  // extraire les ingrédients,appareils,ustensiles à partir
-  //des recettes afin de les afficher comme options de filtrag
-  getItems(key) {
-    // Set--permet de stocker des valeurs uniques de tout type
-    const uniqueObject = new Set();
+  getItems() {
+    // stocker les ingrédients, appareils et ustensiles uniques
+    const uniqueIngredients = new Set();
+    const uniqueAppliances = new Set();
+    const uniqueUstensils = new Set();
 
+    // Parcourez toutes les recettes pour extraire ingrédients, appareils, ustensiles uniques
     this.recipes.forEach((recipe) => {
-      recipe.ingredients.forEach((item) => {
-        if (item[key]) {
-          uniqueObject.add(item[key]);
-        }
+      recipe.ingredients.forEach((ingredient) => {
+        uniqueIngredients.add(ingredient.ingredient);
       });
 
-      if (key === "appareils" && recipe.appliance) {
-        uniqueObject.add(recipe.appliance);
+      if (recipe.appliance) {
+        uniqueAppliances.add(recipe.appliance);
       }
 
-      if (key === "ustensils" && recipe.ustensils) {
+      if (recipe.ustensils) {
         recipe.ustensils.forEach((ustensil) => {
-          uniqueObject.add(ustensil);
+          uniqueUstensils.add(ustensil);
         });
       }
     });
-    // console.log(Array.from());
-    return Array.from(uniqueObject);
+
+    // Convertissez les sets en tableaux
+    const ingredientsArray = Array.from(uniqueIngredients);
+    const appliancesArray = Array.from(uniqueAppliances);
+    const ustensilsArray = Array.from(uniqueUstensils);
+
+    // Retournez un objet contenant les données nécessaires
+    return {
+      ingredients: ingredientsArray,
+      appliances: appliancesArray,
+      ustensils: ustensilsArray,
+    };
   }
 
-  //
   searchRecipes(searchInput) {
     const regex = new RegExp(searchInput, "i"); // 'i' indique une recherche insensible à la casse
     const filteredRecipes = this.recipes.filter((recipe) =>

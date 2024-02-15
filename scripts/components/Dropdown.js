@@ -1,7 +1,10 @@
 export class Dropdown {
-  constructor(category, list) {
+  constructor(category, list, messageFond) {
     this.category = category;
     this.list = list;
+
+    this.openIcon = false;
+    this.messageFond = messageFond;
   }
 
   getDOM() {
@@ -20,8 +23,6 @@ export class Dropdown {
     iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
     iconElement.setAttribute("aria-hidden", "true");
 
-    // dropdownIconDiv.appendChild(iconElement);
-
     dropdownButton.appendChild(dropdownCategory);
     dropdownButton.appendChild(iconElement);
 
@@ -32,7 +33,6 @@ export class Dropdown {
     const dropdownIconInputDiv = document.createElement("div");
     dropdownIconInputDiv.className = "dropdown__search";
 
-    // Création de l'élément input.dropdown__input
     const dropdownInput = document.createElement("input");
     dropdownInput.className = "dropdown__input";
     dropdownInput.type = "text";
@@ -58,7 +58,6 @@ export class Dropdown {
       closeButton.style.display = "none";
     });
 
-    // Création de l'élément i pour l'icône de recherche
     const searchIcon = document.createElement("i");
     searchIcon.className = "fas fa-search";
 
@@ -67,7 +66,6 @@ export class Dropdown {
 
     const dropdownList = document.createElement("ul");
     dropdownList.className = "dropdown__list";
-    dropdownList.id = "dropdownId";
 
     // la liste déroulante
     this.list.forEach((item) => {
@@ -75,6 +73,40 @@ export class Dropdown {
       listItem.textContent = item;
 
       dropdownList.appendChild(listItem);
+
+      // événement de clic à chaque élément de la liste
+      listItem.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        // Affichez resultat
+        // results.innerHTML = `<div id="btn-id" class="dropdown__color">${item}<button class="fa-solid fa-xmark dropdown__btn"></button></div>`;
+
+        const divElement = document.createElement("div");
+        divElement.id = "btn-id";
+        divElement.className = "dropdown__color";
+
+        divElement.innerHTML = item;
+
+        const buttonElement = document.createElement("i");
+        buttonElement.className = "fa-solid fa-xmark dropdown__btn";
+
+        divElement.appendChild(buttonElement);
+
+        results.appendChild(divElement);
+
+        const closeButton = document.getElementById("btn-id");
+        closeButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          results.style.display = "none";
+        });
+
+        // Affichez l'élément sélectionné
+        dropdownInput.value = item;
+
+        results.style.display = "block";
+        // Masquez la liste déroulante
+        dropdownContent.classList.add("hidden");
+      });
     });
 
     dropdownContent.appendChild(dropdownIconInputDiv);
@@ -86,28 +118,63 @@ export class Dropdown {
 
     document.body.appendChild(dropdown);
 
-    // L'événement de clic "l'affichage ou masquage du menu déroulant"
+    // l'affichage ou masquage du menu déroulant
     dropdownButton.addEventListener("click", (event) => {
       event.stopPropagation();
 
-      dropdownContent.classList.toggle("hidden");
+      this.openIcon = !this.openIcon;
+      dropdownContent.classList.toggle("hidden", !this.openIcon);
+
+      if (this.openIcon) {
+        iconElement.innerHTML = '<i class="fa-solid fa-angle-up"></i>'; // Changer l'icône lorsque la liste est ouverte
+      } else {
+        iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>'; // Changer l'icône lorsque la liste est fermée
+      }
     });
-    // Ajout événement d'entrée pour barre de recherche
+
+    // Message d'erreur
+    const errorMessage = document.createElement("div");
+    errorMessage.className = "dropdown__message";
+    errorMessage.textContent = "Aucun résultat trouvé";
+    dropdownContent.appendChild(errorMessage);
+
+    const results = document.createElement("div");
+    results.className = "dropdown__results";
+    dropdown.appendChild(results);
+
+    //  événement d'entrée pour barre de recherche
     dropdownInput.addEventListener("input", (event) => {
       event.stopPropagation();
       const searchTerm = dropdownInput.value;
       const listItems = dropdownList.getElementsByTagName("li");
 
+      this.messageFond = false;
+      // Réinitialiser les résultats filtrés à chaque saisie
+      results.innerHTML = "";
+      // results.style.display = dropdown ? "block" : "none";
+
       for (let i = 0; i < listItems.length; i++) {
         const listItem = listItems[i];
         const text = listItem.textContent;
-        listItem.style.display = text.includes(searchTerm) ? "block" : "none";
+        const message = text.includes(searchTerm);
+        listItem.style.display = message ? "block" : "none";
+        if (message) {
+          this.messageFond = true;
+
+          // les éléments filtrés
+          const filteredItem = document.createElement("div");
+          filteredItem.textContent = text;
+          // results.appendChild(filteredItem);
+        }
       }
 
+      // Afficher le message d'erreur
+      errorMessage.style.display =
+        searchTerm !== "" && !this.messageFond ? "block" : "none";
       // Afficher la liste uniquement si la barre de recherche n'est pas vide
-      dropdownList.classList.toggle("show", searchTerm !== "");
+      dropdownList.classList.toggle("hidden", searchTerm === "");
+
       // Afficher l'icône de recherche même si la barre de recherche est vide
-      // dropdownIconInputDiv.classList.toggle("hidden");
       dropdownIconInputDiv.style.display = "block";
     });
 

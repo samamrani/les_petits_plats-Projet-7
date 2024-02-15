@@ -5,11 +5,11 @@
   width: 220px;
 
   &__filters {
-    display: inline-flex;
-
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 63px;
-    justify-content: space-evenly;
+    padding-left: 102px;
+    justify-content: space-between;
     margin: 20px;
   }
   &__category {
@@ -18,7 +18,7 @@
   &__recette {
     align-items: center;
     font-family: $font-family-title;
-    font-size: 21px;
+    font-size: 1.6rem;
     font-weight: 400;
     color: #1b1b1b;
     background: none;
@@ -44,7 +44,7 @@
     border-right: 1px solid #c6c6c6;
     border-bottom: 1px solid #c6c6c6;
     width: 100%;
-    top: 90%;
+    top: 70%;
   }
 
   &__input {
@@ -66,7 +66,7 @@
   .fa-search {
     position: absolute;
     top: 48%;
-    left: 180px;
+    left: 170px;
     transform: translate(-50%, -50%);
     cursor: pointer;
   }
@@ -77,7 +77,7 @@
     display: none;
     transform: translate(-50%, -50%);
     top: 48%;
-    left: 160px;
+    left: 150px;
   }
 
   &__list {
@@ -87,7 +87,7 @@
     max-height: 330px;
     overflow-y: auto;
     // text-transform: uppercase;
-    padding-top: 20px;
+    padding-top: 10px;
   }
 
   &__list li {
@@ -98,7 +98,36 @@
   &__list li:hover {
     background-color: $primary-color;
   }
+
+  &__message {
+    color: red;
+    margin-left: 35px;
+    display: none;
+  }
   li::first-letter {
     text-transform: capitalize;
+  }
+
+  &__color {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: $primary-color;
+    padding: 15px;
+    width: 220px;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__results:hover {
+    display: block;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__btn {
+    text-align: right;
   }
 }

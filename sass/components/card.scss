@@ -5,6 +5,7 @@
   gap: 48px;
   justify-content: space-between;
   margin: 20px;
+  text-align: start;
 }
 .recipe {
   position: relative;
@@ -12,9 +13,9 @@
   padding: 20px;
   margin-right: 20px;
 
-  .recipe:last-child {
-    margin-right: 0; /* pour enlever la marge à droite de la dernière carte */
-  }
+  // .recipe:last-child {
+  //   margin-right: 0; /* pour enlever la marge à droite de la dernière carte */
+  // }
   img {
     object-fit: cover;
     width: 100%;
@@ -33,6 +34,7 @@
     font-weight: 400;
     color: #1b1b1b;
     font-family: $font-family-title;
+    margin-top: 20px;
   }
 
   &__title,
@@ -60,14 +62,15 @@
   &__recipeTitle {
     font-size: 12px;
     color: grey;
-    margin-top: 40px;
+
+    line-height: 6;
+    font-weight: 700;
   }
 
   &__ingredients {
-    margin-bottom: 30px;
     width: 400px;
     height: 200px;
-
+    line-height: 2.5;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }

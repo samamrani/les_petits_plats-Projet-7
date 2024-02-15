@@ -13,8 +13,6 @@
     position: absolute;
     top: 51px;
     left: 69px;
-    width: 207px;
-    height: 25px;
   }
   &__content {
     position: absolute;
@@ -25,9 +23,12 @@
   &__title {
     font-family: $font-family-title;
     color: $primary-color;
-    font-size: 1.8rem;
+    font-size: 44px;
+    font-weight: 400;
     text-align: center;
     text-transform: uppercase;
+
+    margin-bottom: 20px;
   }
 
   &__input {
@@ -49,7 +50,7 @@
   &__form i.fas.fa-search {
     position: absolute;
     top: 50%;
-    right: 0px;
+    left: 96%;
 
     transform: translate(-50%, -50%);
     cursor: pointer;
