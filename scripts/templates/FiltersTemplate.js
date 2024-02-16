@@ -1,5 +1,4 @@
 import { Dropdown } from "../components/Dropdown.js";
-
 export class FiltersTemplate {
   constructor(ingredients, appliances, ustensils) {
     this.ingredients = ingredients;

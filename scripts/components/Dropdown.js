@@ -4,6 +4,7 @@ export class Dropdown {
     this.list = list;
 
     this.openIcon = false;
+
     this.messageFond = messageFond;
   }
 
@@ -95,16 +96,18 @@ export class Dropdown {
         results.appendChild(divElement);
 
         const closeButton = document.getElementById("btn-id");
+
         closeButton.addEventListener("click", (event) => {
           event.stopPropagation();
-          results.style.display = "none";
+          divElement.remove();
         });
 
         // Affichez l'élément sélectionné
-        dropdownInput.value = item;
+        dropdownInput.value = "";
 
         results.style.display = "block";
         // Masquez la liste déroulante
+
         dropdownContent.classList.add("hidden");
       });
     });
@@ -152,6 +155,14 @@ export class Dropdown {
       // Réinitialiser les résultats filtrés à chaque saisie
       results.innerHTML = "";
       // results.style.display = dropdown ? "block" : "none";
+
+      // Gestionnaire d'événements pour la touche "Entrée"
+      dropdownInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.stopPropagation();
+          results.appendChild(dropdownInput);
+        }
+      });
 
       for (let i = 0; i < listItems.length; i++) {
         const listItem = listItems[i];

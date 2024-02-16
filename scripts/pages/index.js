@@ -23,13 +23,13 @@ class App {
           !dropdown.contains(event.target)
         ) {
           dropdownContent.classList.add("hidden");
-          // Autres actions à effectuer lorsque la liste déroulante est fermée
         }
       });
     });
   }
 
   displayData() {
+    // ajout de l'en-tête de l'application à la page HTML e
     const body = document.querySelector("body");
 
     const headerTemplate = new HeaderTemplate();
@@ -44,6 +44,7 @@ class App {
       this.searchRecipes(inputValue);
     });
 
+    // création et de l'ajout filtres et les recettes
     const main = document.createElement("main");
 
     // les données pour les filtres
@@ -54,6 +55,7 @@ class App {
       filtersData.appliances,
       filtersData.ustensils
     );
+
     main.appendChild(filters.getDOM());
 
     const recipes = new RecipesTemplate(this.recipes);

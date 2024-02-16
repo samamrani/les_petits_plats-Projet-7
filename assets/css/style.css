@@ -138,11 +138,6 @@ a {
   display: flex;
   justify-content: space-between;
 }
-.dropdown__results:hover {
-  display: block;
-  display: flex;
-  flex-direction: column;
-}
 .dropdown__btn {
   text-align: right;
 }
