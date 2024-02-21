@@ -1,11 +1,9 @@
 export class Dropdown {
-  constructor(category, list, messageFond) {
+  constructor(category, list) {
     this.category = category;
     this.list = list;
-
     this.openIcon = false;
-
-    this.messageFond = messageFond;
+    this.selectedItems = [];
   }
 
   getDOM() {
@@ -27,7 +25,6 @@ export class Dropdown {
     dropdownButton.appendChild(dropdownCategory);
     dropdownButton.appendChild(iconElement);
 
-    // *****
     const dropdownContent = document.createElement("div");
     dropdownContent.className = "dropdown__content hidden";
 
@@ -38,155 +35,114 @@ export class Dropdown {
     dropdownInput.className = "dropdown__input";
     dropdownInput.type = "text";
     dropdownInput.name = "search";
-
     dropdownInput.minLength = 3;
     dropdownInput.placeholder = "Rechercher...";
 
     const closeButton = document.createElement("i");
     closeButton.className = "fa-solid fa-xmark";
-
     dropdownIconInputDiv.appendChild(closeButton);
-
-    // la visibilité du bouton de fermeture lors de la saisie
-    dropdownInput.addEventListener("input", () => {
-      const inputValue = dropdownInput.value;
-      closeButton.style.display = inputValue ? "block" : "none";
-    });
-
-    // la fermeture de bouton de fermeture
-    closeButton.addEventListener("click", () => {
-      dropdownInput.value = "";
-      closeButton.style.display = "none";
-    });
 
     const searchIcon = document.createElement("i");
     searchIcon.className = "fas fa-search";
-
     dropdownIconInputDiv.appendChild(dropdownInput);
     dropdownIconInputDiv.appendChild(searchIcon);
 
     const dropdownList = document.createElement("ul");
     dropdownList.className = "dropdown__list";
 
-    // la liste déroulante
+    const results = document.createElement("div");
+    results.className = "dropdown__results";
+
     this.list.forEach((item) => {
       const listItem = document.createElement("li");
       listItem.textContent = item;
 
       dropdownList.appendChild(listItem);
 
-      // événement de clic à chaque élément de la liste
       listItem.addEventListener("click", (event) => {
         event.stopPropagation();
 
-        // Affichez resultat
-        // results.innerHTML = `<div id="btn-id" class="dropdown__color">${item}<button class="fa-solid fa-xmark dropdown__btn"></button></div>`;
+        // Sélectionne l'élément cliqué
+        listItem.className = "dropdown__colorItem";
 
-        const divElement = document.createElement("div");
-        divElement.id = "btn-id";
-        divElement.className = "dropdown__color";
+        const closeBtn = document.createElement("i");
+        closeBtn.className = "fa-solid fa-circle-xmark";
 
-        divElement.innerHTML = item;
+        closeBtn.addEventListener("click", (event) => {
+          event.stopPropagation();
+          listItem.classList.remove("dropdown__colorItem");
+          listItem.remove();
+          // Supprime l'élément de l'affichage extérieur
+          selectedItem.remove();
+        });
 
-        const buttonElement = document.createElement("i");
-        buttonElement.className = "fa-solid fa-xmark dropdown__btn";
+        listItem.appendChild(closeBtn);
+        // listItem.value = "";
+        dropdownContent.classList.add("hidden");
 
-        divElement.appendChild(buttonElement);
+        const selectedItem = document.createElement("div");
+        selectedItem.textContent = item;
 
-        results.appendChild(divElement);
+        selectedItem.className = "dropdown__color";
 
-        const closeButton = document.getElementById("btn-id");
+        results.appendChild(selectedItem);
+
+        const closeButton = document.createElement("i");
+        closeButton.className = "fa-solid fa-xmark dropdown__btn";
 
         closeButton.addEventListener("click", (event) => {
           event.stopPropagation();
-          divElement.remove();
+
+          selectedItem.classList.remove("dropdown__colorItem");
+          listItem.remove();
+          // Supprime l'élément de l'affichage extérieur
+          selectedItem.remove();
         });
 
-        // Affichez l'élément sélectionné
-        dropdownInput.value = "";
-
-        results.style.display = "block";
-        // Masquez la liste déroulante
-
-        dropdownContent.classList.add("hidden");
+        selectedItem.appendChild(closeButton);
       });
+    });
+
+    closeButton.addEventListener("click", () => {
+      dropdownInput.value = "";
+      closeButton.style.display = "none";
     });
 
     dropdownContent.appendChild(dropdownIconInputDiv);
     dropdownContent.appendChild(dropdownList);
 
     dropdown.appendChild(dropdownButton);
-
     dropdown.appendChild(dropdownContent);
+    dropdown.appendChild(results);
 
-    document.body.appendChild(dropdown);
-
-    // l'affichage ou masquage du menu déroulant
     dropdownButton.addEventListener("click", (event) => {
       event.stopPropagation();
-
       this.openIcon = !this.openIcon;
       dropdownContent.classList.toggle("hidden", !this.openIcon);
-
       if (this.openIcon) {
-        iconElement.innerHTML = '<i class="fa-solid fa-angle-up"></i>'; // Changer l'icône lorsque la liste est ouverte
+        iconElement.innerHTML = '<i class="fa-solid fa-angle-up"></i>';
       } else {
-        iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>'; // Changer l'icône lorsque la liste est fermée
+        iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
       }
     });
 
-    // Message d'erreur
-    const errorMessage = document.createElement("div");
-    errorMessage.className = "dropdown__message";
-    errorMessage.textContent = "Aucun résultat trouvé";
-    dropdownContent.appendChild(errorMessage);
-
-    const results = document.createElement("div");
-    results.className = "dropdown__results";
-    dropdown.appendChild(results);
-
-    //  événement d'entrée pour barre de recherche
+    // écouteur d'événements de la barre de recherche
     dropdownInput.addEventListener("input", (event) => {
-      event.stopPropagation();
-      const searchTerm = dropdownInput.value;
-      const listItems = dropdownList.getElementsByTagName("li");
+      const inputValue = dropdownInput.value;
+      closeButton.style.display = inputValue ? "block" : "none";
 
-      this.messageFond = false;
-      // Réinitialiser les résultats filtrés à chaque saisie
-      results.innerHTML = "";
-      // results.style.display = dropdown ? "block" : "none";
+      const searchValue = event.target.value; // Récupère la valeur saisie
+      const dropdownList = dropdownContent.querySelector(".dropdown__list"); // Sélectionne la liste déroulante
 
-      // Gestionnaire d'événements pour la touche "Entrée"
-      dropdownInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-          event.stopPropagation();
-          results.appendChild(dropdownInput);
+      // éléments de la liste déroulante pour les filtrer la valeur saisie
+      dropdownList.querySelectorAll("li").forEach((item) => {
+        const itemName = item.textContent;
+        if (itemName.includes(searchValue)) {
+          item.style.display = "block"; // Affiche l'élément
+        } else {
+          item.style.display = "none"; // Masque l'élément
         }
       });
-
-      for (let i = 0; i < listItems.length; i++) {
-        const listItem = listItems[i];
-        const text = listItem.textContent;
-        const message = text.includes(searchTerm);
-        listItem.style.display = message ? "block" : "none";
-        if (message) {
-          this.messageFond = true;
-
-          // les éléments filtrés
-          const filteredItem = document.createElement("div");
-          filteredItem.textContent = text;
-          // results.appendChild(filteredItem);
-        }
-      }
-
-      // Afficher le message d'erreur
-      errorMessage.style.display =
-        searchTerm !== "" && !this.messageFond ? "block" : "none";
-      // Afficher la liste uniquement si la barre de recherche n'est pas vide
-      dropdownList.classList.toggle("hidden", searchTerm === "");
-
-      // Afficher l'icône de recherche même si la barre de recherche est vide
-      dropdownIconInputDiv.style.display = "block";
     });
 
     return dropdown;

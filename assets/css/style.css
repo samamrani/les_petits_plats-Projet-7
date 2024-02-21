@@ -90,7 +90,7 @@ a {
 .dropdown .fa-search {
   position: absolute;
   top: 48%;
-  left: 170px;
+  left: 180px;
   transform: translate(-50%, -50%);
   cursor: pointer;
 }
@@ -118,28 +118,40 @@ a {
 .dropdown__list li:hover {
   background-color: #ffd15b;
 }
-.dropdown__message {
-  color: red;
-  margin-left: 35px;
-  display: none;
-}
 .dropdown li::first-letter {
   text-transform: capitalize;
 }
-.dropdown__color {
+.dropdown__results {
   position: absolute;
-  top: 100%;
-  left: 0;
-  background: #ffd15b;
-  padding: 15px;
-  width: 220px;
-  border-radius: 5px;
-  margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
-.dropdown__btn {
-  text-align: right;
+.dropdown__color {
+  top: 100%;
+  left: 0;
+  background: #ffd15b;
+  color: #000;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+  padding: 17px 18px 17px 18px;
+  border-radius: 10px;
+  gap: 60px;
+}
+.dropdown #btn-id {
+  position: absolute;
+}
+.dropdown .fa-circle-xmark {
+  padding: 10px;
+}
+.dropdown__colorItem {
+  background: #ffd15b;
+  display: flex;
+  justify-content: space-between;
+  color: #000;
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .recipes {

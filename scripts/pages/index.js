@@ -105,6 +105,7 @@ class App {
     const filteredRecipes = this.recipes.filter((recipe) =>
       regex.test(recipe.name)
     );
+
     // Mettre à jour l'interface utilisateur avec les résultats de la recherche
     const recipesTemplate = new RecipesTemplate(filteredRecipes);
     const recipesSection = document.querySelector(".recipes");

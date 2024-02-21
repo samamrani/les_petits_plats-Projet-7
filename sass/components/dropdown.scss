@@ -66,7 +66,7 @@
   .fa-search {
     position: absolute;
     top: 48%;
-    left: 170px;
+    left: 180px;
     transform: translate(-50%, -50%);
     cursor: pointer;
   }
@@ -99,29 +99,40 @@
     background-color: $primary-color;
   }
 
-  &__message {
-    color: red;
-    margin-left: 35px;
-    display: none;
-  }
   li::first-letter {
     text-transform: capitalize;
   }
-
-  &__color {
+  &__results {
     position: absolute;
-    top: 100%;
-    left: 0;
-    background: $primary-color;
-    padding: 15px;
-    width: 220px;
-    border-radius: 5px;
-    margin-top: 20px;
     display: flex;
     justify-content: space-between;
   }
+  &__color {
+    top: 100%;
+    left: 0;
+    background: $primary-color;
+    color: #000;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
 
-  &__btn {
-    text-align: right;
+    padding: 17px 18px 17px 18px;
+    border-radius: 10px;
+    gap: 60px;
+  }
+  #btn-id {
+    position: absolute;
+  }
+  .fa-circle-xmark {
+    padding: 10px;
+  }
+  &__colorItem {
+    background: $primary-color;
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
   }
 }
