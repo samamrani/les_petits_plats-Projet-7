@@ -148,7 +148,3 @@ export class Dropdown {
     return dropdown;
   }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 787681022db59cec79a6ef17b22ed3e5a41b6d1e
