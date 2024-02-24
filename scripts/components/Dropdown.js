@@ -188,7 +188,7 @@ export class Dropdown {
         // afficher l'element
         dropdownListSelected.appendChild(listItemSelected);
 
-        // Fermer le dropdown après avoir sélectionné un élément
+        // Ferme le dropdown après avoir sélectionné un élément
         const dropdownContent = document.getElementById(
           this.category + "_dropdown__content"
         );
