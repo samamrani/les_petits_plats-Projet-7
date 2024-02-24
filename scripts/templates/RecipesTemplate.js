@@ -6,15 +6,15 @@ export class RecipesTemplate {
   }
 
   getDOM() {
-    const wrapper = document.createElement("section");
-    wrapper.className = "recipes";
+    const recipeSection = document.createElement("section");
+    recipeSection.className = "recipes";
 
     this.recipes.forEach((recipe) => {
       const card = new RecipeCard(recipe);
 
-      wrapper.appendChild(card.getDOM());
+      recipeSection.appendChild(card.getDOM());
     });
 
-    return wrapper;
+    return recipeSection;
   }
 }

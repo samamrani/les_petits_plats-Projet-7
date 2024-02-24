@@ -18,7 +18,7 @@ export class RecipeCard {
 
     const card = document.createElement("div");
     card.classList = "recipe__card";
-    // **************************
+
     const divRecette = document.createElement("div");
 
     const titleH3 = document.createElement("h3");

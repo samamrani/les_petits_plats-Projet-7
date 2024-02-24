@@ -1,5 +1,5 @@
 import { Dropdown } from "../components/Dropdown.js";
-export class FiltersTemplate {
+export class DropdownTemplate {
   constructor(ingredients, appliances, ustensils) {
     this.ingredients = ingredients;
     this.appliances = appliances;
@@ -7,29 +7,29 @@ export class FiltersTemplate {
   }
 
   getDOM() {
-    const wrapper = document.createElement("section");
-    wrapper.className = "dropdown__filters";
+    const dropdownSection = document.createElement("section");
+    dropdownSection.className = "dropdown__filters";
 
     // Création du dropdown pour les ingrédients
     const ingredientsDropdown = new Dropdown("Ingrédients", this.ingredients);
     const ingredientsDropdownDOM = ingredientsDropdown.getDOM();
-    wrapper.appendChild(ingredientsDropdownDOM);
+    dropdownSection.appendChild(ingredientsDropdownDOM);
 
     // Création du dropdown pour les appareils
     const appliancesDropdown = new Dropdown("Appareils", this.appliances);
     const appliancesDropdownDOM = appliancesDropdown.getDOM();
-    wrapper.appendChild(appliancesDropdownDOM);
+    dropdownSection.appendChild(appliancesDropdownDOM);
 
     // Création du dropdown pour les ustensiles
     const ustensilsDropdown = new Dropdown("Ustensiles", this.ustensils);
     const ustensilsDropdownDOM = ustensilsDropdown.getDOM();
-    wrapper.appendChild(ustensilsDropdownDOM);
+    dropdownSection.appendChild(ustensilsDropdownDOM);
 
     // Ajout du div pour afficher le nombre de recettes
     const recipeCountDiv = document.createElement("div");
     recipeCountDiv.className = "dropdown__recette";
     recipeCountDiv.textContent = "50 Recette(s) "; // Initial count
-    wrapper.appendChild(recipeCountDiv);
+    dropdownSection.appendChild(recipeCountDiv);
 
     // Compteur de clics
     let clickCount = 0;
@@ -55,6 +55,6 @@ export class FiltersTemplate {
     addClickListeners(appliancesDropdownDOM);
     addClickListeners(ustensilsDropdownDOM);
 
-    return wrapper;
+    return dropdownSection;
   }
 }

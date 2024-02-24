@@ -102,6 +102,14 @@ a {
   top: 48%;
   left: 150px;
 }
+.dropdown .fa-xmark {
+  position: absolute;
+  cursor: pointer;
+  display: none;
+  transform: translate(-50%, -50%);
+  top: 48%;
+  left: 150px;
+}
 .dropdown__list {
   list-style-type: none;
   padding: 0;
@@ -113,7 +121,7 @@ a {
 .dropdown__list li {
   cursor: pointer;
   line-height: 2;
-  padding: 0 1em;
+  padding: 10px;
 }
 .dropdown__list li:hover {
   background-color: #ffd15b;
@@ -121,37 +129,35 @@ a {
 .dropdown li::first-letter {
   text-transform: capitalize;
 }
-.dropdown__results {
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-}
-.dropdown__color {
-  top: 100%;
-  left: 0;
+.dropdown__colorItem {
   background: #ffd15b;
   color: #000;
-  margin-top: 20px;
+  margin: 5px;
   display: flex;
   justify-content: space-between;
   margin-right: 10px;
-  padding: 17px 18px 17px 18px;
+  align-items: center;
   border-radius: 10px;
-  gap: 60px;
-}
-.dropdown #btn-id {
-  position: absolute;
 }
 .dropdown .fa-circle-xmark {
   padding: 10px;
+  color: #000;
 }
-.dropdown__colorItem {
+.dropdown__color {
   background: #ffd15b;
+  margin-left: 120px;
   display: flex;
   justify-content: space-between;
-  color: #000;
-  font-weight: 700;
-  font-size: 14px;
+  align-items: center;
+  padding: 1.25em;
+  border-radius: 0.7em;
+  width: 50%;
+  margin-top: 20px;
+}
+
+#selectedItemsSection {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .recipes {

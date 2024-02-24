@@ -1,17 +1,20 @@
-import { HeaderTemplate } from "../templates/Header.js";
-import { FiltersTemplate } from "../templates/FiltersTemplate.js";
+import { HeaderTemplate } from "../templates/HeaderTemplet.js";
+import { DropdownTemplate } from "../templates/dropdownTemplate.js";
+import { Dropdown } from "../components/Dropdown.js";
 import { RecipesTemplate } from "../templates/RecipesTemplate.js";
 
 class App {
   constructor() {
-    this.recipes = [];
+    this.listes = [];
     this.ingredient = [];
     this.appliance = [];
     this.ustensiles = [];
+    this.result = [];
   }
 
   async init() {
     this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
+
     this.displayData();
 
     document.addEventListener("click", (event) => {
@@ -50,7 +53,7 @@ class App {
     // les données pour les filtres
     const filtersData = this.getItems();
 
-    const filters = new FiltersTemplate(
+    const filters = new DropdownTemplate(
       filtersData.ingredients,
       filtersData.appliances,
       filtersData.ustensils
@@ -58,10 +61,16 @@ class App {
 
     main.appendChild(filters.getDOM());
 
+    const resultSection = document.createElement("section");
+    resultSection.id = "selectedItemsSection";
+    main.appendChild(resultSection);
+
     const recipes = new RecipesTemplate(this.recipes);
     main.appendChild(recipes.getDOM());
 
     body.appendChild(main);
+
+    // ,,,,,,,,,,,
   }
 
   getItems() {
