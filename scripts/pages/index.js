@@ -1,6 +1,5 @@
 import { HeaderTemplate } from "../templates/HeaderTemplet.js";
 import { DropdownTemplate } from "../templates/dropdownTemplate.js";
-import { Dropdown } from "../components/Dropdown.js";
 import { RecipesTemplate } from "../templates/RecipesTemplate.js";
 
 class App {
@@ -109,6 +108,7 @@ class App {
     };
   }
 
+  // ?????????????????????????????
   searchRecipes(searchInput) {
     const regex = new RegExp(searchInput, "i"); // 'i' indique une recherche insensible à la casse
     const filteredRecipes = this.recipes.filter((recipe) =>
@@ -120,6 +120,10 @@ class App {
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = ""; // Effacer le contenu précédent
     recipesSection.appendChild(recipesTemplate.getDOM());
+
+    const dropdownSection = document.querySelector(".dropdown__filters");
+    dropdownSection.innerHTML = ""; // Effacer le contenu précédent
+    dropdownSection.appendChild(recipesTemplate.getDOM());
   }
 }
 
