@@ -97,15 +97,6 @@ a {
 .dropdown__search i.fa-xmark {
   position: absolute;
   cursor: pointer;
-  display: none;
-  transform: translate(-50%, -50%);
-  top: 48%;
-  left: 150px;
-}
-.dropdown .fa-xmark {
-  position: absolute;
-  cursor: pointer;
-  display: none;
   transform: translate(-50%, -50%);
   top: 48%;
   left: 150px;

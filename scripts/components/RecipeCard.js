@@ -47,6 +47,7 @@ export class RecipeCard {
     // Boucle sur chaque recette dans le fichier JSON
     this.recipe.ingredients.forEach((ingredientData) => {
       const ingredientDiv = document.createElement("div");
+      ingredientDiv.id = "recipesContainer";
       ingredientDiv.classList = "recipe__container";
 
       const ingredientH4 = document.createElement("h4");
@@ -62,6 +63,7 @@ export class RecipeCard {
       unitSpan.textContent = ingredientData.unit;
 
       ingredientDiv.appendChild(ingredientH4);
+
       ingredientDiv.appendChild(quantitySpan);
       ingredientDiv.appendChild(unitSpan);
 

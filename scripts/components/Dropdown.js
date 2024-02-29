@@ -1,5 +1,5 @@
 import { DropDownSearch } from "./DropdownSearch.js";
-import { DropdownItem } from "./DropdownItem.js";
+import { DropdownItems } from "./DropdownItems.js";
 import { DropdownOpenClose } from "./DropdownOpenClose.js";
 
 export class Dropdown {
@@ -30,7 +30,13 @@ export class Dropdown {
     dropdownContent.appendChild(dropdownListSelected);
     dropdownContent.appendChild(dropdownList);
 
-    DropdownItem(this.list, this.category, dropdownList, dropdownListSelected);
+    const di = new DropdownItems(
+      this.list,
+      this.category,
+      dropdownList,
+      dropdownListSelected
+    );
+    di.render();
 
     dropdown.appendChild(DropdownOpenClose(this.category, this.openIcon));
     dropdown.appendChild(dropdownContent);

@@ -45,16 +45,17 @@ export class DropdownTemplate {
     const addClickListeners = (dropdownElement) => {
       dropdownElement.querySelectorAll(".dropdown__list li").forEach((item) => {
         item.addEventListener("click", (event) => {
-          event.stopPropagation(); // Empêche la propagation du clic
-          updateRecipeCount();
+          event.stopPropagation();
+
+          //updateRecipeCount();
         });
       });
     };
 
     // écouteurs d'événements de clic à chaque dropdown
-    addClickListeners(ingredientsDropdownDOM);
-    addClickListeners(appliancesDropdownDOM);
-    addClickListeners(ustensilsDropdownDOM);
+    //addClickListeners(ingredientsDropdownDOM);
+    //addClickListeners(appliancesDropdownDOM);
+    //addClickListeners(ustensilsDropdownDOM);
 
     return dropdownSection;
   }

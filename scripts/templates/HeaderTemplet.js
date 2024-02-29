@@ -1,6 +1,6 @@
 export class HeaderTemplate {
   constructor() {
-    this.inputElement = null;
+    // this.inputElement = null;
   }
 
   getDOM() {

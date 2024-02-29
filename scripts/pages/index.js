@@ -3,19 +3,18 @@ import { DropdownTemplate } from "../templates/dropdownTemplate.js";
 import { RecipesTemplate } from "../templates/RecipesTemplate.js";
 
 class App {
-  constructor() {
-    this.listes = [];
-    this.ingredient = [];
-    this.appliance = [];
-    this.ustensiles = [];
-    this.result = [];
-  }
+  constructor() {}
 
   async init() {
+    // Récupérer les recettes depuis le fichier JSON
     this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
 
+    // Afficher les données sur la page
     this.displayData();
 
+    /* 
+    gestionnaire d'événements  pourla fermeture des dropdowns en dehors
+  */
     document.addEventListener("click", (event) => {
       const dropdowns = document.querySelectorAll(".dropdown");
       dropdowns.forEach((dropdown) => {
@@ -31,9 +30,10 @@ class App {
   }
 
   displayData() {
-    // ajout de l'en-tête de l'application à la page HTML e
+    // ajout de l'en-tête à la page
     const body = document.querySelector("body");
 
+    // Création de l'en-tête à partir du template
     const headerTemplate = new HeaderTemplate();
     const headerElement = headerTemplate.getDOM();
 
@@ -42,6 +42,8 @@ class App {
     // gestionnaire d'événements pour la saisie dans la barre de recherche
     const inputElement = document.querySelector(".header__input");
     inputElement.addEventListener("input", (event) => {
+      event.stopPropagation();
+
       const inputValue = event.target.value;
       this.searchRecipes(inputValue);
     });
@@ -52,6 +54,7 @@ class App {
     // les données pour les filtres
     const filtersData = this.getItems();
 
+    // Création du template des filtres et ajout au main
     const filters = new DropdownTemplate(
       filtersData.ingredients,
       filtersData.appliances,
@@ -61,24 +64,23 @@ class App {
     main.appendChild(filters.getDOM());
 
     const resultSection = document.createElement("section");
-    resultSection.id = "selectedItemsSection";
+    resultSection.id = "selectedItemsResult";
     main.appendChild(resultSection);
 
+    // Création du template des recettes et ajout au main
     const recipes = new RecipesTemplate(this.recipes);
     main.appendChild(recipes.getDOM());
 
     body.appendChild(main);
-
-    // ,,,,,,,,,,,
   }
 
   getItems() {
-    // stocker les ingrédients, appareils et ustensiles uniques
+    // stocker les ingrédients, appareils et ustensiles
     const uniqueIngredients = new Set();
     const uniqueAppliances = new Set();
     const uniqueUstensils = new Set();
 
-    // Parcourez toutes les recettes pour extraire ingrédients, appareils, ustensiles uniques
+    // Parcourez toutes les recettes pour extraire ingrédients, appareils, ustensiles
     this.recipes.forEach((recipe) => {
       recipe.ingredients.forEach((ingredient) => {
         uniqueIngredients.add(ingredient.ingredient);
@@ -110,6 +112,7 @@ class App {
 
   // ?????????????????????????????
   searchRecipes(searchInput) {
+    // Création d'une expression régulière pour la recherche
     const regex = new RegExp(searchInput, "i"); // 'i' indique une recherche insensible à la casse
     const filteredRecipes = this.recipes.filter((recipe) =>
       regex.test(recipe.name)
@@ -118,12 +121,8 @@ class App {
     // Mettre à jour l'interface utilisateur avec les résultats de la recherche
     const recipesTemplate = new RecipesTemplate(filteredRecipes);
     const recipesSection = document.querySelector(".recipes");
-    recipesSection.innerHTML = ""; // Effacer le contenu précédent
+    recipesSection.innerHTML = "";
     recipesSection.appendChild(recipesTemplate.getDOM());
-
-    const dropdownSection = document.querySelector(".dropdown__filters");
-    dropdownSection.innerHTML = ""; // Effacer le contenu précédent
-    dropdownSection.appendChild(recipesTemplate.getDOM());
   }
 }
 

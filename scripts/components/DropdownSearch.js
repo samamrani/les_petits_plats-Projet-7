@@ -42,7 +42,7 @@ export function DropDownSearch(dropdownList) {
       if (itemName.includes(inputValue)) {
         item.style.display = "block";
       } else {
-        item.style.display = "none"; // Cacher l'élément
+        item.style.display = "none";
       }
     });
   });
