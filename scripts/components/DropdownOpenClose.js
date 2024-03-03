@@ -1,35 +1,41 @@
-export function DropdownOpenClose(category, openIcon) {
-  const dropdownOpenClose = document.createElement("button");
-  dropdownOpenClose.className = "dropdown__button";
+export class DropdownOpenClose {
+  constructor(category, openIcon) {
+    (this.category = category), (this.openIcon = openIcon);
+  }
 
-  const dropdownName = document.createElement("div");
-  dropdownName.className = "dropdown__category";
-  dropdownName.textContent = `${category}`;
+  getDOM() {
+    const dropdownOpenClose = document.createElement("button");
+    dropdownOpenClose.className = "dropdown__button";
 
-  const iconElement = document.createElement("div");
-  iconElement.className = "dropdown__icone";
-  iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
-  iconElement.setAttribute("aria-hidden", "true");
+    const dropdownName = document.createElement("div");
+    dropdownName.className = "dropdown__category";
+    dropdownName.textContent = `${this.category}`;
 
-  dropdownOpenClose.appendChild(dropdownName);
-  dropdownOpenClose.appendChild(iconElement);
+    const iconElement = document.createElement("div");
+    iconElement.className = "dropdown__icone";
+    iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
+    iconElement.setAttribute("aria-hidden", "true");
 
-  dropdownOpenClose.addEventListener("click", (event) => {
-    event.stopPropagation();
+    dropdownOpenClose.appendChild(dropdownName);
+    dropdownOpenClose.appendChild(iconElement);
 
-    openIcon = !openIcon;
+    dropdownOpenClose.addEventListener("click", (event) => {
+      event.stopPropagation();
 
-    document
-      .getElementById(category + "_dropdown__content")
-      .classList.toggle("hidden", !openIcon);
+      this.openIcon = !this.openIcon;
 
-    // Changer l'icône en fonction de l'état du dropdown
-    if (openIcon) {
-      iconElement.innerHTML = '<i class="fa-solid fa-angle-up"></i>';
-    } else {
-      iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
-    }
-  });
+      document
+        .getElementById(this.category + "_dropdown__content")
+        .classList.toggle("hidden", !this.openIcon);
 
-  return dropdownOpenClose;
+      // Changer l'icône en fonction de l'état du dropdown
+      if (this.openIcon) {
+        iconElement.innerHTML = '<i class="fa-solid fa-angle-up"></i>';
+      } else {
+        iconElement.innerHTML = '<i class="fa-solid fa-angle-down"></i>';
+      }
+    });
+
+    return dropdownOpenClose;
+  }
 }

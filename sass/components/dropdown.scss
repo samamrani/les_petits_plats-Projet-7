@@ -12,9 +12,11 @@
     justify-content: space-between;
     margin: 20px;
   }
+
   &__category {
     color: grey;
   }
+
   &__recette {
     align-items: center;
     font-family: $font-family-title;
@@ -23,6 +25,7 @@
     color: #1b1b1b;
     background: none;
   }
+
   &__button {
     display: flex;
     justify-content: space-between;
@@ -36,6 +39,7 @@
 
     cursor: pointer;
   }
+
   &__content {
     background-color: #fff;
     border-radius: 0 0 0.8em 0.8em;
@@ -49,7 +53,6 @@
 
   &__input {
     cursor: pointer;
-
     padding: 10px;
     border: 1px solid grey;
     border-radius: 4px;
@@ -66,7 +69,7 @@
   .fa-search {
     position: absolute;
     top: 48%;
-    left: 180px;
+    left: 166px;
     transform: translate(-50%, -50%);
     cursor: pointer;
   }
@@ -74,7 +77,6 @@
   &__search i.fa-xmark {
     position: absolute;
     cursor: pointer;
-
     transform: translate(-50%, -50%);
     top: 48%;
     left: 150px;
@@ -95,6 +97,7 @@
     line-height: 2;
     padding: 10px;
   }
+
   &__list li:hover {
     background-color: $primary-color;
   }
@@ -116,7 +119,6 @@
 
   .fa-circle-xmark {
     padding: 10px;
-
     color: #000;
   }
 
@@ -128,11 +130,13 @@
     align-items: center;
     padding: 1.25em;
     border-radius: 0.7em;
-    width: 50%;
     margin-top: 20px;
+    width: 50%;
   }
 }
-#selectedItemsSection {
+
+#selectedItemsResult {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
 }

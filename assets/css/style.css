@@ -90,7 +90,7 @@ a {
 .dropdown .fa-search {
   position: absolute;
   top: 48%;
-  left: 180px;
+  left: 166px;
   transform: translate(-50%, -50%);
   cursor: pointer;
 }
@@ -142,13 +142,14 @@ a {
   align-items: center;
   padding: 1.25em;
   border-radius: 0.7em;
-  width: 50%;
   margin-top: 20px;
+  width: 50%;
 }
 
-#selectedItemsSection {
+#selectedItemsResult {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
 }
 
 .recipes {
