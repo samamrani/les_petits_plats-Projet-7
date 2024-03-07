@@ -13,6 +13,7 @@ export class DropDownSearch {
     dropdownInput.name = "search";
     dropdownInput.minLength = 3;
     dropdownInput.placeholder = "Rechercher...";
+    dropdownInput.id = search;
 
     const closeButton = document.createElement("i");
     closeButton.className = "fa-solid fa-xmark";

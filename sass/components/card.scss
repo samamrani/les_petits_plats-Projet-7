@@ -4,18 +4,14 @@
   padding: 102px;
   gap: 48px;
   justify-content: space-between;
-  margin: 20px;
   text-align: start;
 }
+
 .recipe {
   position: relative;
   flex: 1;
   padding: 20px;
-  margin-right: 20px;
 
-  // .recipe:last-child {
-  //   margin-right: 0; /* pour enlever la marge à droite de la dernière carte */
-  // }
   img {
     object-fit: cover;
     width: 100%;
@@ -29,6 +25,7 @@
     font-weight: 500;
     line-height: 0;
   }
+
   &__title {
     font-size: 18px;
     font-weight: 400;
@@ -44,6 +41,7 @@
   &__description {
     margin-left: 20px;
   }
+
   &__description {
     color: #1b1b1b;
     font-size: 14px;
@@ -54,6 +52,7 @@
     width: 330px;
     height: 67px;
   }
+
   &__span {
     font-size: 14px;
     color: grey;
@@ -74,6 +73,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
+
   &__container {
     flex: 1 0 calc(50% - 18px);
   }
@@ -89,10 +89,10 @@
     margin-top: 20px;
     text-align: center;
   }
+
   &__card {
     width: 380px;
     background: #fff;
-
     border-radius: 21px;
     padding-bottom: 20px;
   }

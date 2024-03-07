@@ -7,7 +7,7 @@ export class DropdownItems {
     this.resultSection = document.getElementById("selectedItemsResult");
   }
 
-  render() {
+  getDOM() {
     let i = 0;
     this.items.forEach((item) => {
       i++;

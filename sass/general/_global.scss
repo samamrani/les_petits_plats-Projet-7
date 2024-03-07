@@ -14,13 +14,16 @@ html {
   background: #e5e5e5;
   font-family: $font-family-text;
 }
+
 .container {
   max-width: 1440px;
   margin: 0 auto;
 }
+
 a {
   text-decoration: none;
 }
+
 .hidden {
   display: none;
 }

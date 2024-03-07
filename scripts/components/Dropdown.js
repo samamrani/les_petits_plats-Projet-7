@@ -25,8 +25,8 @@ export class Dropdown {
     dropdownListSelected.className = "dropdown__list";
     dropdownListSelected.id = this.category + "_dropdown__list_selected";
 
-    const de = new DropDownSearch(dropdownList);
-    const dropdownSearchDOM = de.getDOM();
+    const search = new DropDownSearch(dropdownList);
+    const dropdownSearchDOM = search.getDOM();
 
     dropdownContent.appendChild(dropdownSearchDOM);
 
@@ -34,16 +34,16 @@ export class Dropdown {
 
     dropdownContent.appendChild(dropdownList);
 
-    const di = new DropdownItems(
+    const items = new DropdownItems(
       this.list,
       this.category,
       dropdownList,
       dropdownListSelected
     );
-    di.render();
+    items.getDOM();
 
-    const da = new DropdownOpenClose(this.category, this.openIcon);
-    const dropdownOpenClose = da.getDOM();
+    const openClose = new DropdownOpenClose(this.category, this.openIcon);
+    const dropdownOpenClose = openClose.getDOM();
 
     dropdown.appendChild(dropdownOpenClose);
 

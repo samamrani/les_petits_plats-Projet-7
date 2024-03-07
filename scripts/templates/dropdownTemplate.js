@@ -32,30 +32,22 @@ export class DropdownTemplate {
     recipeCountDiv.textContent = "50 Recette(s) "; // Initial count
     dropdownSection.appendChild(recipeCountDiv);
 
-    // Compteur de clics
-    let clickCount = 0;
+    // Compteur de recettes
+    let recipeCount = 50;
 
-    //  mettre à jour le nombre de recettes affichées
     const updateRecipeCount = () => {
-      clickCount++;
-      recipeCountDiv.textContent = `${clickCount} Recette(s)`;
+      recipeCount++;
+      recipeCountDiv.textContent = `${recipeCount} Recette(s)`;
     };
 
-    // écouteurs d'événements de clic à chaque élément de liste des dropdowns
-    const addClickListeners = (dropdownElement) => {
-      dropdownElement.querySelectorAll(".dropdown__list li").forEach((item) => {
-        item.addEventListener("click", (event) => {
-          event.stopPropagation();
+    // Écouteurs d'événements de clic à chaque élément de liste des dropdowns
+    dropdownSection.querySelectorAll(".dropdown__list li").forEach((item) => {
+      item.addEventListener("click", (event) => {
+        event.stopPropagation();
 
-          //updateRecipeCount();
-        });
+        updateRecipeCount(); // Mettre à jour le compteur
       });
-    };
-
-    // écouteurs d'événements de clic à chaque dropdown
-    //addClickListeners(ingredientsDropdownDOM);
-    //addClickListeners(appliancesDropdownDOM);
-    //addClickListeners(ustensilsDropdownDOM);
+    });
 
     return dropdownSection;
   }

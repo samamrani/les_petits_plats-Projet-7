@@ -36,7 +36,6 @@
     border: 1px solid #c6c6c6;
     background-color: #fff;
     color: grey;
-
     cursor: pointer;
   }
 
@@ -88,8 +87,6 @@
     width: 215px;
     max-height: 330px;
     overflow-y: auto;
-
-    padding-top: 10px;
   }
 
   &__list li {
@@ -112,7 +109,7 @@
     margin: 5px;
     display: flex;
     justify-content: space-between;
-    margin-right: 10px;
+    // margin-right: 10px;
     align-items: center;
     border-radius: 10px;
   }
@@ -137,6 +134,5 @@
 
 #selectedItemsResult {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
 }
