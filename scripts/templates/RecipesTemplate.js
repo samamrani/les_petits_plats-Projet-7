@@ -1,4 +1,4 @@
-import { RecipeCard } from "../components/RecipeCard.js";
+import { RecipeCardTemplate } from "./RecipeCardTemplate.js";
 
 export class RecipesTemplate {
   constructor(recipes) {
@@ -10,7 +10,7 @@ export class RecipesTemplate {
     recipeSection.className = "recipes";
 
     this.recipes.forEach((recipe) => {
-      const card = new RecipeCard(recipe);
+      const card = new RecipeCardTemplate(recipe);
 
       recipeSection.appendChild(card.getDOM());
     });

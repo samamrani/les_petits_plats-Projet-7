@@ -10,45 +10,45 @@ export class DropDownSearch {
     const dropdownInput = document.createElement("input");
     dropdownInput.className = "dropdown__input";
     dropdownInput.type = "text";
-    dropdownInput.name = "search";
-    dropdownInput.minLength = 3;
     dropdownInput.placeholder = "Rechercher...";
-    dropdownInput.id = search;
 
-    const closeButton = document.createElement("i");
-    closeButton.className = "fa-solid fa-xmark";
-    closeButton.style.display = "none";
+    const resetButton = document.createElement("i");
+    resetButton.className = "fa-solid fa-xmark hidden";
 
     const searchIcon = document.createElement("i");
     searchIcon.className = "fas fa-search";
 
     dropdownSearch.appendChild(dropdownInput);
-    dropdownSearch.appendChild(closeButton);
+    dropdownSearch.appendChild(resetButton);
     dropdownSearch.appendChild(searchIcon);
 
-    // la fermeture de bouton de fermeture
-    closeButton.addEventListener("click", (event) => {
+    //gestionnaire d'événement de reset input
+    resetButton.addEventListener("click", (event) => {
       event.stopPropagation();
 
       dropdownInput.value = "";
-      closeButton.style.display = "none";
+      resetButton.classList.add("hidden");
     });
 
-    // gestionnaire d'événements pour la barre de recherche
+    // gestionnaire d'événements pour la recherche
     dropdownInput.addEventListener("input", (event) => {
       event.stopPropagation();
 
       const inputValue = dropdownInput.value;
-      closeButton.style.display = inputValue ? "block" : "none";
+      if (inputValue) {
+        resetButton.classList.remove("hidden");
+      } else {
+        resetButton.classList.add("hidden");
+      }
 
       const dropdownItems = this.dropdownList.querySelectorAll("li");
 
       dropdownItems.forEach((item) => {
         const itemName = item.textContent;
         if (itemName.includes(inputValue)) {
-          item.style.display = "block";
+          item.classList.remove("hidden");
         } else {
-          item.style.display = "none";
+          item.classList.add("hidden");
         }
       });
     });

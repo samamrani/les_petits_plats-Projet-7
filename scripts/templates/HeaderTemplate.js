@@ -1,7 +1,5 @@
 export class HeaderTemplate {
-  constructor() {
-    // this.inputElement = null;
-  }
+  constructor() {}
 
   getDOM() {
     const header = document.createElement("header");
@@ -46,26 +44,26 @@ export class HeaderTemplate {
     inputElement.className = "header__input";
     inputElement.type = "text";
     inputElement.name = "search";
-    inputElement.minLength = 3;
     inputElement.placeholder = "Rechercher un ingrédient,...";
 
     formDiv.appendChild(inputElement);
 
-    const closeButton = document.createElement("i");
-    closeButton.className = "fa-solid fa-xmark";
+    const resetButton = document.createElement("i");
+    resetButton.className = "fa-solid fa-xmark hidden reset-icon";
 
-    formDiv.appendChild(closeButton);
-
-    // la visibilité du bouton de fermeture lors de la saisie
-    inputElement.addEventListener("input", () => {
-      const inputValue = inputElement.value;
-      closeButton.style.display = inputValue ? "block" : "none";
-    });
+    formDiv.appendChild(resetButton);
 
     // la fermeture de bouton de fermeture
-    closeButton.addEventListener("click", () => {
+    resetButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+
       inputElement.value = "";
-      closeButton.style.display = "none";
+      resetButton.classList.add("hidden");
+    });
+
+    inputElement.addEventListener("input", (event) => {
+      event.stopPropagation();
+      resetButton.classList.toggle("hidden", inputElement.value == "");
     });
 
     const searchIcon = document.createElement("i");

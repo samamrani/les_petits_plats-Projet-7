@@ -68,13 +68,12 @@
     color: black;
   }
 
-  &__form i.fa-xmark {
+  &__form .reset-icon {
     position: absolute;
     top: 50%;
     right: 45px;
     transform: translate(-50%, -50%);
     cursor: pointer;
     padding: 12px;
-    display: none;
   }
 }

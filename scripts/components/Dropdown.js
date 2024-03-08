@@ -1,5 +1,5 @@
 import { DropdownItems } from "./DropdownItems.js";
-import { DropdownOpenClose } from "./DropdownOpenClose.js";
+import { DropdownButton } from "./DropdownButton.js";
 import { DropDownSearch } from "./DropdownSearch.js";
 export class Dropdown {
   constructor(category, list) {
@@ -25,8 +25,8 @@ export class Dropdown {
     dropdownListSelected.className = "dropdown__list";
     dropdownListSelected.id = this.category + "_dropdown__list_selected";
 
-    const search = new DropDownSearch(dropdownList);
-    const dropdownSearchDOM = search.getDOM();
+    const de = new DropDownSearch(dropdownList);
+    const dropdownSearchDOM = de.getDOM();
 
     dropdownContent.appendChild(dropdownSearchDOM);
 
@@ -34,18 +34,18 @@ export class Dropdown {
 
     dropdownContent.appendChild(dropdownList);
 
-    const items = new DropdownItems(
+    const di = new DropdownItems(
       this.list,
       this.category,
       dropdownList,
       dropdownListSelected
     );
-    items.getDOM();
+    di.render();
 
-    const openClose = new DropdownOpenClose(this.category, this.openIcon);
-    const dropdownOpenClose = openClose.getDOM();
+    const da = new DropdownButton(this.category, this.openIcon);
+    const dropdownButton = da.getDOM();
 
-    dropdown.appendChild(dropdownOpenClose);
+    dropdown.appendChild(dropdownButton);
 
     dropdown.appendChild(dropdownContent);
 

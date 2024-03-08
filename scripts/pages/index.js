@@ -1,13 +1,9 @@
-import { HeaderTemplate } from "../templates/HeaderTemplet.js";
-import { DropdownTemplate } from "../templates/dropdownTemplate.js";
+import { HeaderTemplate } from "../templates/HeaderTemplate.js";
+import { FiltersTemplate } from "../templates/FiltersTemplate.js";
 import { RecipesTemplate } from "../templates/RecipesTemplate.js";
 
 class App {
-  constructor() {
-    this.selectedIngredients = [];
-    this.selectedAppliances = [];
-    this.selectedUstensils = [];
-  }
+  constructor() {}
 
   async init() {
     // Récupérer les recettes depuis le fichier JSON
@@ -59,28 +55,12 @@ class App {
     const filtersData = this.getItems();
 
     // Création du template des filtres et ajout au main
-    const filters = new DropdownTemplate(
+    const filters = new FiltersTemplate(
       filtersData.ingredients,
       filtersData.appliances,
       filtersData.ustensils
     );
-    // ***************????????????????????????
-    filters.getDOM().addEventListener("change", (event) => {
-      event.stopImmediatePropagation();
 
-      this.selectedIngredients = this.selectedIngredients.filter(
-        (ingredient) => ingredient !== value
-      );
-
-      this.selectedAppliances = this.selectedAppliances.filter(
-        (appliances) => appliances !== value
-      );
-
-      this.selectedUstensils = this.selectedUstensils.filter(
-        (ustensiles) => ustensiles !== value
-      );
-    });
-    // ??????????????????
     main.appendChild(filters.getDOM());
 
     const resultSection = document.createElement("section");
@@ -143,13 +123,6 @@ class App {
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
     recipesSection.appendChild(recipesTemplate.getDOM());
-  }
-
-  searchDropdown() {
-    const drop = document.getElementById("search").value;
-    if (drop === "recipe") {
-      window.open(this.recipes);
-    }
   }
 }
 
