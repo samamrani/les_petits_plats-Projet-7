@@ -20,14 +20,6 @@ export class DropdownItems {
     itemLi.textContent = item;
     itemLi.id = this.category + "_" + i;
 
-    this.addEventClickOnItemLi(i, item, itemLi);
-
-    this.dropdownList.appendChild(itemLi);
-
-    return itemLi;
-  }
-
-  addEventClickOnItemLi(i, item, itemLi) {
     itemLi.addEventListener("click", (event) => {
       event.stopPropagation();
 
@@ -36,6 +28,10 @@ export class DropdownItems {
       this.createItemLiSelected(i, item);
       this.createItemSelected(i, item);
     });
+
+    this.dropdownList.appendChild(itemLi);
+
+    return itemLi;
   }
 
   createItemLiSelected(i, item) {
@@ -45,11 +41,11 @@ export class DropdownItems {
     itemLiSelected.className = "dropdown__colorItem";
 
     const itemLiSelectedClose = document.createElement("i");
-    itemLiSelectedClose.className = "fa-solid fa-xmark";
+    itemLiSelectedClose.className = "fa-solid fa-circle-xmark";
 
     itemLiSelected.appendChild(itemLiSelectedClose);
 
-    this.dropdownListSelected.appendChild(itemLiSelected);
+    // this.dropdownListSelected.appendChild(itemLiSelected);
 
     itemLiSelectedClose.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -57,18 +53,9 @@ export class DropdownItems {
       this.deleteItemSelected(i, item);
     });
 
+    this.dropdownList.appendChild(itemLiSelected);
+
     return itemLiSelected;
-  }
-
-  resetItemClickEvent(itemLi, i, item) {
-    itemLi.addEventListener("click", (event) => {
-      event.stopPropagation();
-
-      this.dropdownList.removeChild(itemLi);
-
-      this.createItemLiSelected(i, item);
-      this.createItemSelected(i, item);
-    });
   }
 
   deleteItemSelected(i, item) {
@@ -80,15 +67,13 @@ export class DropdownItems {
     );
 
     this.resultSection.removeChild(itemSelected);
-    this.dropdownListSelected.removeChild(itemLiSelected);
+    this.dropdownList.removeChild(itemLiSelected);
 
     const itemLi = document.createElement("li");
     itemLi.textContent = item;
     itemLi.id = this.category + "_" + i;
 
     this.dropdownList.appendChild(itemLi);
-
-    this.resetItemClickEvent(itemLi, i, item);
   }
 
   createItemSelected(i, item) {
@@ -98,7 +83,7 @@ export class DropdownItems {
     itemSelected.className = "dropdown__color";
 
     const itemSelectedClose = document.createElement("i");
-    itemSelectedClose.className = "fa-solid fa-circle-xmark";
+    itemSelectedClose.className = "fa-solid fa-xmark";
 
     itemSelected.appendChild(itemSelectedClose);
 

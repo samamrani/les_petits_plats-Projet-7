@@ -63,6 +63,7 @@ class App {
 
     main.appendChild(filters.getDOM());
 
+    // afficher le resulat de clique dans le dropdown
     const resultSection = document.createElement("section");
     resultSection.id = "selectedItemsResult";
     main.appendChild(resultSection);

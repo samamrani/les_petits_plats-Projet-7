@@ -97,9 +97,6 @@ a {
 .dropdown__search i.fa-xmark {
   position: absolute;
   cursor: pointer;
-  transform: translate(-50%, -50%);
-  top: 48%;
-  left: 150px;
 }
 .dropdown__list {
   list-style-type: none;
@@ -121,12 +118,11 @@ a {
 }
 .dropdown__colorItem {
   background: #ffd15b;
+  font-weight: 700;
   color: #000;
-  margin: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 10px;
 }
 .dropdown .fa-circle-xmark {
   padding: 10px;
@@ -135,18 +131,18 @@ a {
 .dropdown__color {
   background: #ffd15b;
   margin-left: 120px;
-  width: 50%;
+  width: 18%;
   padding: 1.25em;
   border-radius: 0.7em;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
 }
 
 #selectedItemsResult {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .recipes {

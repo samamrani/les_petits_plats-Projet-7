@@ -24,9 +24,9 @@ export class FiltersTemplate {
     const ingredientsDropdown = new Dropdown("Ingrédients", this.ingredients);
     const ingredientsDropdownDOM = ingredientsDropdown.getDOM();
 
-    ingredientsDropdownDOM.addEventListener("change", () => {
-      this.updateRecipeCount();
-    });
+    // ingredientsDropdownDOM.addEventListener("change", () => {
+    //   this.updateRecipeCount();
+    // });
 
     dropdownSection.appendChild(ingredientsDropdownDOM);
 
@@ -34,9 +34,9 @@ export class FiltersTemplate {
     const appliancesDropdown = new Dropdown("Appareils", this.appliances);
     const appliancesDropdownDOM = appliancesDropdown.getDOM();
 
-    appliancesDropdownDOM.addEventListener("change", () => {
-      this.updateRecipeCount();
-    });
+    // appliancesDropdownDOM.addEventListener("change", () => {
+    //   this.updateRecipeCount();
+    // });
 
     dropdownSection.appendChild(appliancesDropdownDOM);
 
@@ -44,9 +44,9 @@ export class FiltersTemplate {
     const ustensilsDropdown = new Dropdown("Ustensiles", this.ustensils);
     const ustensilsDropdownDOM = ustensilsDropdown.getDOM();
 
-    ustensilsDropdownDOM.addEventListener("change", () => {
-      this.updateRecipeCount();
-    });
+    // ustensilsDropdownDOM.addEventListener("change", () => {
+    //   this.updateRecipeCount();
+    // });
 
     dropdownSection.appendChild(ustensilsDropdownDOM);
 
