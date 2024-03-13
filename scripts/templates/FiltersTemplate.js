@@ -1,61 +1,59 @@
 import { Dropdown } from "../components/Dropdown.js";
+
 export class FiltersTemplate {
-  constructor(ingredients, appliances, ustensils) {
+  constructor(ingredients, appliances, ustensils, selectChange) {
     this.ingredients = ingredients;
     this.appliances = appliances;
     this.ustensils = ustensils;
-    this.recipeCount = 50;
-  }
+    this.selectChange = selectChange;
 
-  // mettre à jour le compteur de recettes
-  updateRecipeCount() {
-    this.recipeCount++;
-    const recipeCountDiv = document.querySelector(".dropdown__recette");
-    if (recipeCountDiv) {
-      recipeCountDiv.textContent = `${this.recipeCount} Recette(s)`;
-    }
+    this.recipes = [];
   }
 
   getDOM() {
-    const dropdownSection = document.createElement("section");
-    dropdownSection.className = "dropdown__filters";
+    const filtersSection = document.createElement("section");
+    filtersSection.className = "filters";
 
-    // Création du dropdown pour les ingrédients
-    const ingredientsDropdown = new Dropdown("Ingrédients", this.ingredients);
-    const ingredientsDropdownDOM = ingredientsDropdown.getDOM();
+    const filtersContainer = document.createElement("div");
+    filtersContainer.className = "filters__container";
+    // Création des dropdowns pour les ingrédients, appareils et ustensiles
+    const ingredientsDropdown = new Dropdown(
+      "Ingrédients",
+      this.ingredients,
+      this.selectChange
+    );
+    const appliancesDropdown = new Dropdown(
+      "Appareils",
+      this.appliances,
+      this.selectChange
+    );
+    const ustensilsDropdown = new Dropdown(
+      "Ustensiles",
+      this.ustensils,
+      this.selectChange
+    );
 
-    // ingredientsDropdownDOM.addEventListener("change", () => {
-    //   this.updateRecipeCount();
-    // });
+    // Ajout des dropdowns au DOM
+    filtersContainer.appendChild(ingredientsDropdown.getDOM());
+    filtersContainer.appendChild(appliancesDropdown.getDOM());
+    filtersContainer.appendChild(ustensilsDropdown.getDOM());
 
-    dropdownSection.appendChild(ingredientsDropdownDOM);
+    filtersSection.appendChild(filtersContainer);
 
-    // Création du dropdown pour les appareils
-    const appliancesDropdown = new Dropdown("Appareils", this.appliances);
-    const appliancesDropdownDOM = appliancesDropdown.getDOM();
-
-    // appliancesDropdownDOM.addEventListener("change", () => {
-    //   this.updateRecipeCount();
-    // });
-
-    dropdownSection.appendChild(appliancesDropdownDOM);
-
-    // Création du dropdown pour les ustensiles
-    const ustensilsDropdown = new Dropdown("Ustensiles", this.ustensils);
-    const ustensilsDropdownDOM = ustensilsDropdown.getDOM();
-
-    // ustensilsDropdownDOM.addEventListener("change", () => {
-    //   this.updateRecipeCount();
-    // });
-
-    dropdownSection.appendChild(ustensilsDropdownDOM);
-
-    // Ajout du div pour afficher le nombre de recettes
+    // afficher le nombre de recettes
     const recipeCountDiv = document.createElement("div");
-    recipeCountDiv.className = "dropdown__recette";
-    recipeCountDiv.textContent = `${this.recipeCount} Recette(s)`;
-    dropdownSection.appendChild(recipeCountDiv);
+    recipeCountDiv.id = "count";
+    recipeCountDiv.className = "filters__recette";
+    recipeCountDiv.textContent = `${this.recipes.length} Recette(s)`;
+    filtersSection.appendChild(recipeCountDiv);
 
-    return dropdownSection;
+    return filtersSection;
   }
+
+  // updateRecipeCount() {
+  //   const recipeCountDiv = document.getElementById("count");
+  //   if (recipeCountDiv) {
+  //     recipeCountDiv.textContent = `${this.recipes.length} Recette(s)`;
+  //   }
+  // }
 }

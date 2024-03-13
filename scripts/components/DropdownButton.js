@@ -1,6 +1,6 @@
 export class DropdownButton {
-  constructor(category, openIcon) {
-    (this.category = category), (this.openIcon = openIcon);
+  constructor(category) {
+    this.category = category;
   }
 
   getDOM() {

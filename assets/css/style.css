@@ -30,119 +30,92 @@ a {
 .dropdown {
   position: relative;
   color: grey;
-  z-index: 99;
-  width: 220px;
-}
-.dropdown__filters {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 63px;
-  padding-left: 102px;
-  justify-content: space-between;
-  margin: 20px;
-}
-.dropdown__category {
-  color: grey;
-}
-.dropdown__recette {
-  align-items: center;
-  font-family: "Anton", sans-serif;
-  font-size: 1.6rem;
-  font-weight: 400;
-  color: #1b1b1b;
-  background: none;
+  min-width: 195px;
 }
 .dropdown__button {
   display: flex;
   justify-content: space-between;
+  gap: 1em;
   width: 100%;
-  padding: 17px 16px;
-  border-radius: 11px;
-  font-size: 1.6rem;
   border: 1px solid #c6c6c6;
-  background-color: #fff;
   color: grey;
+  padding: 0.75em 1em;
+  background-color: #fff;
+  border-radius: 0.8em;
+  font-size: 16px;
+  text-align: left;
   cursor: pointer;
+}
+.dropdown__category {
+  color: grey;
 }
 .dropdown__content {
   background-color: #fff;
-  border-radius: 0 0 0.8em 0.8em;
+  border-bottom-left-radius: 0.8em;
+  border-bottom-right-radius: 0.8em;
   position: absolute;
   border-left: 1px solid #c6c6c6;
   border-right: 1px solid #c6c6c6;
   border-bottom: 1px solid #c6c6c6;
   width: 100%;
-  top: 70%;
+  transform: translateY(-0.8em);
+  z-index: 1;
 }
 .dropdown__input {
   cursor: pointer;
-  padding: 10px;
+  padding: 0.9em;
   border: 1px solid grey;
-  border-radius: 4px;
-  outline-color: grey;
-  margin: 15px;
+  border-radius: 2px;
+  border: 1px solid #c6c6c6;
+  margin: 20px;
+  width: 100%;
 }
 .dropdown__search {
   position: relative;
   display: flex;
   width: 100%;
 }
-.dropdown .fa-search {
+.dropdown__search .search-icon {
   position: absolute;
-  top: 48%;
-  left: 166px;
-  transform: translate(-50%, -50%);
   cursor: pointer;
+  transform: translateY(-50%);
+  top: 50%;
+  right: 20px;
 }
-.dropdown__search i.fa-xmark {
+.dropdown__search .reset-icon {
   position: absolute;
   cursor: pointer;
+  transform: translateY(-50%);
+  top: 50%;
+  right: 40px;
 }
 .dropdown__list {
   list-style-type: none;
   padding: 0;
-  width: 215px;
-  max-height: 330px;
-  overflow-y: auto;
+  max-height: 240px;
+  overflow: auto;
 }
-.dropdown__list li {
+.dropdown__item {
   cursor: pointer;
-  line-height: 2;
-  padding: 10px;
-}
-.dropdown__list li:hover {
-  background-color: #ffd15b;
-}
-.dropdown li::first-letter {
+  padding: 1em;
+  justify-content: space-between;
+  align-items: center;
   text-transform: capitalize;
 }
-.dropdown__colorItem {
-  background: #ffd15b;
-  font-weight: 700;
-  color: #000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.dropdown__item:hover {
+  background-color: #ffd15b;
 }
-.dropdown .fa-circle-xmark {
-  padding: 10px;
+.dropdown__item .unselect-icon {
+  opacity: 0;
   color: #000;
 }
-.dropdown__color {
+.dropdown__item--selected {
   background: #ffd15b;
-  margin-left: 120px;
-  width: 18%;
-  padding: 1.25em;
-  border-radius: 0.7em;
+  color: #000;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
-
-#selectedItemsResult {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+.dropdown__item--selected .unselect-icon {
+  opacity: 1;
 }
 
 .recipes {
@@ -232,6 +205,19 @@ a {
   font-weight: 400px;
 }
 
+.tag {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  align-items: center;
+  background: #ffd15b;
+  padding: 1.25em;
+  border-radius: 0.7em;
+}
+.tag .icon-close {
+  cursor: pointer;
+}
+
 .header {
   position: relative;
 }
@@ -299,6 +285,37 @@ a {
   transform: translate(-50%, -50%);
   cursor: pointer;
   padding: 12px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+  padding: 20px 0;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.filters__recette {
+  font-family: "Anton", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #1b1b1b;
+  background: none;
+}
+.filters__container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+#tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 0;
 }
 
 /*# sourceMappingURL=style.css.map */

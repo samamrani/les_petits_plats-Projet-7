@@ -9,79 +9,41 @@ class App {
     // Récupérer les recettes depuis le fichier JSON
     this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
 
-    // Afficher les données sur la page
     this.displayData();
 
-    /* 
-    gestionnaire d'événements  pourla fermeture des dropdowns en dehors
-  */
-    document.addEventListener("click", (event) => {
-      const dropdowns = document.querySelectorAll(".dropdown");
-      dropdowns.forEach((dropdown) => {
-        const dropdownContent = dropdown.querySelector(".dropdown__content");
-        if (
-          !dropdownContent.classList.contains("hidden") &&
-          !dropdown.contains(event.target)
-        ) {
-          dropdownContent.classList.add("hidden");
-        }
-      });
-    });
+    // Gestionnaire d'événements pour la fermeture des dropdowns en dehors
+    this.setupDropdownEvent();
   }
 
   displayData() {
-    // ajout de l'en-tête à la page
     const body = document.querySelector("body");
 
-    // Création de l'en-tête à partir du template
     const headerTemplate = new HeaderTemplate();
     const headerElement = headerTemplate.getDOM();
-
     body.appendChild(headerElement);
 
-    // gestionnaire d'événements pour la saisie dans la barre de recherche
+    // 'événements pour la saisie dans la barre de recherche
     const inputElement = document.querySelector(".header__input");
     inputElement.addEventListener("input", (event) => {
       event.stopPropagation();
-
       const inputValue = event.target.value;
       this.searchRecipes(inputValue);
     });
 
-    // création et de l'ajout filtres et les recettes
+    // Création et ajout des filtres et des recettes
     const main = document.createElement("main");
-
-    // les données pour les filtres
-    const filtersData = this.getItems();
-
-    // Création du template des filtres et ajout au main
-    const filters = new FiltersTemplate(
-      filtersData.ingredients,
-      filtersData.appliances,
-      filtersData.ustensils
-    );
-
-    main.appendChild(filters.getDOM());
-
-    // afficher le resulat de clique dans le dropdown
-    const resultSection = document.createElement("section");
-    resultSection.id = "selectedItemsResult";
-    main.appendChild(resultSection);
-
-    // Création du template des recettes et ajout au main
-    const recipes = new RecipesTemplate(this.recipes);
-    main.appendChild(recipes.getDOM());
+    main.appendChild(this.createFilters());
+    main.appendChild(this.createResultSection());
+    main.appendChild(this.createRecipes());
 
     body.appendChild(main);
   }
 
   getItems() {
-    // stocker les ingrédients, appareils et ustensiles
     const uniqueIngredients = new Set();
     const uniqueAppliances = new Set();
     const uniqueUstensils = new Set();
 
-    // Parcourez toutes les recettes pour extraire ingrédients, appareils, ustensiles
     this.recipes.forEach((recipe) => {
       recipe.ingredients.forEach((ingredient) => {
         uniqueIngredients.add(ingredient.ingredient);
@@ -98,12 +60,12 @@ class App {
       }
     });
 
-    // Convertissez les sets en tableaux
-    const ingredientsArray = Array.from(uniqueIngredients);
-    const appliancesArray = Array.from(uniqueAppliances);
-    const ustensilsArray = Array.from(uniqueUstensils);
+    const fnSort = (item1, item2) => item1.localeCompare(item2);
 
-    // Retournez un objet contenant les données nécessaires
+    const ingredientsArray = Array.from(uniqueIngredients).sort(fnSort);
+    const appliancesArray = Array.from(uniqueAppliances).sort(fnSort);
+    const ustensilsArray = Array.from(uniqueUstensils).sort(fnSort);
+
     return {
       ingredients: ingredientsArray,
       appliances: appliancesArray,
@@ -111,19 +73,86 @@ class App {
     };
   }
 
-  // ?????????????????????????????
+  createResultSection() {
+    const resultSection = document.createElement("section");
+    resultSection.id = "tags";
+    return resultSection;
+  }
+
+  createFilters() {
+    const filtersData = this.getItems();
+    const filters = new FiltersTemplate(
+      filtersData.ingredients,
+      filtersData.appliances,
+      filtersData.ustensils,
+      (dropdown, li, item, selected) => {
+        const tagsSection = document.querySelector("#tags");
+
+        if (selected) {
+          const tag = document.createElement("div");
+          tag.textContent = item;
+          tag.className = "tag";
+          // tag.id = li.id;
+          tag.dataset.category = dropdown.dataset.category;
+          tag.dataset.key = li.dataset.key;
+
+          const buttonClose = document.createElement("i");
+          buttonClose.className = "fa-solid fa-xmark icon-close";
+          buttonClose.addEventListener("click", (event) => {
+            event.preventDefault();
+            tag.remove();
+            li.classList.remove("dropdown__item--selected");
+          });
+
+          tag.appendChild(buttonClose);
+          tagsSection.appendChild(tag);
+        } else {
+          const tag = tagsSection.querySelector(
+            `.tag[data-category="${dropdown.dataset.category}"][data-key="${li.dataset.key}"]`
+          );
+          tag.remove();
+        }
+
+        this.updateRecipeTags();
+      }
+    );
+    return filters.getDOM();
+  }
+
+  createRecipes() {
+    const recipes = new RecipesTemplate(this.recipes);
+    return recipes.getDOM();
+  }
+
+  setupDropdownEvent() {
+    document.addEventListener("click", (event) => {
+      const dropdowns = document.querySelectorAll(".dropdown");
+      dropdowns.forEach((dropdown) => {
+        const dropdownContent = dropdown.querySelector(".dropdown__content");
+        if (
+          !dropdownContent.classList.contains("hidden") &&
+          !dropdown.contains(event.target)
+        ) {
+          dropdownContent.classList.add("hidden");
+        }
+      });
+    });
+  }
+
   searchRecipes(searchInput) {
-    // Création d'une expression régulière pour la recherche
-    const regex = new RegExp(searchInput, "i"); // 'i' indique une recherche insensible à la casse
+    const regex = new RegExp(searchInput, "i");
     const filteredRecipes = this.recipes.filter((recipe) =>
       regex.test(recipe.name)
     );
-
-    // Mettre à jour l'interface utilisateur avec les résultats de la recherche
     const recipesTemplate = new RecipesTemplate(filteredRecipes);
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
     recipesSection.appendChild(recipesTemplate.getDOM());
+  }
+
+  // ,????????????????
+  updateRecipeTags() {
+    const tags = document.querySelectorAll("#tags .tag");
   }
 }
 

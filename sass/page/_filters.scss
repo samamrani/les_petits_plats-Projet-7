@@ -1,0 +1,23 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  justify-content: space-between;
+  padding: 20px 0;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  &__recette {
+    font-family: $font-family-title;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #1b1b1b;
+    background: none;
+  }
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}

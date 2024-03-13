@@ -1,0 +1,13 @@
+.tag {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  align-items: center;
+  background: $primary-color;
+  padding: 1.25em;
+  border-radius: 0.7em;
+
+  .icon-close {
+    cursor: pointer;
+  }
+}

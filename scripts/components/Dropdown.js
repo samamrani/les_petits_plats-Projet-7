@@ -1,52 +1,45 @@
 import { DropdownItems } from "./DropdownItems.js";
 import { DropdownButton } from "./DropdownButton.js";
 import { DropDownSearch } from "./DropdownSearch.js";
+
 export class Dropdown {
-  constructor(category, list) {
+  constructor(category, list, selectChange) {
     this.category = category;
     this.list = list;
-    this.openIcon = false;
+    this.selectChange = selectChange;
   }
 
   getDOM() {
     const dropdown = document.createElement("div");
     dropdown.className = "dropdown";
     dropdown.id = this.category;
+    dropdown.dataset.category = this.category;
 
     const dropdownContent = document.createElement("div");
     dropdownContent.className = "dropdown__content hidden";
     dropdownContent.id = this.category + "_dropdown__content";
 
-    const dropdownList = document.createElement("ul");
-    dropdownList.className = "dropdown__list";
-    dropdownList.id = this.category + "_dropdown__list";
+    const dropdownItems = new DropdownItems(this.list, (li, item, selected) => {
+      this.selectChange(dropdown, li, item, selected);
+    }).getDOM();
 
-    const dropdownListSelected = document.createElement("ul");
-    dropdownListSelected.className = "dropdown__list";
-    dropdownListSelected.id = this.category + "_dropdown__list_selected";
+    const dropdownSearch = new DropDownSearch((text) => {
+      const items = dropdownItems.querySelectorAll("li");
+      items.forEach((item) => {
+        const itemName = item.textContent;
+        if (itemName.includes(text)) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+    }).getDOM();
 
-    const de = new DropDownSearch(dropdownList);
-    const dropdownSearchDOM = de.getDOM();
-
-    dropdownContent.appendChild(dropdownSearchDOM);
-
-    dropdownContent.appendChild(dropdownListSelected);
-
-    dropdownContent.appendChild(dropdownList);
-
-    const di = new DropdownItems(
-      this.list,
-      this.category,
-      dropdownList,
-      dropdownListSelected
-    );
-    di.render();
-
-    const da = new DropdownButton(this.category, this.openIcon);
-    const dropdownButton = da.getDOM();
+    dropdownContent.appendChild(dropdownSearch);
+    dropdownContent.appendChild(dropdownItems);
+    const dropdownButton = new DropdownButton(this.category).getDOM();
 
     dropdown.appendChild(dropdownButton);
-
     dropdown.appendChild(dropdownContent);
 
     return dropdown;

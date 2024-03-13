@@ -1,6 +1,6 @@
 export class DropDownSearch {
-  constructor(dropdownList) {
-    this.dropdownList = dropdownList;
+  constructor(searchChange) {
+    this.searchChange = searchChange;
   }
 
   getDOM() {
@@ -13,10 +13,10 @@ export class DropDownSearch {
     dropdownInput.placeholder = "Rechercher...";
 
     const resetButton = document.createElement("i");
-    resetButton.className = "fa-solid fa-xmark hidden";
+    resetButton.className = "fa-solid fa-xmark reset-icon hidden";
 
     const searchIcon = document.createElement("i");
-    searchIcon.className = "fas fa-search";
+    searchIcon.className = "fas fa-search search-icon";
 
     dropdownSearch.appendChild(dropdownInput);
     dropdownSearch.appendChild(resetButton);
@@ -28,6 +28,8 @@ export class DropDownSearch {
 
       dropdownInput.value = "";
       resetButton.classList.add("hidden");
+
+      this.searchChange("");
     });
 
     // gestionnaire d'événements pour la recherche
@@ -40,17 +42,7 @@ export class DropDownSearch {
       } else {
         resetButton.classList.add("hidden");
       }
-
-      const dropdownItems = this.dropdownList.querySelectorAll("li");
-
-      dropdownItems.forEach((item) => {
-        const itemName = item.textContent;
-        if (itemName.includes(inputValue)) {
-          item.classList.remove("hidden");
-        } else {
-          item.classList.add("hidden");
-        }
-      });
+      this.searchChange(inputValue);
     });
 
     return dropdownSearch;
