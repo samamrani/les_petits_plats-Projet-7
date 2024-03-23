@@ -220,8 +220,10 @@ class App {
       let verifyUstensils = true;
 
       if (selectedIngredients.length > 0) {
-        verifyIngredients = recipe.ingredients.some((ingredient) =>
-          selectedIngredients.includes(ingredient.ingredient.toLowerCase())
+        verifyIngredients = selectedIngredients.every((ingredient) =>
+          recipe.ingredients.some(
+            (item) => item.ingredient.toLowerCase() === ingredient
+          )
         );
       }
       // si l'appareil de la recette correspond à l'appareil sélectionné.
@@ -231,8 +233,10 @@ class App {
         );
       }
       if (selectedUstensils.length > 0) {
-        verifyUstensils = recipe.ustensils.some((ustensil) =>
-          selectedUstensils.includes(ustensil.toLowerCase())
+        verifyUstensils = selectedUstensils.every((ustensil) =>
+          recipe.ustensils.some(
+            (item) => item.ustensil.toLowerCase() === ustensil
+          )
         );
       }
       return verifyIngredients && verifyAppliances && verifyUstensils;
@@ -263,3 +267,6 @@ class App {
 
 const app = new App();
 app.init();
+
+//   https://validator.w3.org/
+// ttps://jigsaw.w3.org/css-validator/
