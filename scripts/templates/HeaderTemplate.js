@@ -30,6 +30,7 @@ export class HeaderTemplate {
 
     const form = document.createElement("form");
     form.name = "search";
+    form.id = "searchForm";
     form.className = "header__search";
     // form.action = "";
 
@@ -42,6 +43,7 @@ export class HeaderTemplate {
 
     const inputElement = document.createElement("input");
     inputElement.className = "header__input";
+    inputElement.id = "searchInput";
     inputElement.type = "text";
     inputElement.name = "search";
     inputElement.placeholder = "Rechercher un ingrédient,...";

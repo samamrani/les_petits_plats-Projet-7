@@ -15,6 +15,8 @@ export class RecipesTemplate {
       recipeSection.appendChild(card.getDOM());
     });
 
+    // const recipesSection = document.querySelector(".recipes");
+
     return recipeSection;
   }
 }

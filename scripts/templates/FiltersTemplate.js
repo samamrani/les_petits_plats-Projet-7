@@ -7,7 +7,7 @@ export class FiltersTemplate {
     this.ustensils = ustensils;
     this.selectChange = selectChange;
 
-    this.recipes = [];
+    this.filteredRecipes = [];
   }
 
   getDOM() {
@@ -16,6 +16,7 @@ export class FiltersTemplate {
 
     const filtersContainer = document.createElement("div");
     filtersContainer.className = "filters__container";
+
     // Création des dropdowns pour les ingrédients, appareils et ustensiles
     const ingredientsDropdown = new Dropdown(
       "Ingrédients",
@@ -40,20 +41,13 @@ export class FiltersTemplate {
 
     filtersSection.appendChild(filtersContainer);
 
-    // afficher le nombre de recettes
+    // Afficher le nombre de recettes
     const recipeCountDiv = document.createElement("div");
     recipeCountDiv.id = "count";
     recipeCountDiv.className = "filters__recette";
-    recipeCountDiv.textContent = `${this.recipes.length} Recette(s)`;
+    recipeCountDiv.textContent = `${this.filteredRecipes.length} Recette(s)`;
     filtersSection.appendChild(recipeCountDiv);
 
     return filtersSection;
   }
-
-  // updateRecipeCount() {
-  //   const recipeCountDiv = document.getElementById("count");
-  //   if (recipeCountDiv) {
-  //     recipeCountDiv.textContent = `${this.recipes.length} Recette(s)`;
-  //   }
-  // }
 }

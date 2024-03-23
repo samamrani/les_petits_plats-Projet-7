@@ -6,8 +6,9 @@ export class RecipeCardTemplate {
   getDOM() {
     const recipe = document.createElement("div");
     recipe.classList = "recipe";
-    const img = document.createElement("img");
+    recipe.dataset.id = this.recipe.id;
 
+    const img = document.createElement("img");
     img.src = `assets/recettes/${this.recipe.image}`;
     img.alt = this.recipe.name;
     img.ariaLabel = this.recipe.name;

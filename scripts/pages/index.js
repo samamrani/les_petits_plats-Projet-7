@@ -2,7 +2,6 @@ import { HeaderTemplate } from "../templates/HeaderTemplate.js";
 import { FiltersTemplate } from "../templates/FiltersTemplate.js";
 import { RecipesTemplate } from "../templates/RecipesTemplate.js";
 import { RecipeCardTemplate } from "../templates/RecipeCardTemplate.js";
-import { DropdownItems } from "../components/DropdownItems.js";
 
 class App {
   constructor() {
@@ -10,7 +9,7 @@ class App {
     this.appliances = [];
     this.ustensils = [];
 
-    this.filtersTemplate = null;
+    // this.filtersTemplate = null;
 
     this.filteredSearch = [];
     this.filteredTags = [];
@@ -25,6 +24,9 @@ class App {
 
     // événements pour la fermeture des dropdowns en dehors
     this.setupDropdownEvent();
+
+    // ?????????????????????
+    this.updateRecipesTags();
   }
 
   displayData() {
@@ -34,9 +36,9 @@ class App {
     const headerElement = headerTemplate.getDOM();
     body.appendChild(headerElement);
 
-    // 'événements pour la saisie dans la barre de recherche
+    // 'événements---keyup, la recherche sera actualisée dès que l'utilisateur relâchera une touche
     const inputElement = document.querySelector(".header__input");
-    inputElement.addEventListener("input", (event) => {
+    inputElement.addEventListener("keyup", (event) => {
       event.stopPropagation();
       const inputValue = event.target.value;
       this.updateRecipesSearch(inputValue);
@@ -92,7 +94,7 @@ class App {
   }
 
   createFilters() {
-    const filtersData = this.getItems();
+    const filtersData = this.getItems(this.filteredSearch);
     const filters = new FiltersTemplate(
       filtersData.ingredients,
       filtersData.appliances,
@@ -159,68 +161,89 @@ class App {
     });
   }
 
-  // *********************************||||||||||
-  // ????????????????????????????????????|||||||
   updateRecipesSearch(searchText) {
-    // supprim les espaces et passer en miniscule
-    const text = searchText.trim().toLowerCase();
+    if (searchText.length >= 3) {
+      // supprim les espaces et passer en miniscule
+      const text = searchText.trim().toLowerCase();
 
-    // Filtrer les recettes correspondant à la recherche
-    const filteredRecipes = this.recipes.filter((recipe) => {
-      const nameRecipe = recipe.name.toLowerCase().includes(text);
-      const descRecipe = recipe.description.toLowerCase().includes(text);
+      // Filtrer les recettes correspondant à la recherche
+      const filteredRecipes = this.recipes.filter((recipe) => {
+        const nameRecipe = recipe.name.toLowerCase().includes(text);
+        const descRecipe = recipe.description.toLowerCase().includes(text);
 
-      // Vérifie ingrédient correspond à la recherche
-      const ingredientRecipe = recipe.ingredients.some((item) =>
-        item.ingredient.toLowerCase().includes(text)
-      );
+        // Vérifie ingrédient correspond à la recherche
+        const ingredientRecipe = recipe.ingredients.find((item) =>
+          item.ingredient.toLowerCase().includes(text)
+        );
 
-      // Retourner true si au moins correspond
-      return nameRecipe || descRecipe || ingredientRecipe;
+        // Retourner true si au moins correspond
+        return nameRecipe || descRecipe || ingredientRecipe;
+      });
+
+      // Mettre à jour la liste des recettes à afficher
+      this.filteredSearch = filteredRecipes;
+
+      // Mettre à jour l'affichage avec les recettes filtrées
+      this.updateDisplayRecipes(filteredRecipes);
+    } else {
+      // inférieure à 3, vide résultats de la recherche
+      this.filteredSearch = [];
+      this.updateDisplayRecipes([]);
+    }
+  }
+  // met à jour la visibilité des recettes en fonction des tags sélectionnés
+  updateRecipesTags() {
+    const tags = document.querySelectorAll("#tags .tag");
+    const recipes = this.recipes;
+
+    // Stocker les éléments sélectionnés dans les tags
+    const selectedIngredients = [];
+    const selectedAppliances = [];
+    const selectedUstensils = [];
+
+    // parcourir chaque tag récupéré à partir de la première ligne
+    tags.forEach((tag) => {
+      //En fonction de la valeur de l'attribut, tag est ajouté au tableau
+      if (tag.dataset.category === "Ingrédients") {
+        selectedIngredients.push(tag.textContent.trim().toLowerCase());
+      } else if (tag.dataset.category === "Appareils") {
+        selectedAppliances.push(tag.textContent.trim().toLowerCase());
+      } else if (tag.dataset.category === "Ustensiles") {
+        selectedUstensils.push(tag.textContent.trim().toLowerCase());
+      }
     });
 
-    // Mettre à jour la liste des recettes à afficher
-    this.filteredSearch = filteredRecipes;
+    // Filtrer les recettes en fonction des éléments sélectionnés
+    const filtered = recipes.filter((recipe) => {
+      let verifyIngredients = true;
+      let verifyAppliances = true;
+      let verifyUstensils = true;
 
-    // Mettre à jour l'affichage avec les recettes filtrées
-    this.updateDisplayRecipes(filteredRecipes);
-  }
+      if (selectedIngredients.length > 0) {
+        verifyIngredients = recipe.ingredients.some((ingredient) =>
+          selectedIngredients.includes(ingredient.ingredient.toLowerCase())
+        );
+      }
+      // si l'appareil de la recette correspond à l'appareil sélectionné.
+      if (selectedAppliances.length > 0) {
+        verifyAppliances = selectedAppliances.includes(
+          recipe.appliance.toLowerCase()
+        );
+      }
+      if (selectedUstensils.length > 0) {
+        verifyUstensils = recipe.ustensils.some((ustensil) =>
+          selectedUstensils.includes(ustensil.toLowerCase())
+        );
+      }
+      return verifyIngredients && verifyAppliances && verifyUstensils;
+    });
+    console.log(filtered);
 
-  // updateRecipeCount() {
-  //   const countDiv = document.querySelector("#count");
-  //   if (countDiv) {
-  //     countDiv.textContent = `${this.filteredSearch.length} Recette(s)`;
-  //   }
-
-  //   // Mettre à jour l'affichage avec les recettes filtrées
-  //   if (this.filteredSearch.length > 0) {
-  //     const recipesTemplate = new RecipesTemplate(this.filteredSearch);
-  //     const recipesSection = document.querySelector(".recipes");
-  //     recipesSection.innerHTML = "";
-  //     recipesSection.appendChild(recipesTemplate.getDOM());
-  //   }
-
-  //   console.log(this.filteredSearch);
-  // }
-
-  // //METTRE A JOUR LA LISTE DES RECETTES
-  updateRecipesTags(item) {
-    const recipesSection = document.querySelector("#tags");
-    recipesSection.innerHTML = "";
-
-    const countDiv = document.querySelector("#count");
-    if (countDiv) {
-      countDiv.textContent = `${item.length} Recette(s)`;
-    }
-
-    console.log(item);
+    this.updateDisplayRecipes(filtered);
   }
 
   // mise ajour de l'affichage des recettes
   updateDisplayRecipes(recipes) {
-    // const recipes = this.recipes;
-    // console.log(recipes);
-
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
 
@@ -233,7 +256,7 @@ class App {
     if (recipes.length > 0) {
       countDiv.textContent = `${recipes.length} Recette(s)`;
     } else {
-      countDiv.textContent = "aucune Recette";
+      countDiv.textContent = "Aucune recette";
     }
   }
 }
