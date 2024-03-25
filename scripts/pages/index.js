@@ -9,7 +9,7 @@ class App {
     this.appliances = [];
     this.ustensils = [];
 
-    // this.filtersTemplate = null;
+    this.filtersTemplate = null;
 
     this.filteredSearch = [];
     this.filteredTags = [];
@@ -24,9 +24,6 @@ class App {
 
     // événements pour la fermeture des dropdowns en dehors
     this.setupDropdownEvent();
-
-    // ?????????????????????
-    this.updateRecipesTags();
   }
 
   displayData() {
@@ -135,7 +132,7 @@ class App {
         }
       }
     );
-    // initialise filtersTemplate
+
     this.filtersTemplate = filters;
 
     return filters.getDOM();
@@ -191,9 +188,11 @@ class App {
       this.updateDisplayRecipes([]);
     }
   }
+
   // met à jour la visibilité des recettes en fonction des tags sélectionnés
   updateRecipesTags() {
     const tags = document.querySelectorAll("#tags .tag");
+
     const recipes = this.recipes;
 
     // Stocker les éléments sélectionnés dans les tags
@@ -215,34 +214,28 @@ class App {
 
     // Filtrer les recettes en fonction des éléments sélectionnés
     const filtered = recipes.filter((recipe) => {
-      let verifyIngredients = true;
-      let verifyAppliances = true;
-      let verifyUstensils = true;
+      const verifyIngredients =
+        selectedIngredients.length === 0 ||
+        selectedIngredients.every((selectedIngredient) =>
+          recipe.ingredients.some((ingredient) =>
+            ingredient.ingredient.toLowerCase().includes(selectedIngredient)
+          )
+        );
+      const verifyAppliances =
+        selectedAppliances.length === 0 ||
+        selectedAppliances.includes(recipe.appliance.toLowerCase());
 
-      if (selectedIngredients.length > 0) {
-        verifyIngredients = selectedIngredients.every((ingredient) =>
-          recipe.ingredients.some(
-            (item) => item.ingredient.toLowerCase() === ingredient
+      const verifyUstensils =
+        selectedUstensils.length === 0 ||
+        selectedUstensils.every((selectedUstensil) =>
+          recipe.ustensils.some((ustensil) =>
+            ustensil.toLowerCase().includes(selectedUstensil)
           )
         );
-      }
-      // si l'appareil de la recette correspond à l'appareil sélectionné.
-      if (selectedAppliances.length > 0) {
-        verifyAppliances = selectedAppliances.includes(
-          recipe.appliance.toLowerCase()
-        );
-      }
-      if (selectedUstensils.length > 0) {
-        verifyUstensils = selectedUstensils.every((ustensil) =>
-          recipe.ustensils.some(
-            (item) => item.ustensil.toLowerCase() === ustensil
-          )
-        );
-      }
       return verifyIngredients && verifyAppliances && verifyUstensils;
     });
-    console.log(filtered);
 
+    this.filteredTags = filtered;
     this.updateDisplayRecipes(filtered);
   }
 
@@ -262,6 +255,64 @@ class App {
     } else {
       countDiv.textContent = "Aucune recette";
     }
+
+    // ???????????????????
+
+    this.updateRecipes(recipes);
+    // ??????????????????????
+  }
+  updateRecipes(recipes) {
+    const recipesDrop = document.querySelectorAll(".dropdown__item");
+
+    recipesDrop.forEach((recipe) => {
+      const itemName = recipe.textContent.trim().toLowerCase();
+      let category = "";
+
+      // si attribut "data-category" défini ou manquant
+      if (recipe.dataset.category) {
+        category = recipe.dataset.category.toLowerCase();
+      } else {
+        // ''closest''echercher l'élément parent le plus proche
+        const dropdown = recipe.closest(".dropdown");
+        if (dropdown) {
+          category = dropdown.dataset.category.toLowerCase();
+          recipe.dataset.category = category;
+        }
+      }
+
+      let isRecipe = false;
+
+      // si l'élément est présent dans la recette
+      if (category === "ingrédients") {
+        isRecipe = recipes.some((recipeItem) =>
+          recipeItem.ingredients.some((ingredientItem) =>
+            ingredientItem.ingredient.toLowerCase().includes(itemName)
+          )
+        );
+      }
+      if (category === "appliances") {
+        isRecipe = recipes.some((recipeItem) =>
+          recipeItem.appliances.some((appliance) =>
+            appliance.toLowerCase().includes(itemName)
+          )
+        );
+      }
+
+      if (category === "ustensils") {
+        isRecipe = recipes.some((recipeItem) =>
+          recipeItem.ustensils.some((ustensil) =>
+            ustensil.toLowerCase().includes(itemName)
+          )
+        );
+      }
+
+      if (!isRecipe) {
+        recipe.classList.add("hidden");
+      } else {
+        recipe.classList.remove("hidden");
+      }
+    });
+    this.filtered = recipesDrop;
   }
 }
 
