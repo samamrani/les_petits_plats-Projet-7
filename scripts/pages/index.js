@@ -20,10 +20,11 @@ class App {
     // Récupérer les recettes depuis le fichier JSON
     this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
     this.filteredSearch = this.recipes;
+    this.filteredTags = this.recipes;
     this.displayData();
 
     // événements pour la fermeture des dropdowns en dehors
-    // this.setupDropdownEvent();
+    this.setupDropdownEvent();
   }
 
   displayData() {
@@ -49,7 +50,20 @@ class App {
 
     body.appendChild(main);
   }
-
+  setupDropdownEvent() {
+    document.addEventListener("click", (event) => {
+      const dropdowns = document.querySelectorAll(".dropdown");
+      dropdowns.forEach((dropdown) => {
+        const dropdownContent = dropdown.querySelector(".dropdown__content");
+        if (
+          !dropdownContent.classList.contains("hidden") &&
+          !dropdown.contains(event.target)
+        ) {
+          dropdownContent.classList.add("hidden");
+        }
+      });
+    });
+  }
   getItems() {
     const uniqueIngredients = new Set();
     const uniqueAppliances = new Set();
@@ -155,29 +169,22 @@ class App {
       const text = searchText.trim().toLowerCase();
 
       // Filtrer les recettes correspondant à la recherche
-      const filteredRecipes = this.recipes.filter((recipe) => {
+      this.filteredSearch = this.recipes.filter((recipe) => {
         const nameRecipe = recipe.name.toLowerCase().includes(text);
         const descRecipe = recipe.description.toLowerCase().includes(text);
 
         // Vérifie ingrédient correspond à la recherche
-        const ingredientRecipe = recipe.ingredients.find((item) =>
+        const ingredientRecipe = recipe.ingredients.some((item) =>
           item.ingredient.toLowerCase().includes(text)
         );
 
-        // Retourner true si au moins correspond
         return nameRecipe || descRecipe || ingredientRecipe;
       });
-
-      // Mettre à jour la liste des recettes à afficher
-      this.filteredSearch = filteredRecipes;
-
-      // Mettre à jour l'affichage avec les recettes filtrées
-      this.updateDisplayRecipes(filteredRecipes);
     } else {
       // inférieure à 3, vide résultats de la recherche
-      this.filteredSearch = [];
-      this.updateDisplayRecipes([]);
+      this.filteredSearch = this.recipes;
     }
+    this.updateDisplayRecipes(this.filteredSearch);
   }
 
   // met à jour la visibilité des recettes en fonction des tags sélectionnés
@@ -235,8 +242,7 @@ class App {
     const recipes = this.filteredSearch.filter((recipe) =>
       this.filteredTags.includes(recipe)
     );
-    // ????????????????????
-
+    console.log(this.filteredTags);
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
 
@@ -245,15 +251,17 @@ class App {
       recipesSection.appendChild(recipeCard.getDOM());
     });
 
-    // TODO: transformer le code ci-dessous en methode
+    this.contRecip(recipes);
+    this.updateFilters(recipes);
+  }
+
+  contRecip(recipes) {
     const countDiv = document.querySelector("#count");
     if (recipes.length > 0) {
       countDiv.textContent = `${recipes.length} Recette(s)`;
     } else {
       countDiv.textContent = "Aucune recette";
     }
-
-    this.updateFilters(recipes);
   }
 
   updateFilters(recipes) {

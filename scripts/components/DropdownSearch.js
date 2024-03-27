@@ -45,10 +45,9 @@ export class DropDownSearch {
       if (inputValue) {
         resetButton.classList.remove("hidden");
         errorMessage.classList.add("hidden");
-      } else {
-        resetButton.classList.add("hidden");
-        errorMessage.classList.add("hidden");
       }
+
+      resetButton.classList.remove("hidden");
 
       if (inputValue.length < 3) {
         errorMessage.classList.remove("hidden");
