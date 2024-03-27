@@ -18,9 +18,14 @@ export class DropDownSearch {
     const searchIcon = document.createElement("i");
     searchIcon.className = "fas fa-search search-icon";
 
+    const errorMessage = document.createElement("div");
+    errorMessage.className = "errorMessage hidden";
+    errorMessage.textContent = "Aucun résultat";
+
     dropdownSearch.appendChild(dropdownInput);
     dropdownSearch.appendChild(resetButton);
     dropdownSearch.appendChild(searchIcon);
+    dropdownSearch.appendChild(errorMessage);
 
     //gestionnaire d'événement de reset input
     resetButton.addEventListener("click", (event) => {
@@ -39,8 +44,16 @@ export class DropDownSearch {
       const inputValue = dropdownInput.value;
       if (inputValue) {
         resetButton.classList.remove("hidden");
+        errorMessage.classList.add("hidden");
       } else {
         resetButton.classList.add("hidden");
+        errorMessage.classList.add("hidden");
+      }
+
+      if (inputValue.length < 3) {
+        errorMessage.classList.remove("hidden");
+      } else {
+        errorMessage.classList.add("hidden");
       }
       this.searchChange(inputValue);
     });

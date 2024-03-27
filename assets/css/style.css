@@ -29,7 +29,6 @@ a {
 
 .dropdown {
   position: relative;
-  color: grey;
   min-width: 195px;
 }
 .dropdown__button {
@@ -74,25 +73,27 @@ a {
   position: relative;
   display: flex;
   width: 100%;
+  color: grey;
 }
 .dropdown__search .search-icon {
   position: absolute;
   cursor: pointer;
   transform: translateY(-50%);
   top: 50%;
-  right: 20px;
+  right: 26px;
 }
 .dropdown__search .reset-icon {
   position: absolute;
   cursor: pointer;
   transform: translateY(-50%);
   top: 50%;
-  right: 40px;
+  right: 50px;
+  color: grey;
 }
 .dropdown__list {
   list-style-type: none;
   padding: 0;
-  max-height: 240px;
+  max-height: 260px;
   overflow: auto;
 }
 .dropdown__item {
@@ -118,13 +119,22 @@ a {
   opacity: 1;
 }
 
+.errorMessage {
+  position: absolute;
+  top: 65px;
+  left: 48px;
+  color: red;
+}
+
 .recipes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 102px;
-  gap: 48px;
+  padding: 0 102px;
+  gap: 2rem;
   justify-content: space-between;
-  text-align: start;
+  padding: 20px 0;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .recipe {
@@ -135,7 +145,7 @@ a {
 .recipe img {
   object-fit: cover;
   width: 100%;
-  height: 253px;
+  height: 273px;
   border-top-left-radius: 21px;
   border-top-right-radius: 21px;
 }
@@ -195,7 +205,6 @@ a {
   text-align: center;
 }
 .recipe__card {
-  width: 380px;
   background: #fff;
   border-radius: 21px;
   padding-bottom: 20px;

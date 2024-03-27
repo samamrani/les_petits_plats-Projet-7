@@ -1,6 +1,6 @@
 .dropdown {
   position: relative;
-  color: grey;
+
   min-width: 195px;
 
   &__button {
@@ -50,13 +50,13 @@
     position: relative;
     display: flex;
     width: 100%;
-
+    color: grey;
     .search-icon {
       position: absolute;
       cursor: pointer;
       transform: translateY(-50%);
       top: 50%;
-      right: 20px;
+      right: 26px;
     }
 
     .reset-icon {
@@ -64,14 +64,15 @@
       cursor: pointer;
       transform: translateY(-50%);
       top: 50%;
-      right: 40px;
+      right: 50px;
+      color: grey;
     }
   }
 
   &__list {
     list-style-type: none;
     padding: 0;
-    max-height: 240px;
+    max-height: 260px;
     overflow: auto;
   }
 
@@ -100,4 +101,11 @@
       }
     }
   }
+}
+.errorMessage {
+  position: absolute;
+  top: 65px;
+  left: 48px;
+
+  color: red;
 }

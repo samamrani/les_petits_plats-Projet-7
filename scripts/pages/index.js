@@ -23,7 +23,7 @@ class App {
     this.displayData();
 
     // événements pour la fermeture des dropdowns en dehors
-    this.setupDropdownEvent();
+    // this.setupDropdownEvent();
   }
 
   displayData() {
@@ -57,30 +57,30 @@ class App {
 
     this.recipes.forEach((recipe) => {
       recipe.ingredients.forEach((ingredient) => {
-        uniqueIngredients.add(ingredient.ingredient);
+        uniqueIngredients.add(ingredient.ingredient.toLowerCase());
       });
 
       if (recipe.appliance) {
-        uniqueAppliances.add(recipe.appliance);
+        uniqueAppliances.add(recipe.appliance.toLowerCase());
       }
 
       if (recipe.ustensils) {
         recipe.ustensils.forEach((ustensil) => {
-          uniqueUstensils.add(ustensil);
+          uniqueUstensils.add(ustensil.toLowerCase());
         });
       }
     });
 
-    const fnSort = (item1, item2) => item1.localeCompare(item2);
+    const sortTri = (item1, item2) => item1.localeCompare(item2);
 
-    const ingredientsArray = Array.from(uniqueIngredients).sort(fnSort);
-    const appliancesArray = Array.from(uniqueAppliances).sort(fnSort);
-    const ustensilsArray = Array.from(uniqueUstensils).sort(fnSort);
+    const ingredientsList = Array.from(uniqueIngredients).sort(sortTri);
+    const appliancesList = Array.from(uniqueAppliances).sort(sortTri);
+    const ustensilsList = Array.from(uniqueUstensils).sort(sortTri);
 
     return {
-      ingredients: ingredientsArray,
-      appliances: appliancesArray,
-      ustensils: ustensilsArray,
+      ingredients: ingredientsList,
+      appliances: appliancesList,
+      ustensils: ustensilsList,
     };
   }
 
@@ -113,6 +113,8 @@ class App {
             event.preventDefault();
             tag.remove();
             li.classList.remove("dropdown__item--selected");
+
+            this.updateFilters();
           });
 
           tag.appendChild(buttonClose);
@@ -134,28 +136,17 @@ class App {
     );
 
     this.filtersTemplate = filters;
-
+    this.updateFilters();
     return filters.getDOM();
   }
 
   createRecipes() {
-    const recipes = new RecipesTemplate(this.recipes);
+    //  trie les recettes en utilisant la méthode localeCompare()--ordre alphabétique
+    const sortedRecipes = this.recipes.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    const recipes = new RecipesTemplate(sortedRecipes);
     return recipes.getDOM();
-  }
-
-  setupDropdownEvent() {
-    document.addEventListener("click", (event) => {
-      const dropdowns = document.querySelectorAll(".dropdown");
-      dropdowns.forEach((dropdown) => {
-        const dropdownContent = dropdown.querySelector(".dropdown__content");
-        if (
-          !dropdownContent.classList.contains("hidden") &&
-          !dropdown.contains(event.target)
-        ) {
-          dropdownContent.classList.add("hidden");
-        }
-      });
-    });
   }
 
   updateRecipesSearch(searchText) {
@@ -240,7 +231,12 @@ class App {
   }
 
   // mise ajour de l'affichage des recettes
-  updateDisplayRecipes(recipes) {
+  updateDisplayRecipes() {
+    const recipes = this.filteredSearch.filter((recipe) =>
+      this.filteredTags.includes(recipe)
+    );
+    // ????????????????????
+
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
 
@@ -249,6 +245,7 @@ class App {
       recipesSection.appendChild(recipeCard.getDOM());
     });
 
+    // TODO: transformer le code ci-dessous en methode
     const countDiv = document.querySelector("#count");
     if (recipes.length > 0) {
       countDiv.textContent = `${recipes.length} Recette(s)`;
@@ -256,63 +253,49 @@ class App {
       countDiv.textContent = "Aucune recette";
     }
 
-    // ???????????????????
-
-    this.updateRecipes(recipes);
-    // ??????????????????????
+    this.updateFilters(recipes);
   }
-  updateRecipes(recipes) {
-    const recipesDrop = document.querySelectorAll(".dropdown__item");
 
-    recipesDrop.forEach((recipe) => {
-      const itemName = recipe.textContent.trim().toLowerCase();
-      let category = "";
+  updateFilters(recipes) {
+    const filterItems = document.querySelectorAll(".dropdown__item");
+    filterItems.forEach((item) => {
+      const itemName = item.textContent.trim().toLowerCase();
 
-      // si attribut "data-category" défini ou manquant
-      if (recipe.dataset.category) {
-        category = recipe.dataset.category.toLowerCase();
-      } else {
-        // ''closest''echercher l'élément parent le plus proche
-        const dropdown = recipe.closest(".dropdown");
-        if (dropdown) {
-          category = dropdown.dataset.category.toLowerCase();
-          recipe.dataset.category = category;
-        }
-      }
+      // ''closest''echercher l'élément parent le plus proche
+      const dropdown = item.closest(".dropdown");
+      const category = dropdown.dataset.category.toLowerCase();
 
       let isRecipe = false;
 
-      // si l'élément est présent dans la recette
+      // si l'éléments est présent dans la recette
       if (category === "ingrédients") {
         isRecipe = recipes.some((recipeItem) =>
           recipeItem.ingredients.some((ingredientItem) =>
             ingredientItem.ingredient.toLowerCase().includes(itemName)
           )
         );
-      }
-      if (category === "appliances") {
-        isRecipe = recipes.some((recipeItem) =>
-          recipeItem.appliances.some((appliance) =>
-            appliance.toLowerCase().includes(itemName)
-          )
+      } else if (category === "appareils") {
+        isRecipe = recipes.some(
+          (recipeItem) =>
+            recipeItem.appliance &&
+            recipeItem.appliance.toLowerCase().includes(itemName)
+        );
+      } else if (category === "ustensiles") {
+        isRecipe = recipes.some(
+          (recipeItem) =>
+            recipeItem.ustensils &&
+            recipeItem.ustensils.some((ustensil) =>
+              ustensil.toLowerCase().includes(itemName)
+            )
         );
       }
 
-      if (category === "ustensils") {
-        isRecipe = recipes.some((recipeItem) =>
-          recipeItem.ustensils.some((ustensil) =>
-            ustensil.toLowerCase().includes(itemName)
-          )
-        );
-      }
-
-      if (!isRecipe) {
-        recipe.classList.add("hidden");
+      if (isRecipe) {
+        item.classList.remove("hidden");
       } else {
-        recipe.classList.remove("hidden");
+        item.classList.add("hidden");
       }
     });
-    this.filtered = recipesDrop;
   }
 }
 
