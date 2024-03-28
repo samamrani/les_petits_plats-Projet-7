@@ -32,7 +32,6 @@ export class HeaderTemplate {
     form.name = "search";
     form.id = "searchForm";
     form.className = "header__search";
-    // form.action = "";
 
     headerContent.appendChild(form);
 
@@ -60,7 +59,7 @@ export class HeaderTemplate {
       event.stopPropagation();
 
       inputElement.value = "";
-      // ?????
+      // declenchement de l'evenement 'input'
       inputElement.dispatchEvent(new Event("input"));
 
       resetButton.classList.add("hidden");
