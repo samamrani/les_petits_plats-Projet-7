@@ -61,11 +61,3 @@ export class DropDownSearch {
     return dropdownSearch;
   }
 }
-
-// function myFunction() {
-//   timeout = setTimeout(alertFunc, 3000);
-// }
-
-// function alertFunc() {
-//   alert("Hello!");
-// }

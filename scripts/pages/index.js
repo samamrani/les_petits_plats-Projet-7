@@ -9,8 +9,6 @@ class App {
     this.appliances = [];
     this.ustensils = [];
 
-    this.filtersTemplate = null;
-
     this.filteredSearch = [];
     this.filteredTags = [];
     this.filtered = [];
@@ -30,7 +28,7 @@ class App {
     this.displayData();
 
     // événements pour la fermeture des dropdowns en dehors
-    this.setupDropdownEvent();
+    this.cancelDropdownOnEvent();
   }
 
   displayData() {
@@ -153,7 +151,6 @@ class App {
       }
     );
 
-    this.filtersTemplate = filters;
     this.updateFiltersDropdown();
     return filters.getDOM();
   }
@@ -239,12 +236,9 @@ class App {
 
   // mise ajour de l'affichage des recettes
   updateDisplayRecipes() {
-    // ??????
     const recipes = this.filteredSearch.filter((recipe) =>
       this.filteredTags.includes(recipe)
     );
-    console.log(this.filteredTags);
-    // ------------------
 
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
@@ -262,7 +256,7 @@ class App {
     const countDiv = document.querySelector("#count");
 
     if (recipes.length > 0) {
-      countDiv.textContent = `0 Recette(s)`;
+      countDiv.textContent = `${recipes.length} Recette(s)`;
     } else {
       countDiv.textContent = "Aucune recette";
     }
