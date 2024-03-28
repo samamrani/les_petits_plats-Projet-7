@@ -62,7 +62,7 @@ export class HeaderTemplate {
       inputElement.value = "";
       // ?????
       inputElement.dispatchEvent(new Event("input"));
-      console.log(event);
+
       resetButton.classList.add("hidden");
     });
 

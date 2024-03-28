@@ -19,6 +19,12 @@ class App {
   async init() {
     // Récupérer les recettes depuis le fichier JSON
     this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
+
+    //  trier les recettes par ordre alphabétique
+    this.recipes.sort((recipeA, recipeB) =>
+      recipeA.name.localeCompare(recipeB.name)
+    );
+
     this.filteredSearch = this.recipes;
     this.filteredTags = this.recipes;
     this.displayData();
@@ -34,9 +40,9 @@ class App {
     const headerElement = headerTemplate.getDOM();
     body.appendChild(headerElement);
 
-    // 'événements---keyup, la recherche sera actualisée dès que l'utilisateur relâchera une touche
+    // 'événements la recherche sera actualisée dès que l'utilisateur relâchera une touche
     const inputElement = document.querySelector(".header__input");
-    inputElement.addEventListener("keyup", (event) => {
+    inputElement.addEventListener("input", (event) => {
       event.stopPropagation();
       const inputValue = event.target.value;
       this.updateRecipesSearch(inputValue);
@@ -44,13 +50,16 @@ class App {
 
     // Création et ajout des filtres et des recettes
     const main = document.createElement("main");
-    main.appendChild(this.createFilters());
-    main.appendChild(this.createResultSection());
-    main.appendChild(this.createRecipes());
+    main.appendChild(this.createFiltersSection());
+    main.appendChild(this.createTagsSection());
+    main.appendChild(this.createRecipesSection());
 
     body.appendChild(main);
+
+    this.updateDisplayCountRecipes(this.recipes);
   }
-  setupDropdownEvent() {
+
+  cancelDropdownOnEvent() {
     document.addEventListener("click", (event) => {
       const dropdowns = document.querySelectorAll(".dropdown");
       dropdowns.forEach((dropdown) => {
@@ -64,7 +73,8 @@ class App {
       });
     });
   }
-  getItems() {
+
+  prepareFiltersDropdown() {
     const uniqueIngredients = new Set();
     const uniqueAppliances = new Set();
     const uniqueUstensils = new Set();
@@ -98,14 +108,14 @@ class App {
     };
   }
 
-  createResultSection() {
+  createTagsSection() {
     const resultSection = document.createElement("section");
     resultSection.id = "tags";
     return resultSection;
   }
 
-  createFilters() {
-    const filtersData = this.getItems(this.filteredSearch);
+  createFiltersSection() {
+    const filtersData = this.prepareFiltersDropdown(this.filteredSearch);
     const filters = new FiltersTemplate(
       filtersData.ingredients,
       filtersData.appliances,
@@ -117,7 +127,7 @@ class App {
           const tag = document.createElement("div");
           tag.textContent = item;
           tag.className = "tag";
-          // tag.id = li.id;
+
           tag.dataset.category = dropdown.dataset.category;
           tag.dataset.key = li.dataset.key;
 
@@ -128,38 +138,28 @@ class App {
             tag.remove();
             li.classList.remove("dropdown__item--selected");
 
-            this.updateFilters();
+            this.updateFiltersDropdown();
           });
 
           tag.appendChild(buttonClose);
           tagsSection.appendChild(tag);
-
-          // orsque l'utilisateur sélectionne une recette, j'appelle
-          this.updateRecipesTags(item);
-          // -------------------
         } else {
           const tag = tagsSection.querySelector(
             `.tag[data-category="${dropdown.dataset.category}"][data-key="${li.dataset.key}"]`
           );
-          // ,,,,,
           tag.remove();
-
-          this.updateRecipesTags();
         }
+        this.updateRecipesTags();
       }
     );
 
     this.filtersTemplate = filters;
-    this.updateFilters();
+    this.updateFiltersDropdown();
     return filters.getDOM();
   }
 
-  createRecipes() {
-    //  trie les recettes en utilisant la méthode localeCompare()--ordre alphabétique
-    const sortedRecipes = this.recipes.sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-    const recipes = new RecipesTemplate(sortedRecipes);
+  createRecipesSection() {
+    const recipes = new RecipesTemplate(this.recipes);
     return recipes.getDOM();
   }
 
@@ -239,10 +239,13 @@ class App {
 
   // mise ajour de l'affichage des recettes
   updateDisplayRecipes() {
+    // ??????
     const recipes = this.filteredSearch.filter((recipe) =>
       this.filteredTags.includes(recipe)
     );
     console.log(this.filteredTags);
+    // ------------------
+
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
 
@@ -251,20 +254,21 @@ class App {
       recipesSection.appendChild(recipeCard.getDOM());
     });
 
-    this.contRecip(recipes);
-    this.updateFilters(recipes);
+    this.updateDisplayCountRecipes(recipes);
+    this.updateFiltersDropdown(recipes);
   }
 
-  contRecip(recipes) {
+  updateDisplayCountRecipes(recipes) {
     const countDiv = document.querySelector("#count");
+
     if (recipes.length > 0) {
-      countDiv.textContent = `${recipes.length} Recette(s)`;
+      countDiv.textContent = `0 Recette(s)`;
     } else {
       countDiv.textContent = "Aucune recette";
     }
   }
 
-  updateFilters(recipes) {
+  updateFiltersDropdown(recipes) {
     const filterItems = document.querySelectorAll(".dropdown__item");
     filterItems.forEach((item) => {
       const itemName = item.textContent.trim().toLowerCase();
@@ -309,6 +313,3 @@ class App {
 
 const app = new App();
 app.init();
-
-//   https://validator.w3.org/
-// ttps://jigsaw.w3.org/css-validator/

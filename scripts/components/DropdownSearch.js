@@ -45,6 +45,7 @@ export class DropDownSearch {
       if (inputValue) {
         resetButton.classList.remove("hidden");
         errorMessage.classList.add("hidden");
+        return;
       }
 
       resetButton.classList.remove("hidden");
@@ -60,3 +61,11 @@ export class DropDownSearch {
     return dropdownSearch;
   }
 }
+
+// function myFunction() {
+//   timeout = setTimeout(alertFunc, 3000);
+// }
+
+// function alertFunc() {
+//   alert("Hello!");
+// }

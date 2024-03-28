@@ -6,8 +6,6 @@ export class FiltersTemplate {
     this.appliances = appliances;
     this.ustensils = ustensils;
     this.selectChange = selectChange;
-
-    this.filteredRecipes = [];
   }
 
   getDOM() {
@@ -45,7 +43,7 @@ export class FiltersTemplate {
     const recipeCountDiv = document.createElement("div");
     recipeCountDiv.id = "count";
     recipeCountDiv.className = "filters__recette";
-    recipeCountDiv.textContent = `${this.filteredRecipes.length} Recette(s)`;
+    recipeCountDiv.textContent = `50 Recette(s)`;
     filtersSection.appendChild(recipeCountDiv);
 
     return filtersSection;
