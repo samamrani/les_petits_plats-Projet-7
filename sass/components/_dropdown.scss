@@ -1,6 +1,5 @@
 .dropdown {
   position: relative;
-
   min-width: 195px;
 
   &__button {
@@ -108,4 +107,11 @@
   left: 48px;
 
   color: red;
+}
+
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  .dropdown {
+    margin: 10px auto;
+  }
 }

@@ -11,3 +11,15 @@
     cursor: pointer;
   }
 }
+
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  .tag {
+    margin-left: 50px;
+    padding: 1em;
+  }
+
+  .tag .icon-close {
+    margin-top: 0.5em;
+  }
+}

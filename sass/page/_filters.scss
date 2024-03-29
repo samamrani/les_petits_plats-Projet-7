@@ -21,3 +21,9 @@
     gap: 20px;
   }
 }
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  #count {
+    margin: 10px auto;
+  }
+}

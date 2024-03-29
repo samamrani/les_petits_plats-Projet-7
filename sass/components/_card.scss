@@ -1,7 +1,7 @@
 .recipes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 0 102px;
+  padding: 0 20px;
   gap: 2rem;
   justify-content: space-between;
   padding: 20px 0;
@@ -48,7 +48,6 @@
     color: #1b1b1b;
     font-size: 14px;
     font-weight: 400;
-
     overflow: hidden;
     text-overflow: ellipsis;
     width: 330px;
@@ -87,8 +86,8 @@
     width: 63px;
     height: 26px;
     position: absolute;
-    margin-left: 300px;
-    margin-top: 20px;
+    top: 35px;
+    right: 40px;
     text-align: center;
   }
 
@@ -101,5 +100,50 @@
   h3 {
     font-size: 18px;
     font-weight: 400px;
+  }
+}
+
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  .recipes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recipe {
+    padding: 10px;
+
+    img {
+      height: 220px;
+    }
+    &__card {
+      max-width: 300px;
+    }
+
+    &__title {
+      font-size: 16px;
+    }
+    &__temps {
+      top: 20px;
+      right: 20px;
+    }
+
+    &__description {
+      font-size: 12px;
+      width: 220px;
+      height: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__recipeTitle {
+      font-size: 10px;
+    }
+    &__ingredients {
+      width: 200px;
+      height: 200px;
+      line-height: 2.5;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }

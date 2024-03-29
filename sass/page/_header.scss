@@ -10,23 +10,25 @@
     }
   }
 
-  &__logo {
+  &__logo-image {
     position: absolute;
     top: 51px;
     left: 69px;
+    max-width: 100%;
+    height: auto;
   }
 
   &__content {
     position: absolute;
-    transform: translate(-50%, 50%);
-    top: 15%;
+    transform: translate(-50%, -50%);
+    top: 50%;
     left: 50%;
   }
 
   &__title {
     font-family: $font-family-title;
     color: $primary-color;
-    font-size: 44px;
+    font-size: 2.5vw;
     font-weight: 400;
     text-align: center;
     text-transform: uppercase;
@@ -36,10 +38,10 @@
 
   &__input {
     position: relative;
-    padding: 1.5em 8em 1.5em 2.1875em;
+    padding: 2% 4% 2% 3%;
     border-radius: 11px;
     color: light grey;
-    // text-overflow: ellipsis;
+
     width: 100%;
     max-width: 954px;
   }
@@ -54,13 +56,14 @@
   &__form i.fas.fa-search {
     position: absolute;
     top: 50%;
-    left: 96%;
-    transform: translate(-50%, -50%);
+    right: 2%;
+    transform: translate(0, -50%);
     cursor: pointer;
     color: white;
     background: black;
-    padding: 12px;
-    border-radius: 11px;
+    padding: 1.5%;
+    border-radius: 1em;
+    font-size: 1vw;
   }
 
   &__form i.fas.fa-search:hover {
@@ -75,5 +78,26 @@
     transform: translate(-50%, -50%);
     cursor: pointer;
     padding: 12px;
+  }
+}
+
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  .header {
+    &__title {
+      font-size: 5vw;
+      margin-bottom: 4vw;
+    }
+
+    &__input {
+      font-size: 2vw;
+    }
+    &__logo {
+      left: 20px;
+      top: 20px;
+    }
+    &__logo-image {
+      max-width: 20%;
+    }
   }
 }

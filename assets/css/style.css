@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *,
 ::before,
 ::after {
@@ -126,10 +127,16 @@ a {
   color: red;
 }
 
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  .dropdown {
+    margin: 10px auto;
+  }
+}
 .recipes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 0 102px;
+  padding: 0 20px;
   gap: 2rem;
   justify-content: space-between;
   padding: 20px 0;
@@ -200,8 +207,8 @@ a {
   width: 63px;
   height: 26px;
   position: absolute;
-  margin-left: 300px;
-  margin-top: 20px;
+  top: 35px;
+  right: 40px;
   text-align: center;
 }
 .recipe__card {
@@ -214,6 +221,45 @@ a {
   font-weight: 400px;
 }
 
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  .recipes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .recipe {
+    padding: 10px;
+  }
+  .recipe img {
+    height: 220px;
+  }
+  .recipe__card {
+    max-width: 300px;
+  }
+  .recipe__title {
+    font-size: 16px;
+  }
+  .recipe__temps {
+    top: 20px;
+    right: 20px;
+  }
+  .recipe__description {
+    font-size: 12px;
+    width: 220px;
+    height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .recipe__recipeTitle {
+    font-size: 10px;
+  }
+  .recipe__ingredients {
+    width: 200px;
+    height: 200px;
+    line-height: 2.5;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 .tag {
   display: flex;
   justify-content: space-between;
@@ -227,6 +273,16 @@ a {
   cursor: pointer;
 }
 
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  .tag {
+    margin-left: 50px;
+    padding: 1em;
+  }
+  .tag .icon-close {
+    margin-top: 0.5em;
+  }
+}
 .header {
   position: relative;
 }
@@ -238,21 +294,23 @@ a {
 .header__background.hidden {
   display: none;
 }
-.header__logo {
+.header__logo-image {
   position: absolute;
   top: 51px;
   left: 69px;
+  max-width: 100%;
+  height: auto;
 }
 .header__content {
   position: absolute;
-  transform: translate(-50%, 50%);
-  top: 15%;
+  transform: translate(-50%, -50%);
+  top: 50%;
   left: 50%;
 }
 .header__title {
   font-family: "Anton", sans-serif;
   color: #ffd15b;
-  font-size: 44px;
+  font-size: 2.5vw;
   font-weight: 400;
   text-align: center;
   text-transform: uppercase;
@@ -260,7 +318,7 @@ a {
 }
 .header__input {
   position: relative;
-  padding: 1.5em 8em 1.5em 2.1875em;
+  padding: 2% 4% 2% 3%;
   border-radius: 11px;
   color: light grey;
   width: 100%;
@@ -275,13 +333,14 @@ a {
 .header__form i.fas.fa-search {
   position: absolute;
   top: 50%;
-  left: 96%;
-  transform: translate(-50%, -50%);
+  right: 2%;
+  transform: translate(0, -50%);
   cursor: pointer;
   color: white;
   background: black;
-  padding: 12px;
-  border-radius: 11px;
+  padding: 1.5%;
+  border-radius: 1em;
+  font-size: 1vw;
 }
 .header__form i.fas.fa-search:hover {
   background-color: #ffd15b;
@@ -296,6 +355,23 @@ a {
   padding: 12px;
 }
 
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  .header__title {
+    font-size: 5vw;
+    margin-bottom: 4vw;
+  }
+  .header__input {
+    font-size: 2vw;
+  }
+  .header__logo {
+    left: 20px;
+    top: 20px;
+  }
+  .header__logo-image {
+    max-width: 20%;
+  }
+}
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -318,6 +394,12 @@ a {
   gap: 20px;
 }
 
+/* Media queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+  #count {
+    margin: 10px auto;
+  }
+}
 #tags {
   display: flex;
   flex-wrap: wrap;
