@@ -151,6 +151,8 @@ main {
   gap: 2rem;
   justify-content: space-between;
   padding: 0 40px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .recipe {
@@ -294,6 +296,8 @@ main {
 }
 .header {
   position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 .header__background {
   object-fit: cover;
@@ -383,6 +387,10 @@ main {
   gap: 2rem;
   padding-top: 10px;
   padding-left: 40px;
+  padding-right: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  justify-content: space-between;
 }
 .filters__recette {
   font-family: "Anton", sans-serif;
@@ -390,7 +398,6 @@ main {
   font-weight: 400;
   color: #1b1b1b;
   background: none;
-  padding-left: 35%;
 }
 .filters__container {
   display: flex;

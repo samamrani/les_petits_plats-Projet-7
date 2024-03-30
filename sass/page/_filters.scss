@@ -4,13 +4,16 @@
   gap: 2rem;
   padding-top: 10px;
   padding-left: 40px;
+  padding-right: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  justify-content: space-between;
   &__recette {
     font-family: $font-family-title;
     font-size: 1.6rem;
     font-weight: 400;
     color: #1b1b1b;
     background: none;
-    padding-left: 35%;
   }
   &__container {
     display: flex;
