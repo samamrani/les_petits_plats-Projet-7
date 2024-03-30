@@ -1,18 +1,15 @@
 .recipes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 0 20px;
   gap: 2rem;
   justify-content: space-between;
-  padding: 20px 0;
-  max-width: 1440px;
-  margin: 0 auto;
+  padding: 0 40px;
 }
 
 .recipe {
   position: relative;
   flex: 1;
-  padding: 20px;
+  width: 400px;
 
   img {
     object-fit: cover;
@@ -86,8 +83,8 @@
     width: 63px;
     height: 26px;
     position: absolute;
-    top: 35px;
-    right: 40px;
+    top: 20px;
+    right: 20px;
     text-align: center;
   }
 
@@ -124,7 +121,7 @@
     }
     &__temps {
       top: 20px;
-      right: 20px;
+      right: 100px;
     }
 
     &__description {

@@ -24,7 +24,7 @@ export class HeaderTemplate {
     const headerTitle = document.createElement("h1");
     headerTitle.className = "header__title";
     headerTitle.textContent =
-      "CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES";
+      "CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES";
 
     headerContent.appendChild(headerTitle);
 

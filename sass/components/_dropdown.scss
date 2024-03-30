@@ -113,5 +113,14 @@
 @media screen and (max-width: 768px) {
   .dropdown {
     margin: 10px auto;
+
+    &__content {
+      max-height: 200px;
+      overflow: auto;
+    }
+    &__input {
+      margin: 10px;
+      width: calc(100% - 20px);
+    }
   }
 }

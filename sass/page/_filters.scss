@@ -2,18 +2,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-
-  justify-content: space-between;
-  padding: 20px 0;
-  max-width: 1440px;
-  margin: 0 auto;
-
+  padding-top: 10px;
+  padding-left: 40px;
   &__recette {
     font-family: $font-family-title;
     font-size: 1.6rem;
     font-weight: 400;
     color: #1b1b1b;
     background: none;
+    padding-left: 35%;
   }
   &__container {
     display: flex;

@@ -13,6 +13,7 @@ export class DropDownSearch {
     dropdownInput.placeholder = "Rechercher...";
 
     const resetButton = document.createElement("i");
+    resetButton.id = "resetButton";
     resetButton.className = "fa-solid fa-xmark reset-icon hidden";
 
     const searchIcon = document.createElement("i");
@@ -44,18 +45,9 @@ export class DropDownSearch {
       const inputValue = dropdownInput.value;
       if (inputValue) {
         resetButton.classList.remove("hidden");
-        errorMessage.classList.add("hidden");
-        return;
-      }
-
-      resetButton.classList.remove("hidden");
-
-      if (inputValue.length < 3) {
-        errorMessage.classList.remove("hidden");
       } else {
-        errorMessage.classList.add("hidden");
+        resetButton.classList.add("hidden");
       }
-      this.searchChange(inputValue);
     });
 
     return dropdownSearch;

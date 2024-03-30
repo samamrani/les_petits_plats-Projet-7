@@ -28,6 +28,10 @@ a {
   display: none !important;
 }
 
+main {
+  margin: 0;
+}
+
 .dropdown {
   position: relative;
   min-width: 195px;
@@ -132,22 +136,27 @@ a {
   .dropdown {
     margin: 10px auto;
   }
+  .dropdown__content {
+    max-height: 200px;
+    overflow: auto;
+  }
+  .dropdown__input {
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
 }
 .recipes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 0 20px;
   gap: 2rem;
   justify-content: space-between;
-  padding: 20px 0;
-  max-width: 1440px;
-  margin: 0 auto;
+  padding: 0 40px;
 }
 
 .recipe {
   position: relative;
   flex: 1;
-  padding: 20px;
+  width: 400px;
 }
 .recipe img {
   object-fit: cover;
@@ -207,8 +216,8 @@ a {
   width: 63px;
   height: 26px;
   position: absolute;
-  top: 35px;
-  right: 40px;
+  top: 20px;
+  right: 20px;
   text-align: center;
 }
 .recipe__card {
@@ -240,7 +249,7 @@ a {
   }
   .recipe__temps {
     top: 20px;
-    right: 20px;
+    right: 100px;
   }
   .recipe__description {
     font-size: 12px;
@@ -294,7 +303,7 @@ a {
 .header__background.hidden {
   display: none;
 }
-.header__logo-image {
+.header__logo-image img {
   position: absolute;
   top: 51px;
   left: 69px;
@@ -364,22 +373,16 @@ a {
   .header__input {
     font-size: 2vw;
   }
-  .header__logo {
-    left: 20px;
-    top: 20px;
-  }
   .header__logo-image {
-    max-width: 20%;
+    max-width: 10%;
   }
 }
 .filters {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  justify-content: space-between;
-  padding: 20px 0;
-  max-width: 1440px;
-  margin: 0 auto;
+  padding-top: 10px;
+  padding-left: 40px;
 }
 .filters__recette {
   font-family: "Anton", sans-serif;
@@ -387,6 +390,7 @@ a {
   font-weight: 400;
   color: #1b1b1b;
   background: none;
+  padding-left: 35%;
 }
 .filters__container {
   display: flex;
@@ -404,9 +408,9 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  padding: 10px 50px;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 20px 0;
 }
 
 /*# sourceMappingURL=style.css.map */
