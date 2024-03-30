@@ -307,7 +307,7 @@ main {
 .header__background.hidden {
   display: none;
 }
-.header__logo-image img {
+.header__logo {
   position: absolute;
   top: 51px;
   left: 69px;
@@ -377,7 +377,7 @@ main {
   .header__input {
     font-size: 2vw;
   }
-  .header__logo-image {
+  .header__logo {
     max-width: 10%;
   }
 }

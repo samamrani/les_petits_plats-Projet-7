@@ -16,6 +16,7 @@ export class HeaderTemplate {
     const logo = document.createElement("img");
     logo.src = "assets/logo.png";
     logo.alt = "les petits plats";
+    logo.className = "header__logo";
     headerLogo.appendChild(logo);
 
     const headerContent = document.createElement("div");

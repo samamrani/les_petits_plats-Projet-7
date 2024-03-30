@@ -12,9 +12,8 @@
     }
   }
 
-  &__logo-image img {
+  &__logo {
     position: absolute;
-
     top: 51px;
     left: 69px;
     max-width: 100%;
@@ -96,7 +95,7 @@
       font-size: 2vw;
     }
 
-    &__logo-image {
+    &__logo {
       max-width: 10%;
     }
   }
