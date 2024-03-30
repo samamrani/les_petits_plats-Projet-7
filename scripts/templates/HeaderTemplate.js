@@ -11,7 +11,6 @@ export class HeaderTemplate {
     headerBackground.className = "header__background";
 
     const headerLogo = document.createElement("div");
-    headerLogo.className = "header__logo-image";
 
     const logo = document.createElement("img");
     logo.src = "assets/logo.png";
