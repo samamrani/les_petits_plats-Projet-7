@@ -24,7 +24,7 @@
   &__section {
     font-size: 14px;
     font-weight: 500;
-    line-height: 0;
+    line-height: 1;
   }
 
   &__title {
@@ -32,7 +32,7 @@
     font-weight: 400;
     color: #1b1b1b;
     font-family: $font-family-title;
-    margin-top: 20px;
+    margin-top: 15px;
   }
 
   &__title,
@@ -62,7 +62,7 @@
     font-size: 12px;
     color: grey;
 
-    line-height: 6;
+    line-height: 5;
     font-weight: 700;
   }
 

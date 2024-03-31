@@ -170,14 +170,14 @@ main {
 .recipe__section {
   font-size: 14px;
   font-weight: 500;
-  line-height: 0;
+  line-height: 1;
 }
 .recipe__title {
   font-size: 18px;
   font-weight: 400;
   color: #1b1b1b;
   font-family: "Anton", sans-serif;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 .recipe__title, .recipe__ingredient, .recipe__recipeTitle, .recipe__ingredients, .recipe__description {
   margin-left: 20px;
@@ -198,7 +198,7 @@ main {
 .recipe__recipeTitle {
   font-size: 12px;
   color: grey;
-  line-height: 6;
+  line-height: 5;
   font-weight: 700;
 }
 .recipe__ingredients {
@@ -277,7 +277,7 @@ main {
   gap: 2em;
   align-items: center;
   background: #ffd15b;
-  padding: 1.25em;
+  padding: 1.2em;
   border-radius: 0.7em;
 }
 .tag .icon-close {
@@ -387,7 +387,6 @@ main {
   gap: 2rem;
   padding-top: 10px;
   padding-left: 40px;
-  padding-right: 40px;
   max-width: 1440px;
   margin: 0 auto;
   justify-content: space-between;
@@ -398,6 +397,7 @@ main {
   font-weight: 400;
   color: #1b1b1b;
   background: none;
+  padding-right: 80px;
 }
 .filters__container {
   display: flex;
@@ -409,6 +409,9 @@ main {
 @media screen and (max-width: 768px) {
   #count {
     margin: 10px auto;
+  }
+  .filters__recette {
+    padding-left: 50px;
   }
 }
 #tags {
