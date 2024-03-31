@@ -365,7 +365,7 @@ main {
   right: 45px;
   transform: translate(-50%, -50%);
   cursor: pointer;
-  padding: 12px;
+  padding: 1.2%;
 }
 
 /* Media queries pour les petits écrans */
@@ -379,6 +379,10 @@ main {
   }
   .header__logo {
     max-width: 10%;
+  }
+  .header__form .reset-icon {
+    right: 4%;
+    font-size: 2vw;
   }
 }
 .filters {
