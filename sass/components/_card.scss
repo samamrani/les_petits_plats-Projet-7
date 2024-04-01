@@ -102,47 +102,25 @@
   }
 }
 
-/* Media queries pour les petits écrans */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .recipes {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media screen and (max-width: 768px) {
+  .recipes {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 20px;
+    gap: 1rem;
+  }
 
   .recipe {
-    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+  }
 
-    img {
-      height: 220px;
-    }
-    &__card {
-      max-width: 300px;
-    }
-
-    &__title {
-      font-size: 16px;
-    }
-    &__temps {
-      top: 20px;
-      right: 100px;
-    }
-
-    &__description {
-      font-size: 12px;
-      width: 220px;
-      height: 60px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    &__recipeTitle {
-      font-size: 10px;
-    }
-    &__ingredients {
-      width: 200px;
-      height: 200px;
-      line-height: 2.5;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .recipe img {
+    height: auto;
   }
 }

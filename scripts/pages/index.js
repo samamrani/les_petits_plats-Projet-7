@@ -25,6 +25,7 @@ class App {
 
     this.filteredSearch = this.recipes;
     this.filteredTags = this.recipes;
+    // this.filtered = this.recipes;
     this.displayData();
 
     // événements pour la fermeture des dropdowns en dehors
@@ -262,7 +263,7 @@ class App {
     }
   }
 
-  updateFiltersDropdown(recipes) {
+  updateFiltersDropdown() {
     const filterItems = document.querySelectorAll(".dropdown__item");
     filterItems.forEach((item) => {
       const itemName = item.textContent.trim().toLowerCase();
@@ -275,19 +276,19 @@ class App {
 
       // si l'éléments est présent dans la recette
       if (category === "ingrédients") {
-        isRecipe = recipes.some((recipeItem) =>
+        isRecipe = this.recipes.some((recipeItem) =>
           recipeItem.ingredients.some((ingredientItem) =>
             ingredientItem.ingredient.toLowerCase().includes(itemName)
           )
         );
       } else if (category === "appareils") {
-        isRecipe = recipes.some(
+        isRecipe = this.recipes.some(
           (recipeItem) =>
             recipeItem.appliance &&
             recipeItem.appliance.toLowerCase().includes(itemName)
         );
       } else if (category === "ustensiles") {
-        isRecipe = recipes.some(
+        isRecipe = this.recipes.some(
           (recipeItem) =>
             recipeItem.ustensils &&
             recipeItem.ustensils.some((ustensil) =>

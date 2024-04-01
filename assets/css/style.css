@@ -232,43 +232,23 @@ main {
   font-weight: 400px;
 }
 
-/* Media queries pour les petits écrans */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .recipes {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+@media screen and (max-width: 768px) {
+  .recipes {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 20px;
+    gap: 1rem;
+  }
   .recipe {
-    padding: 10px;
+    width: 100%;
+    max-width: 400px;
   }
   .recipe img {
-    height: 220px;
-  }
-  .recipe__card {
-    max-width: 300px;
-  }
-  .recipe__title {
-    font-size: 16px;
-  }
-  .recipe__temps {
-    top: 20px;
-    right: 100px;
-  }
-  .recipe__description {
-    font-size: 12px;
-    width: 220px;
-    height: 60px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .recipe__recipeTitle {
-    font-size: 10px;
-  }
-  .recipe__ingredients {
-    width: 200px;
-    height: 200px;
-    line-height: 2.5;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    height: auto;
   }
 }
 .tag {
@@ -296,8 +276,6 @@ main {
 }
 .header {
   position: relative;
-  max-width: 1440px;
-  margin: 0 auto;
 }
 .header__background {
   object-fit: cover;
@@ -346,14 +324,13 @@ main {
 .header__form i.fas.fa-search {
   position: absolute;
   top: 50%;
-  right: 2%;
+  right: 1.8%;
   transform: translate(0, -50%);
   cursor: pointer;
   color: white;
   background: black;
   padding: 1.5%;
-  border-radius: 1em;
-  font-size: 1vw;
+  border-radius: 11px;
 }
 .header__form i.fas.fa-search:hover {
   background-color: #ffd15b;
@@ -362,27 +339,38 @@ main {
 .header__form .reset-icon {
   position: absolute;
   top: 50%;
-  right: 45px;
+  right: 35px;
   transform: translate(-50%, -50%);
   cursor: pointer;
   padding: 1.2%;
 }
 
-/* Media queries pour les petits écrans */
 @media screen and (max-width: 768px) {
-  .header__title {
-    font-size: 5vw;
-    margin-bottom: 4vw;
-  }
-  .header__input {
-    font-size: 2vw;
+  .header__background {
+    height: 400px;
   }
   .header__logo {
-    max-width: 10%;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 80%;
+    height: auto;
+  }
+  .header__title {
+    font-size: 18px;
+  }
+  .header__input {
+    font-size: 12px;
+  }
+  .header__form i.fas.fa-search {
+    font-size: 6px;
+    padding: 6px;
+    right: 8px;
+    border-radius: 6px;
   }
   .header__form .reset-icon {
-    right: 4%;
-    font-size: 2vw;
+    right: 20px;
+    font-size: 8px;
   }
 }
 .filters {
