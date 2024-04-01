@@ -276,6 +276,8 @@ main {
 }
 .header {
   position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 .header__background {
   object-fit: cover;
@@ -289,8 +291,6 @@ main {
   position: absolute;
   top: 51px;
   left: 69px;
-  max-width: 100%;
-  height: auto;
 }
 .header__content {
   position: absolute;
@@ -301,7 +301,7 @@ main {
 .header__title {
   font-family: "Anton", sans-serif;
   color: #ffd15b;
-  font-size: 2.5vw;
+  font-size: 2.5em;
   font-weight: 400;
   text-align: center;
   text-transform: uppercase;
@@ -309,27 +309,26 @@ main {
 }
 .header__input {
   position: relative;
-  padding: 2% 4% 2% 3%;
+  padding: 11px;
   border-radius: 11px;
   color: light grey;
   width: 100%;
-  max-width: 954px;
 }
 .header__form {
   position: relative;
   width: 100%;
-  border-radius: 0.6875em;
+  border-radius: 11px;
   display: flex;
 }
 .header__form i.fas.fa-search {
   position: absolute;
   top: 50%;
-  right: 1.8%;
+  right: 5px;
   transform: translate(0, -50%);
   cursor: pointer;
   color: white;
   background: black;
-  padding: 1.5%;
+  padding: 8px;
   border-radius: 11px;
 }
 .header__form i.fas.fa-search:hover {
@@ -342,35 +341,13 @@ main {
   right: 35px;
   transform: translate(-50%, -50%);
   cursor: pointer;
-  padding: 1.2%;
 }
 
 @media screen and (max-width: 768px) {
-  .header__background {
-    height: 400px;
-  }
   .header__logo {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    max-width: 80%;
-    height: auto;
-  }
-  .header__title {
-    font-size: 18px;
-  }
-  .header__input {
-    font-size: 12px;
-  }
-  .header__form i.fas.fa-search {
-    font-size: 6px;
-    padding: 6px;
-    right: 8px;
-    border-radius: 6px;
-  }
-  .header__form .reset-icon {
-    right: 20px;
-    font-size: 8px;
   }
 }
 .filters {
