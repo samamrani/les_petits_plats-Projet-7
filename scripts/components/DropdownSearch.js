@@ -48,6 +48,8 @@ export class DropDownSearch {
       } else {
         resetButton.classList.add("hidden");
       }
+
+      this.searchChange(inputValue);
     });
 
     return dropdownSearch;
