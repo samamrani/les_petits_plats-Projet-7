@@ -162,27 +162,58 @@ class App {
 
   updateRecipesSearch(searchText) {
     if (searchText.length >= 3) {
-      // supprim les espaces et passer en miniscule
       const text = searchText.trim().toLowerCase();
 
-      // Filtrer les recettes correspondant à la recherche
-      this.filteredSearch = this.recipes.filter((recipe) => {
+      const filteredRecipes = [];
+      // travers toutes les recettes
+      for (let i = 0; i < this.recipes.length; i++) {
+        const recipe = this.recipes[i];
         const nameRecipe = recipe.name.toLowerCase().includes(text);
         const descRecipe = recipe.description.toLowerCase().includes(text);
 
-        // Vérifie ingrédient correspond à la recherche
-        const ingredientRecipe = recipe.ingredients.some((item) =>
-          item.ingredient.toLowerCase().includes(text)
-        );
-
-        return nameRecipe || descRecipe || ingredientRecipe;
-      });
+        let ingredientRecipe = false;
+        // traves les ingredients dela rectte
+        for (let a = 0; a < recipe.ingredients.length; a++) {
+          const item = recipe.ingredients[a];
+          if (item.ingredient.toLowerCase().includes(text)) {
+            ingredientRecipe = true;
+            break;
+          }
+        }
+        // ajour desrectte filtrees
+        if (nameRecipe || descRecipe || ingredientRecipe) {
+          filteredRecipes.push(recipe);
+        }
+      }
+      this.filteredSearch = filteredRecipes;
     } else {
-      // inférieure à 3, vide résultats de la recherche
       this.filteredSearch = this.recipes;
     }
     this.updateDisplayRecipes(this.filteredSearch);
   }
+
+  //   if (searchText.length >= 3) {
+  //     // supprim les espaces et passer en miniscule
+  //     const text = searchText.trim().toLowerCase();
+
+  //     // Filtrer les recettes correspondant à la recherche
+  //     this.filteredSearch = this.recipes.filter((recipe) => {
+  //       const nameRecipe = recipe.name.toLowerCase().includes(text);
+  //       const descRecipe = recipe.description.toLowerCase().includes(text);
+
+  //       // Vérifie ingrédient correspond à la recherche
+  //       const ingredientRecipe = recipe.ingredients.some((item) =>
+  //         item.ingredient.toLowerCase().includes(text)
+  //       );
+
+  //       return nameRecipe || descRecipe || ingredientRecipe;
+  //     });
+  //   } else {
+  //     // inférieure à 3, vide résultats de la recherche
+  //     this.filteredSearch = this.recipes;
+  //   }
+  //   this.updateDisplayRecipes(this.filteredSearch);
+  // }
 
   // met à jour la visibilité des recettes en fonction des tags sélectionnés
   updateRecipesTags() {
