@@ -165,23 +165,25 @@ class App {
       const text = searchText.trim().toLowerCase();
 
       const filteredRecipes = [];
-      // travers toutes les recettes
+      // traverser toutes les recettes
       for (let i = 0; i < this.recipes.length; i++) {
         const recipe = this.recipes[i];
-        const nameRecipe = recipe.name.toLowerCase().includes(text);
-        const descRecipe = recipe.description.toLowerCase().includes(text);
+        const verifyName = recipe.name.toLowerCase().includes(text);
+        const verifyDescription = recipe.description
+          .toLowerCase()
+          .includes(text);
 
-        let ingredientRecipe = false;
-        // traves les ingredients dela rectte
+        // traverser les ingredients de la recette
+        let verifyIngredient = false;
         for (let a = 0; a < recipe.ingredients.length; a++) {
           const item = recipe.ingredients[a];
           if (item.ingredient.toLowerCase().includes(text)) {
-            ingredientRecipe = true;
+            verifyIngredient = true;
             break;
           }
         }
-        // ajour desrectte filtrees
-        if (nameRecipe || descRecipe || ingredientRecipe) {
+        // ajouter la recette filtree
+        if (verifyName || verifyDescription || verifyIngredient) {
           filteredRecipes.push(recipe);
         }
       }
