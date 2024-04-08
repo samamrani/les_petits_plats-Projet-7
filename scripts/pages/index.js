@@ -8,6 +8,7 @@ class App {
     this.ingredients = [];
     this.appliances = [];
     this.ustensils = [];
+    this.recipes = [];
 
     this.filteredSearch = [];
     this.filteredTags = [];
