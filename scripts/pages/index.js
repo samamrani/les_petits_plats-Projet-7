@@ -23,10 +23,15 @@ class App {
       recipeA.name.localeCompare(recipeB.name)
     );
 
+    // Mesure du temps pour l'algorithme 2
+    console.time("Algorithme 2");
+
     this.filteredSearch = this.recipes;
     this.filteredTags = this.recipes;
     // this.filtered = this.recipes;
     this.displayData();
+
+    console.timeEnd("Algorithme 2");
 
     // événements pour la fermeture des dropdowns en dehors
     this.cancelDropdownOnEvent();
