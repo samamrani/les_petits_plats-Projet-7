@@ -23,9 +23,10 @@ class App {
       recipeA.name.localeCompare(recipeB.name)
     );
 
-    // Mesure du temps pour l'algorithme 1
+    // Mesure du temps d'exécution pour l'algorithme 1
     console.time("Algorithme 1");
 
+    //Initialisation des variables de recherche filtrée
     this.filteredSearch = this.recipes;
     this.filteredTags = this.recipes;
     // this.filtered = this.recipes;
@@ -60,6 +61,7 @@ class App {
 
     body.appendChild(main);
 
+    //Mise à jour du compteur de recettes
     this.updateDisplayCountRecipes(this.recipes);
   }
 
