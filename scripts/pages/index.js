@@ -64,7 +64,7 @@ class App {
     //Mise à jour du compteur de recettes
     this.updateDisplayCountRecipes(this.recipes);
   }
-
+  //
   cancelDropdownOnEvent() {
     document.addEventListener("click", (event) => {
       const dropdowns = document.querySelectorAll(".dropdown");
