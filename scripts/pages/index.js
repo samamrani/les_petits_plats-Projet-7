@@ -79,7 +79,7 @@ class App {
       });
     });
   }
-
+  // Préparation des options de filtrage
   prepareFiltersDropdown() {
     const uniqueIngredients = new Set();
     const uniqueAppliances = new Set();
@@ -113,13 +113,13 @@ class App {
       ustensils: ustensilsList,
     };
   }
-
+  // Création de la section des tags
   createTagsSection() {
     const resultSection = document.createElement("section");
     resultSection.id = "tags";
     return resultSection;
   }
-
+  // Création de la section des filtres
   createFiltersSection() {
     const filtersData = this.prepareFiltersDropdown(this.filteredSearch);
     const filters = new FiltersTemplate(
@@ -161,12 +161,11 @@ class App {
 
     return filters.getDOM();
   }
-
+  // Création de la section des recettes
   createRecipesSection() {
     const recipes = new RecipesTemplate(this.recipes);
     return recipes.getDOM();
   }
-
   updateRecipesSearch(searchText) {
     if (searchText.length >= 3) {
       const text = searchText.trim().toLowerCase();
@@ -200,8 +199,7 @@ class App {
     }
     this.updateDisplayRecipes(this.filteredSearch);
   }
-
-  // met à jour la visibilité des recettes en fonction des tags sélectionnés
+  // Mise à jour des recettes en fonction des tags sélectionnés
   updateRecipesTags() {
     const tags = document.querySelectorAll("#tags .tag");
 
@@ -250,8 +248,7 @@ class App {
     this.filteredTags = filtered;
     this.updateDisplayRecipes(filtered);
   }
-
-  // mise ajour de l'affichage des recettes
+  // Mise à jour de l'affichage des recettes
   updateDisplayRecipes() {
     const recipes = this.filteredSearch.filter((recipe) =>
       this.filteredTags.includes(recipe)
@@ -268,7 +265,7 @@ class App {
     this.updateDisplayCountRecipes(recipes);
     this.updateFiltersDropdown(recipes);
   }
-
+  // Mise à jour du compteur de recettes affichées
   updateDisplayCountRecipes(recipes) {
     const countDiv = document.querySelector("#count");
 
@@ -278,13 +275,13 @@ class App {
       countDiv.textContent = "Aucune recette";
     }
   }
-
+  //  Mise à jour des options de filtrage dans le menu déroulant
   updateFiltersDropdown(recipes) {
     const filterItems = document.querySelectorAll(".dropdown__item");
     filterItems.forEach((item) => {
       const itemName = item.textContent.trim().toLowerCase();
 
-      // ''closest''echercher l'élément parent le plus proche
+      // 'closest'echercher l'élément parent le plus proche
       const dropdown = item.closest(".dropdown");
       const category = dropdown.dataset.category.toLowerCase();
 
@@ -321,6 +318,5 @@ class App {
     });
   }
 }
-
 const app = new App();
 app.init();
