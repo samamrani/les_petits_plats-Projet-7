@@ -39,7 +39,7 @@ class App {
     const headerElement = headerTemplate.getDOM();
     body.appendChild(headerElement);
 
-    // 'événements la recherche sera actualisée dès que l'utilisateur relâchera une touche
+    // evénements la recherche sera actualisée dès que l'utilisateur relâchera une touche
     const inputElement = document.querySelector(".header__input");
     inputElement.addEventListener("input", (event) => {
       event.stopPropagation();
