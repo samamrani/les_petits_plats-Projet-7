@@ -162,7 +162,7 @@ class App {
 
   updateRecipesSearch(searchText) {
     if (searchText.length >= 3) {
-      // supprim les espaces et passer en miniscule
+      // supprimer les espaces et passer en miniscule
       const text = searchText.trim().toLowerCase();
 
       // Filtrer les recettes correspondant à la recherche
