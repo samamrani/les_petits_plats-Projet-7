@@ -2,7 +2,6 @@ import { HeaderTemplate } from "../templates/HeaderTemplate.js";
 import { FiltersTemplate } from "../templates/FiltersTemplate.js";
 import { RecipesTemplate } from "../templates/RecipesTemplate.js";
 import { RecipeCardTemplate } from "../templates/RecipeCardTemplate.js";
-
 class App {
   constructor() {
     this.ingredients = [];
@@ -62,7 +61,7 @@ class App {
 
     this.updateDisplayCountRecipes(this.recipes);
   }
-
+  //Gère les événements de clic pour fermer les menus déroulants lorsque l'utilisateur clique en dehors d'eux.
   cancelDropdownOnEvent() {
     document.addEventListener("click", (event) => {
       const dropdowns = document.querySelectorAll(".dropdown");
@@ -78,11 +77,13 @@ class App {
     });
   }
 
+  //  prépare les données des filtres,
   prepareFiltersDropdown() {
     const uniqueIngredients = new Set();
     const uniqueAppliances = new Set();
     const uniqueUstensils = new Set();
 
+    // Parcours des recettes
     this.recipes.forEach((recipe) => {
       recipe.ingredients.forEach((ingredient) => {
         uniqueIngredients.add(ingredient.ingredient.toLowerCase());
@@ -99,8 +100,10 @@ class App {
       }
     });
 
+    // Tri des valeurs
     const sortTri = (item1, item2) => item1.localeCompare(item2);
 
+    // convertis en tableaux à l'aide de Array.from() pour permettre le tri
     const ingredientsList = Array.from(uniqueIngredients).sort(sortTri);
     const appliancesList = Array.from(uniqueAppliances).sort(sortTri);
     const ustensilsList = Array.from(uniqueUstensils).sort(sortTri);
@@ -111,13 +114,13 @@ class App {
       ustensils: ustensilsList,
     };
   }
-
   createTagsSection() {
     const resultSection = document.createElement("section");
     resultSection.id = "tags";
     return resultSection;
   }
 
+  //  création de la section des filtres
   createFiltersSection() {
     const filtersData = this.prepareFiltersDropdown(this.filteredSearch);
     const filters = new FiltersTemplate(
@@ -156,7 +159,6 @@ class App {
         this.updateRecipesTags();
       }
     );
-
     return filters.getDOM();
   }
 
@@ -164,7 +166,6 @@ class App {
     const recipes = new RecipesTemplate(this.recipes);
     return recipes.getDOM();
   }
-
   updateRecipesSearch(searchText) {
     if (searchText.length >= 3) {
       // supprim les espaces et passer en miniscule
@@ -188,14 +189,14 @@ class App {
     }
     this.updateDisplayRecipes(this.filteredSearch);
   }
-
   // met à jour la visibilité des recettes en fonction des tags sélectionnés
   updateRecipesTags() {
+    // Sélection des tags
     const tags = document.querySelectorAll("#tags .tag");
 
     const recipes = this.recipes;
 
-    // Stocker les éléments sélectionnés dans les tags
+    // Stockage des éléments sélectionnés
     const selectedIngredients = [];
     const selectedAppliances = [];
     const selectedUstensils = [];
@@ -238,7 +239,6 @@ class App {
     this.filteredTags = filtered;
     this.updateDisplayRecipes(filtered);
   }
-
   // mise ajour de l'affichage des recettes
   updateDisplayRecipes() {
     const recipes = this.filteredSearch.filter((recipe) =>
@@ -256,7 +256,6 @@ class App {
     this.updateDisplayCountRecipes(recipes);
     this.updateFiltersDropdown(recipes);
   }
-
   updateDisplayCountRecipes(recipes) {
     const countDiv = document.querySelector("#count");
 
@@ -266,9 +265,10 @@ class App {
       countDiv.textContent = "Aucune recette";
     }
   }
-
   updateFiltersDropdown(recipes) {
+    // Sélection des éléments de menu déroulant
     const filterItems = document.querySelectorAll(".dropdown__item");
+    // Parcours des éléments de menu déroulant
     filterItems.forEach((item) => {
       const itemName = item.textContent.trim().toLowerCase();
 
@@ -309,6 +309,5 @@ class App {
     });
   }
 }
-
 const app = new App();
 app.init();
