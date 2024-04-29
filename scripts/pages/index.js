@@ -61,7 +61,7 @@ class App {
 
     this.updateDisplayCountRecipes(this.recipes);
   }
-  //Gère les événements de clic pour fermer les menus déroulants lorsque l'utilisateur clique en dehors d'eux.
+  //Gère les événements de clic pour fermer les menus déroulants
   cancelDropdownOnEvent() {
     document.addEventListener("click", (event) => {
       const dropdowns = document.querySelectorAll(".dropdown");
