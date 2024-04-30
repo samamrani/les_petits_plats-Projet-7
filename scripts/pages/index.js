@@ -255,7 +255,7 @@ class App {
         dropdown.classList.add("hidden");
       });
     } else {
-      // Si des recettes sont trouvées, assurez-vous de retirer la classe error-message si elle était précédemment ajoutée
+      // Si des recettes sont trouvées
       searchInput.classList.remove("error-message");
       recipes.forEach((recipe) => {
         const recipeCard = new RecipeCardTemplate(recipe);
