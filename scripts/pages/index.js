@@ -18,6 +18,10 @@ class App {
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase();
     };
+
+    this.normalizeSearchString= (str) => {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    };
   }
 
   async init() {
@@ -269,7 +273,7 @@ class App {
         dropdown.classList.add("hidden");
       });
     } else {
-      // Si des recettes sont trouvées, assurez-vous de retirer la classe error-message si elle était précédemment ajoutée
+      // Si des recettes sont trouvées
       searchInput.classList.remove("error-message");
       recipes.forEach((recipe) => {
         const recipeCard = new RecipeCardTemplate(recipe);
@@ -303,7 +307,7 @@ class App {
     const filterItems = document.querySelectorAll(".dropdown__item");
     filterItems.forEach((item) => {
       const itemName = item.textContent.trim().toLowerCase();
-      const itemNameNormalized = this.normalizeString(itemName); // Normaliser le nom de l'élément du dropdown
+      const itemNameNormalized = normalizeSearchString(itemName); // Normaliser le nom de l'élément du dropdown
 
       // Récupérer l'élément parent le plus proche avec la classe dropdown
       const dropdown = item.closest(".dropdown");
@@ -315,7 +319,7 @@ class App {
       if (category === "ingrédients") {
         isRecipe = recipes.some((recipeItem) =>
           recipeItem.ingredients.some((ingredientItem) =>
-            this.normalizeString(ingredientItem.ingredient).includes(
+            normalizeSearchString(ingredientItem.ingredient).includes(
               itemNameNormalized
             )
           )
@@ -324,7 +328,7 @@ class App {
         isRecipe = recipes.some(
           (recipeItem) =>
             recipeItem.appliance &&
-            this.normalizeString(recipeItem.appliance).includes(
+            normalizeSearchString(recipeItem.appliance).includes(
               itemNameNormalized
             )
         );
@@ -333,7 +337,7 @@ class App {
           (recipeItem) =>
             recipeItem.ustensils &&
             recipeItem.ustensils.some((ustensil) =>
-              this.normalizeString(ustensil).includes(itemNameNormalized)
+              normalizeSearchString(ustensil).includes(itemNameNormalized)
             )
         );
       }
@@ -345,7 +349,7 @@ class App {
         item.classList.add("hidden");
       }
     });
-  }
+}
 }
 
 const app = new App();
