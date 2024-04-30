@@ -343,6 +343,11 @@ main {
   cursor: pointer;
 }
 
+.error-message {
+  color: red;
+  text-align: center;
+}
+
 @media screen and (max-width: 768px) {
   .header__logo {
     top: 20px;
