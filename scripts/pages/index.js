@@ -2,7 +2,6 @@ import { HeaderTemplate } from "../templates/HeaderTemplate.js";
 import { FiltersTemplate } from "../templates/FiltersTemplate.js";
 import { RecipesTemplate } from "../templates/RecipesTemplate.js";
 import { RecipeCardTemplate } from "../templates/RecipeCardTemplate.js";
-
 class App {
   constructor() {
     this.ingredients = [];
@@ -12,8 +11,15 @@ class App {
     this.filteredSearch = [];
     this.filteredTags = [];
     this.filtered = [];
+
+    this.normalizeString = (str) => {
+      return str
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    };
   }
-//
+
   async init() {
     // Récupérer les recettes depuis le fichier JSON
     this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
@@ -23,10 +29,15 @@ class App {
       recipeA.name.localeCompare(recipeB.name)
     );
 
+    // Mesure du temps pour l'algorithme 2
+    console.time("Algorithme 2");
+
     this.filteredSearch = this.recipes;
     this.filteredTags = this.recipes;
     // this.filtered = this.recipes;
     this.displayData();
+
+    console.timeEnd("Algorithme 2");
 
     // événements pour la fermeture des dropdowns en dehors
     this.cancelDropdownOnEvent();
@@ -39,7 +50,7 @@ class App {
     const headerElement = headerTemplate.getDOM();
     body.appendChild(headerElement);
 
-    // evénements la recherche sera actualisée dès que l'utilisateur relâchera une touche
+    // 'événements la recherche sera actualisée dès que l'utilisateur relâchera une touche
     const inputElement = document.querySelector(".header__input");
     inputElement.addEventListener("input", (event) => {
       event.stopPropagation();
@@ -57,7 +68,7 @@ class App {
 
     this.updateDisplayCountRecipes(this.recipes);
   }
-
+  //Gère les événements de clic pour fermer les menus déroulants
   cancelDropdownOnEvent() {
     document.addEventListener("click", (event) => {
       const dropdowns = document.querySelectorAll(".dropdown");
@@ -73,11 +84,13 @@ class App {
     });
   }
 
+  //  prépare les données des filtres,
   prepareFiltersDropdown() {
     const uniqueIngredients = new Set();
     const uniqueAppliances = new Set();
     const uniqueUstensils = new Set();
 
+    // Parcours des recettes
     this.recipes.forEach((recipe) => {
       recipe.ingredients.forEach((ingredient) => {
         uniqueIngredients.add(ingredient.ingredient.toLowerCase());
@@ -94,8 +107,10 @@ class App {
       }
     });
 
+    // Tri des valeurs
     const sortTri = (item1, item2) => item1.localeCompare(item2);
 
+    // convertis en tableaux à l'aide de Array.from() pour permettre le tri
     const ingredientsList = Array.from(uniqueIngredients).sort(sortTri);
     const appliancesList = Array.from(uniqueAppliances).sort(sortTri);
     const ustensilsList = Array.from(uniqueUstensils).sort(sortTri);
@@ -106,13 +121,13 @@ class App {
       ustensils: ustensilsList,
     };
   }
-
   createTagsSection() {
     const resultSection = document.createElement("section");
     resultSection.id = "tags";
     return resultSection;
   }
 
+  //  création de la section des filtres
   createFiltersSection() {
     const filtersData = this.prepareFiltersDropdown(this.filteredSearch);
     const filters = new FiltersTemplate(
@@ -159,26 +174,26 @@ class App {
     const recipes = new RecipesTemplate(this.recipes);
     return recipes.getDOM();
   }
-
   updateRecipesSearch(searchText) {
     if (searchText.length >= 3) {
-      // supprimer les espaces et passer en miniscule
-      const text = searchText.trim().toLowerCase();
+      // supprimer les espaces et passer en minuscules
+      const text = this.normalizeString(searchText.trim());
 
       // Filtrer les recettes correspondant à la recherche
       this.filteredSearch = this.recipes.filter((recipe) => {
-        const nameRecipe = recipe.name.toLowerCase().includes(text);
-        const descRecipe = recipe.description.toLowerCase().includes(text);
-
-        // Vérifie ingrédient correspond à la recherche
-        const ingredientRecipe = recipe.ingredients.some((item) =>
-          item.ingredient.toLowerCase().includes(text)
+        const nameRecipe = this.normalizeString(recipe.name).includes(text);
+        const descRecipe = this.normalizeString(recipe.description).includes(
+          text
         );
 
+        // Vérifier si un ingrédient correspond à la recherche
+        const ingredientRecipe = recipe.ingredients.some((item) =>
+          this.normalizeString(item.ingredient).includes(text)
+        );
         return nameRecipe || descRecipe || ingredientRecipe;
       });
     } else {
-      // inférieure à 3, vide résultats de la recherche
+      // Si la longueur de la recherche est inférieure à 3, afficher toutes les recettes
       this.filteredSearch = this.recipes;
     }
     this.updateDisplayRecipes(this.filteredSearch);
@@ -186,11 +201,12 @@ class App {
 
   // met à jour la visibilité des recettes en fonction des tags sélectionnés
   updateRecipesTags() {
+    // Sélection des tags
     const tags = document.querySelectorAll("#tags .tag");
 
     const recipes = this.recipes;
 
-    // Stocker les éléments sélectionnés dans les tags
+    // Stockage des éléments sélectionnés
     const selectedIngredients = [];
     const selectedAppliances = [];
     const selectedUstensils = [];
@@ -233,7 +249,6 @@ class App {
     this.filteredTags = filtered;
     this.updateDisplayRecipes(filtered);
   }
-
   // mise ajour de l'affichage des recettes
   updateDisplayRecipes() {
     const recipes = this.filteredSearch.filter((recipe) =>
@@ -243,16 +258,10 @@ class App {
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
 
-    // Récupérer la barre de recherche
-    const searchInput = document.querySelector(".header__input");
     if (recipes.length === 0) {
-      // Afficher le message d'erreur dans la barre de recherche
-      searchInput.value = "Aucune recette trouvée.";
-      searchInput.classList.add("error-message");
-
       // Cacher le compte des recettes
       const countDiv = document.querySelector("#count");
-      countDiv.textContent = "";
+      countDiv.textContent = "Aucune recette trouvée.";
 
       // Cacher les dropdowns
       const dropdowns = document.querySelectorAll(".dropdown");
@@ -260,7 +269,7 @@ class App {
         dropdown.classList.add("hidden");
       });
     } else {
-      // Si des recettes sont trouvées
+      // Si des recettes sont trouvées, assurez-vous de retirer la classe error-message si elle était précédemment ajoutée
       searchInput.classList.remove("error-message");
       recipes.forEach((recipe) => {
         const recipeCard = new RecipeCardTemplate(recipe);
@@ -281,7 +290,6 @@ class App {
     this.updateFiltersDropdown(recipes);
   }
 
-
   updateDisplayCountRecipes(recipes) {
     const countDiv = document.querySelector("#count");
 
@@ -291,43 +299,46 @@ class App {
       countDiv.textContent = "Aucune recette";
     }
   }
-
   updateFiltersDropdown(recipes) {
-    // Sélection des éléments de menu déroulant
     const filterItems = document.querySelectorAll(".dropdown__item");
-    // Parcours des éléments de menu déroulant
     filterItems.forEach((item) => {
       const itemName = item.textContent.trim().toLowerCase();
+      const itemNameNormalized = this.normalizeString(itemName); // Normaliser le nom de l'élément du dropdown
 
-      // ''closest''echercher l'élément parent le plus proche
+      // Récupérer l'élément parent le plus proche avec la classe dropdown
       const dropdown = item.closest(".dropdown");
       const category = dropdown.dataset.category.toLowerCase();
 
       let isRecipe = false;
 
-      // si l'éléments est présent dans la recette
+      // Vérifier si l'élément est présent dans la recette en fonction de sa catégorie
       if (category === "ingrédients") {
         isRecipe = recipes.some((recipeItem) =>
           recipeItem.ingredients.some((ingredientItem) =>
-            ingredientItem.ingredient.toLowerCase().includes(itemName)
+            this.normalizeString(ingredientItem.ingredient).includes(
+              itemNameNormalized
+            )
           )
         );
       } else if (category === "appareils") {
         isRecipe = recipes.some(
           (recipeItem) =>
             recipeItem.appliance &&
-            recipeItem.appliance.toLowerCase().includes(itemName)
+            this.normalizeString(recipeItem.appliance).includes(
+              itemNameNormalized
+            )
         );
       } else if (category === "ustensiles") {
         isRecipe = recipes.some(
           (recipeItem) =>
             recipeItem.ustensils &&
             recipeItem.ustensils.some((ustensil) =>
-              ustensil.toLowerCase().includes(itemName)
+              this.normalizeString(ustensil).includes(itemNameNormalized)
             )
         );
       }
 
+      // Appliquer la classe hidden en fonction de la correspondance avec les recettes
       if (isRecipe) {
         item.classList.remove("hidden");
       } else {

@@ -342,10 +342,7 @@ main {
   transform: translate(-50%, -50%);
   cursor: pointer;
 }
-.error-message {
-  color: red;
-  text-align: center;
-}
+
 
 @media screen and (max-width: 768px) {
   .header__logo {
