@@ -14,7 +14,7 @@ class App {
   }
 
   async init() {
-    // Récupérer les recettes depuis le fichier JSON
+  
     this.recipes = await fetch("./data/recipes.json").then((res) => res.json());
 
     //  trier les recettes par ordre alphabétique
