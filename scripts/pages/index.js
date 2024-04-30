@@ -301,21 +301,27 @@ class App {
       if (category === "ingrédients") {
         isRecipe = recipes.some((recipeItem) =>
           recipeItem.ingredients.some((ingredientItem) =>
-            ingredientItem.ingredient.toLowerCase().includes(itemName)
+            this.includesAccentedCharacter(
+              ingredientItem.ingredient.toLowerCase(),
+              itemName
+            )
           )
         );
       } else if (category === "appareils") {
         isRecipe = recipes.some(
           (recipeItem) =>
             recipeItem.appliance &&
-            recipeItem.appliance.toLowerCase().includes(itemName)
+            this.includesAccentedCharacter(
+              recipeItem.appliance.toLowerCase(),
+              itemName
+            )
         );
       } else if (category === "ustensiles") {
         isRecipe = recipes.some(
           (recipeItem) =>
             recipeItem.ustensils &&
             recipeItem.ustensils.some((ustensil) =>
-              ustensil.toLowerCase().includes(itemName)
+              this.includesAccentedCharacter(ustensil.toLowerCase(), itemName)
             )
         );
       }
@@ -326,6 +332,13 @@ class App {
         item.classList.add("hidden");
       }
     });
+  }
+
+  includesAccentedCharacter(str, searchStr) {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .includes(searchStr);
   }
 }
 const app = new App();
