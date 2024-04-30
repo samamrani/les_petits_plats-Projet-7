@@ -248,10 +248,30 @@ class App {
     const recipesSection = document.querySelector(".recipes");
     recipesSection.innerHTML = "";
 
-    recipes.forEach((recipe) => {
-      const recipeCard = new RecipeCardTemplate(recipe);
-      recipesSection.appendChild(recipeCard.getDOM());
-    });
+    // Récupérer les dropdowns
+    const dropdowns = document.querySelectorAll(".dropdown");
+    const searchInput = document.querySelector(".header__input");
+    if (recipes.length === 0) {
+      searchInput.value = "Aucune recette trouvée.";
+      searchInput.classList.add("error-message");
+
+      // Cacher les dropdowns
+      dropdowns.forEach((dropdown) => {
+        dropdown.classList.add("hidden");
+      });
+    } else {
+      // Si des recettes sont trouvées, assurez-vous de retirer la classe error-message si elle était précédemment ajoutée
+      searchInput.classList.remove("error-message");
+      recipes.forEach((recipe) => {
+        const recipeCard = new RecipeCardTemplate(recipe);
+        recipesSection.appendChild(recipeCard.getDOM());
+      });
+
+      // Afficher les dropdowns
+      dropdowns.forEach((dropdown) => {
+        dropdown.classList.remove("hidden");
+      });
+    }
 
     this.updateDisplayCountRecipes(recipes);
     this.updateFiltersDropdown(recipes);
