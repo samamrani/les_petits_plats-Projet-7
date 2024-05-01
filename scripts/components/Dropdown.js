@@ -7,6 +7,13 @@ export class Dropdown {
     this.category = category;
     this.list = list;
     this.selectChange = selectChange;
+
+    this.normalizeString = (str) => {
+      return str
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    };
   }
 
   getDOM() {
@@ -24,9 +31,10 @@ export class Dropdown {
     }).getDOM();
 
     const dropdownSearch = new DropDownSearch((text) => {
+      text = this.normalizeString(text)
       const items = dropdownItems.querySelectorAll("li");
       items.forEach((item) => {
-        const itemName = item.textContent;
+        const itemName = this.normalizeString(item.textContent);
         if (itemName.includes(text)) {
           item.classList.remove("hidden");
         } else {

@@ -18,10 +18,6 @@ class App {
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase();
     };
-
-    this.normalizeSearchString= (str) => {
-      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    };
   }
 
   async init() {
@@ -305,51 +301,43 @@ class App {
   }
   updateFiltersDropdown(recipes) {
     const filterItems = document.querySelectorAll(".dropdown__item");
+
     filterItems.forEach((item) => {
-      const itemName = item.textContent.trim().toLowerCase();
-      const itemNameNormalized = normalizeSearchString(itemName); // Normaliser le nom de l'élément du dropdown
+      const itemName = item.textContent;
 
-      // Récupérer l'élément parent le plus proche avec la classe dropdown
-      const dropdown = item.closest(".dropdown");
-      const category = dropdown.dataset.category.toLowerCase();
-
+      const category = item.closest(".dropdown").dataset.category.toLowerCase();
       let isRecipe = false;
 
-      // Vérifier si l'élément est présent dans la recette en fonction de sa catégorie
       if (category === "ingrédients") {
         isRecipe = recipes.some((recipeItem) =>
           recipeItem.ingredients.some((ingredientItem) =>
-            normalizeSearchString(ingredientItem.ingredient).includes(
-              itemNameNormalized
-            )
+            ingredientItem.ingredient.toLowerCase().includes(itemName)
           )
         );
       } else if (category === "appareils") {
-        isRecipe = recipes.some(
-          (recipeItem) =>
+        isRecipe = recipes.some((recipeItem) => {
+          return (
             recipeItem.appliance &&
-            normalizeSearchString(recipeItem.appliance).includes(
-              itemNameNormalized
-            )
-        );
+            recipeItem.appliance.toLowerCase().includes(itemName)
+          );
+        });
       } else if (category === "ustensiles") {
         isRecipe = recipes.some(
           (recipeItem) =>
             recipeItem.ustensils &&
             recipeItem.ustensils.some((ustensil) =>
-              normalizeSearchString(ustensil).includes(itemNameNormalized)
+              ustensil.toLowerCase().includes(itemName)
             )
         );
       }
 
-      // Appliquer la classe hidden en fonction de la correspondance avec les recettes
       if (isRecipe) {
         item.classList.remove("hidden");
       } else {
         item.classList.add("hidden");
       }
     });
-}
+  }
 }
 
 const app = new App();
